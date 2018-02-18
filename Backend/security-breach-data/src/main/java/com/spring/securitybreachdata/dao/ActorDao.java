@@ -1,5 +1,9 @@
 package com.spring.securitybreachdata.dao;
 
-public interface ActorDao {
+import java.util.List;
 
+import com.spring.securitybreachdata.entity.Actor;
+
+public interface ActorDao {
+	public List<Actor> getAllActorInfo();
 }
