@@ -2,67 +2,38 @@ package com.spring.securitybreachdata.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-
-@Entity
-@Table(name = "incident")
 public class Incident implements Serializable{
 	private static final long serialVersionUID = -3976940842169644427L;
 	
-	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
-	@Column(name="incident_id", unique = true, nullable = false)
-	private Long incidentId;
+	private int incidentId;
+	private int orgId;    
 	
-    @Column(name="org_id")
-	private Long orgId;
-    
-    @Column(name="country")
 	private String country;
-
-    @Column(name="state")
 	private String state;
-    
-    @Column(name="victim_type")
-	private String victimType;    
-    @Column(name="data_lost_type")
+    private String victimType;    
 	private String dataLostType;
-    @Column(name="summary")
 	private String summary;
-    @Column(name="references")
 	private String references;
     
-    @Column(name="report_day")
 	private Integer reportDay;
-    @Column(name="report_month")
 	private Integer reportMonth;
-    @Column(name="report_year")
 	private Integer reportYear;
-	
-    @Column(name="num_records_lost")
+
 	private Integer numRecordsLost;
 
-	public Long getIncidentId() {
+	public int getIncidentId() {
 		return incidentId;
 	}
 
-	public void setIncidentId(Long incidentId) {
+	public void setIncidentId(int incidentId) {
 		this.incidentId = incidentId;
 	}
 
-	public Long getOrgId() {
+	public int getOrgId() {
 		return orgId;
 	}
 
-	public void setOrgId(Long orgId) {
+	public void setOrgId(int orgId) {
 		this.orgId = orgId;
 	}
 

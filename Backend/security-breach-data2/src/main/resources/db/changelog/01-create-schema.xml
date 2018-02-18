@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="01" author="awilson">
+    
+    <createTable tableName="org" remarks="A table to contain organization information">
+      <column name="org_id" type="int">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="org_name" type="varchar(255)"></column>
+      <column name="org_industry" type="varchar(100)"></column>
+    </createTable>
+    
+    <createTable tableName="incident" remarks="A table to information about data breach incidents">
+      <column name="incident_id" type="int">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="org_id" type="int">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="country" type="varchar(255)"></column>
+      <column name="state" type="varchar(100)"></column>
+      <column name="victim_type" type="varchar(255)"></column>
+      <column name="data_lost_type" type="varchar(255)"></column>
+      <column name="summary" type="varchar(5000)"></column>
+      <column name="references" type="varchar(5000)"></column>
+      <column name="report_day" type="int"></column>
+      <column name="report_month" type="int"></column>
+      <column name="report_year" type="int"></column>
+      <column name="num_records_lost" type="int"></column>
+    </createTable>
+    
+    <createTable tableName="actor" remarks="A table to information about data breach actors">
+      <column name="actor_id" type="int">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="incident_id" type="int">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="actor_type" type="varchar(100)"></column>
+      <column name="actor_pattern" type="varchar(100)"></column>
+    </createTable>
+
+    <addForeignKeyConstraint baseTableName="incident" baseColumnNames="org_id"
+      constraintName="incident_org_id_fk"
+      referencedTableName="org" referencedColumnNames="org_id"/>
+      
+    <addForeignKeyConstraint baseTableName="actor" baseColumnNames="incident_id"
+      constraintName="actor_incident_id_fk"
+      referencedTableName="incident" referencedColumnNames="incident_id"/>
+      
+      
+  </changeSet>
+</databaseChangeLog>

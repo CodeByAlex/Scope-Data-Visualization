@@ -13,6 +13,8 @@ import com.spring.securitybreachdata.dao.SetUpDao;
 import com.spring.securitybreachdata.dao.IncidentDao;
 import com.spring.securitybreachdata.dao.OrgDao;
 import com.spring.securitybreachdata.entity.Actor;
+import com.spring.securitybreachdata.entity.Incident;
+import com.spring.securitybreachdata.entity.Organization;
 
 @Component
 public class SecurityBreachManager {
@@ -29,7 +31,13 @@ public class SecurityBreachManager {
 
 	//ensure propagation is required
 	public ResponseEntity<?> getAllIncidentInfo() {
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		try{
+			List<Incident> incidents = incidentDao.getAllIncidentInfo();
+			return new ResponseEntity<>(incidents, HttpStatus.OK);
+		}catch(Exception ex){
+			System.err.println(ex);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 	}
 
 	public ResponseEntity<?> getAllActorInfo() {
@@ -38,12 +46,18 @@ public class SecurityBreachManager {
 			return new ResponseEntity<>(actors, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
-			return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
 
 	public ResponseEntity<?> getAllOrgInfo() {
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		try{
+			List<Organization> orgs = orgDao.getAllOrgInfo();
+			return new ResponseEntity<>(orgs, HttpStatus.OK);
+		}catch(Exception ex){
+			System.err.println(ex);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	
