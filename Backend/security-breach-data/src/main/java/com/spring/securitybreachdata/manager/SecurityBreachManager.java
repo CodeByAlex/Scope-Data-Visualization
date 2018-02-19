@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.spring.securitybreachdata.dao.ActorDao;
-import com.spring.securitybreachdata.dao.SetUpDao;
 import com.spring.securitybreachdata.dao.IncidentDao;
 import com.spring.securitybreachdata.dao.OrgDao;
 import com.spring.securitybreachdata.entity.Actor;
