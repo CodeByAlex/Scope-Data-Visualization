@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {Organization} from "../Models/Organization";
 import {Incident} from "../Models/Incident";
 import {Actor} from "../Models/Actor";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 const API_URL = environment.apiUrl;
 

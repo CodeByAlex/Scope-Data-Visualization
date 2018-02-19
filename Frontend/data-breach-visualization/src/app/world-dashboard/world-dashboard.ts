@@ -5,9 +5,9 @@ import {Incident} from "app/Models/Incident";
 import {Organization} from "../Models/Organization";
 
 @Component({
-  selector: 'app-graphing-area',
+  selector: 'world-dashboard',
   templateUrl: './world-dashboard.component.html',
-  styleUrls: ['./world-dashboard.component.css']
+  styleUrls: ['./world-dashboard.component.scss']
 })
 export class WorldDashboardComponent implements OnInit {
   actorList: Actor [];
