@@ -17,6 +17,7 @@ public class IncidentRowMapper implements RowMapper<Incident>{
 		incident.setIncidentId(rs.getInt("incident_id"));
 		incident.setNumRecordsLost(rs.getInt("num_records_lost"));
 		incident.setOrgId(rs.getInt("org_id"));
+		incident.setActorId(rs.getInt("actor_id"));
 		incident.setReferences(rs.getString("references"));
 		incident.setReportDay(rs.getInt("report_day"));
 		incident.setReportMonth(rs.getInt("report_month"));

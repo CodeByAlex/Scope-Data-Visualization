@@ -8,7 +8,7 @@
 
   <include file="changelog/01-create-schema.xml" relativeToChangelogFile="true"/>
   <include file="changelog/02-insert-data-organization.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/03-insert-data-incident.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/04-insert-data-actor.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/03-insert-data-actor.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/04-insert-data-incident.xml" relativeToChangelogFile="true"/>
   
 </databaseChangeLog>

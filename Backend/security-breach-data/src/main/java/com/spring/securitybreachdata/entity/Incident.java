@@ -6,6 +6,7 @@ public class Incident implements Serializable{
 	private static final long serialVersionUID = -3976940842169644427L;
 	
 	private int incidentId;
+	private int actorId;
 	private int orgId;    
 	
 	private String country;
@@ -115,6 +116,14 @@ public class Incident implements Serializable{
 
 	public void setNumRecordsLost(Integer numRecordsLost) {
 		this.numRecordsLost = numRecordsLost;
+	}
+
+	public int getActorId() {
+		return actorId;
+	}
+
+	public void setActorId(int actorId) {
+		this.actorId = actorId;
 	}
 	
 	

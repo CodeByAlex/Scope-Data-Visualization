@@ -6,9 +6,7 @@ public class Actor implements Serializable{
 	private static final long serialVersionUID = 2928023584642330485L;
 	
 	private int actorId;
-	
-	private int incidentId;
-	
+		
 	private String actorType;
     
 	private String actorPattern;
@@ -19,14 +17,6 @@ public class Actor implements Serializable{
 	
 	public void setActorId(int actorId) {
 		this.actorId = actorId;
-	}
-	
-	public int getIncidentId() {
-		return incidentId;
-	}
-	
-	public void setIncidentId(int incidentId) {
-		this.incidentId = incidentId;
 	}
 	
 	public String getActorType() {

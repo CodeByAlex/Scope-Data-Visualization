@@ -5,12 +5,14 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { ApiService } from './ApiService/api.service';
-import { GraphingAreaComponent } from './graphing-area/graphing-area.component';
+import { WorldDashboardComponent } from './world-dashboard/world-dashboard';
+import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GraphingAreaComponent
+    WorldDashboardComponent,
+    OrgDashboardComponent
   ],
   imports: [
     BrowserModule,

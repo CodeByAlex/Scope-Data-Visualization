@@ -6,10 +6,10 @@ import {Organization} from "../Models/Organization";
 
 @Component({
   selector: 'app-graphing-area',
-  templateUrl: './graphing-area.component.html',
-  styleUrls: ['./graphing-area.component.css']
+  templateUrl: './world-dashboard.component.html',
+  styleUrls: ['./world-dashboard.component.css']
 })
-export class GraphingAreaComponent implements OnInit {
+export class WorldDashboardComponent implements OnInit {
   actorList: Actor [];
   incidentList: Incident [];
   orgList: Organization [];

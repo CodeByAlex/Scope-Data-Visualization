@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GraphingAreaComponent } from './graphing-area.component';
+import { OrgDashboardComponent } from './org-dashboard.component';
 
-describe('GraphingAreaComponent', () => {
-  let component: GraphingAreaComponent;
-  let fixture: ComponentFixture<GraphingAreaComponent>;
+describe('OrgDashboardComponent', () => {
+  let component: OrgDashboardComponent;
+  let fixture: ComponentFixture<OrgDashboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GraphingAreaComponent ]
+      declarations: [ OrgDashboardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GraphingAreaComponent);
+    fixture = TestBed.createComponent(OrgDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

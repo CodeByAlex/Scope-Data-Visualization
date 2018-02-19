@@ -21,7 +21,10 @@
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
       <column name="org_id" type="int">
-        <constraints nullable="false" unique="true"/>
+        <constraints nullable="false"/>
+      </column>
+      <column name="actor_id" type="int">
+        <constraints nullable="false"/>
       </column>
       <column name="country" type="varchar(255)"></column>
       <column name="state" type="varchar(100)"></column>
@@ -39,9 +42,6 @@
       <column name="actor_id" type="int">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
-      <column name="incident_id" type="int">
-        <constraints nullable="false" unique="true"/>
-      </column>
       <column name="actor_type" type="varchar(100)"></column>
       <column name="actor_pattern" type="varchar(100)"></column>
     </createTable>
@@ -49,11 +49,10 @@
     <addForeignKeyConstraint baseTableName="incident" baseColumnNames="org_id"
       constraintName="incident_org_id_fk"
       referencedTableName="org" referencedColumnNames="org_id"/>
-      
-    <addForeignKeyConstraint baseTableName="actor" baseColumnNames="incident_id"
-      constraintName="actor_incident_id_fk"
-      referencedTableName="incident" referencedColumnNames="incident_id"/>
-      
+    
+    <addForeignKeyConstraint baseTableName="incident" baseColumnNames="actor_id"
+      constraintName="incident_actor_id_fk"
+      referencedTableName="actor" referencedColumnNames="actor_id"/>
       
   </changeSet>
 </databaseChangeLog>

@@ -2,7 +2,7 @@
 export class Incident{
   private incidentId:number;
   private orgId:number;
-
+  private actorId: number;
   private reportDay:number;
   private reportMonth:number;
   private reportYear:number;
@@ -15,11 +15,12 @@ export class Incident{
   private summary:string;
   private references:string;
 
-  constructor(incidentId:number, orgId:number, reportDay:number, reportMonth:number, reportYear:number,
+  constructor(incidentId:number, orgId:number, actorId: number, reportDay:number, reportMonth:number, reportYear:number,
               numRecordsLost:number, dataLostType:string, country:string, state:string, victimType:string,
               summary:string, references:string) {
     this.incidentId = incidentId;
     this.orgId = orgId;
+    this.actorId = actorId;
     this.reportDay = reportDay;
     this.reportMonth = reportMonth;
     this.reportYear = reportYear;

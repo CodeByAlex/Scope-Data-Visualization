@@ -25,7 +25,7 @@ export class ApiService {
     return this.http.get(API_URL+'/breach-data/incident-info')
       .map(response=>{
         const incidents = response.json();
-        return incidents.map(incident => new Incident(incident.incidentId, incident.orgId, incident.reportDay,
+        return incidents.map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
           incident.reportMonth, incident.reportYear, incident.numRecordsLost,
           incident.dataLostType, incident.country, incident.state, incident.victimType,
           incident.summary, incident.references))
@@ -36,8 +36,7 @@ export class ApiService {
     return this.http.get(API_URL+'/breach-data/actor-info')
       .map(response=>{
         const actors = response.json();
-        return actors.map(actor => new Actor(actor.actorId,
-          actor.incidentId, actor.actorType, actor.actorPattern))
+        return actors.map(actor => new Actor(actor.actorId, actor.actorType, actor.actorPattern))
       }).catch(this.handleError)
   }
 
