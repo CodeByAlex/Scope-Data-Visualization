@@ -1,0 +1,42 @@
+import { Component, OnInit } from '@angular/core';
+import {ApiService} from "../ApiService/api.service";
+import {Actor} from "../Models/Actor";
+import {Incident} from "app/Models/Incident";
+import {Organization} from "../Models/Organization";
+
+@Component({
+  selector: 'app-graphing-area',
+  templateUrl: './graphing-area.component.html',
+  styleUrls: ['./graphing-area.component.css']
+})
+export class GraphingAreaComponent implements OnInit {
+  actorList: Actor [];
+  incidentList: Incident [];
+  orgList: Organization [];
+
+  constructor(private apiService:ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getAllActors()
+      .subscribe(
+        (actors) => {
+          this.actorList = actors;
+        }
+      );
+
+    this.apiService.getAllIncidents()
+      .subscribe(
+        (incidents) => {
+          this.incidentList = incidents;
+        }
+      );
+
+    this.apiService.getAllOrgs()
+      .subscribe(
+        (orgs) => {
+          this.orgList = orgs;
+        }
+      );
+  }
+
+}
