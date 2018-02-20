@@ -2,52 +2,40 @@
   <h1>World Dashboard</h1>
   <br>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-lg-6">
       <mat-card>
         <mat-card-content>
-          Country comparison - advanced pie chart
+          Incidents over time
+          <p-chart type="line" [data]="yearComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-lg-6">
       <mat-card>
         <mat-card-content>
-          incidents over time - line graph
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <div class="col-md-4">
-      <mat-card>
-        <mat-card-content>
-          All actor types comparison
+          Actor pattern comparison
+          <p-chart type="doughnut" [data]="actorComparison"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
 <br>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-lg-6">
       <mat-card>
         <mat-card-content>
-          Data lost type comparison - vertical bar chart
+          Breaches by industry
+          <p-chart type="radar" [data]="industryComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-lg-6">
       <mat-card>
         <mat-card-content>
-          All actor pattern comparison
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <div class="col-md-4">
-      <mat-card>
-        <mat-card-content>
-          Industry comparison
+          Number of records lost by year
+          <p-chart type="line" [data]="recordsLostComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>

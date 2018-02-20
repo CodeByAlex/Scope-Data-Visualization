@@ -13,14 +13,20 @@ export class WorldDashboardComponent implements OnInit {
   actorList: Actor [];
   incidentList: Incident [];
   orgList: Organization [];
+  countryComparison ={};
+  yearComparisonData = {};
+  actorComparison = {};
+  industryComparisonData ={};
+  recordsLostComparisonData ={};
 
   constructor(private apiService:ApiService) {}
 
   ngOnInit() {
-    /*this.apiService.getAllActors()
+    this.apiService.getAllActors()
       .subscribe(
         (actors) => {
           this.actorList = actors;
+          this.getActorPatternComparison();
         }
       );
 
@@ -28,6 +34,9 @@ export class WorldDashboardComponent implements OnInit {
       .subscribe(
         (incidents) => {
           this.incidentList = incidents;
+          this.getCountryComparison();
+          this.getYearComparisonData();
+          this.getRecordsLostComparisonData();
         }
       );
 
@@ -35,10 +44,186 @@ export class WorldDashboardComponent implements OnInit {
       .subscribe(
         (orgs) => {
           this.orgList = orgs;
+          this.getIndustryComparisonData();
         }
-      );*/
+      );
   }
 
-  get
+  getCountryComparison(){
+    let dataMap = new Map<string, number>();
 
+    for (let incident of this.incidentList) {
+      if(dataMap.get(incident.country)) {
+        dataMap.set(incident.country, dataMap.get(incident.country)+1);
+      }else{
+        dataMap.set(incident.country, 1);
+      }
+    }
+    let countryLabels = [];
+    let countryCounts = [];
+    dataMap.forEach((value: number, key: string) => {
+      countryLabels.push(key);
+      countryCounts.push(value);
+    });
+
+    this.countryComparison = {
+      labels: countryLabels,
+      datasets: [
+        {
+          data: countryCounts,
+          backgroundColor: [
+            "#ff6384",
+            "#36A2EB",
+            "#FFCE56"
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56"
+          ]
+        }]
+    }
+  }
+
+  getYearComparisonData(){
+    let labels = [];
+    let orgYearData = [];
+
+    for(let year=1971; year<=2017; year++){
+      labels.push(year.toString());
+      let numIncidentsPerYear = 0;
+      for(let incident of this.incidentList){
+        if(incident.reportYear ==year){
+          numIncidentsPerYear+=1;
+        }
+      }
+      orgYearData.push(numIncidentsPerYear)
+    }
+
+    this.yearComparisonData = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Incidents per year',
+          data: orgYearData,
+          fill: false,
+          borderColor: '#ff6384'
+        }
+      ]
+    }
+  }
+
+  getRecordsLostComparisonData(){
+    let labels = [];
+    let recordYearData = [];
+
+    for(let year=1971; year<=2017; year++){
+      labels.push(year.toString());
+      let numRecordsPerYear = 0;
+      for(let incident of this.incidentList){
+        if(incident.reportYear ==year){
+          numRecordsPerYear+=incident.numRecordsLost;
+        }
+      }
+      recordYearData.push(numRecordsPerYear)
+    }
+
+    this.recordsLostComparisonData = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Records lost per year',
+          data: recordYearData,
+          fill: true,
+          borderColor: '#FFCE56'
+        }
+      ]
+    }
+  }
+
+  getActorPatternComparison() {
+    let dataMap = new Map<string, number>();
+
+    for (let actor of this.actorList) {
+      if (dataMap.get(actor.actorPattern)) {
+        dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
+      } else {
+        dataMap.set(actor.actorPattern, 1);
+      }
+    }
+    let typeLabels = [];
+    let typeCounts = [];
+    dataMap.forEach((value: number, key: string) => {
+      typeLabels.push(key);
+      typeCounts.push(value);
+    });
+
+    this.actorComparison = {
+      labels: typeLabels,
+      datasets: [
+        {
+          data: typeCounts,
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#85ff5d",
+            "#6affeb",
+            "#94b6ff",
+            "#9389ff",
+            "#c99bff",
+            "#ff83f8",
+
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#85ff5d",
+            "#6affeb",
+            "#94b6ff",
+            "#9389ff",
+            "#c99bff",
+            "#ff83f8",
+          ]
+        }]
+    };
+  }
+
+  getIndustryComparisonData(){
+    let dataMap = new Map<string, number>();
+
+    for (let org of this.orgList) {
+      if (dataMap.get(org.orgIndustry)) {
+        dataMap.set(org.orgIndustry, dataMap.get(org.orgIndustry) + 1);
+      } else {
+        dataMap.set(org.orgIndustry, 1);
+      }
+    }
+    let industryLabels = [];
+    let industryCounts = [];
+    let otherIndustries = 0;
+    dataMap.forEach((value: number, key: string) => {
+      if(value >300) { //to eliminate low range insustries
+        industryLabels.push(key);
+        industryCounts.push(value);
+      }
+    });
+
+    this.industryComparisonData = {
+      labels: industryLabels,
+      datasets: [
+        {
+          label: 'Industries',
+          backgroundColor: 'rgba(179,181,198,0.2)',
+          borderColor: '#36A2EB',
+          pointBackgroundColor: 'rgba(179,181,198,1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(179,181,198,1)',
+          data: industryCounts
+        }
+      ]
+    };
+  }
 }

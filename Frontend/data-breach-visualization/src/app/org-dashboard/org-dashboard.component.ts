@@ -71,31 +71,28 @@ export class OrgDashboardComponent implements AfterViewInit {
   }
 
   getDataLostTypeComparison(){
-    this.dataLostTypeComparison ={}
-    let labels = [];
-    let data = [];
+    this.dataLostTypeComparison ={};
+    let dataMap = new Map<string, number>();
 
-    let numIncidentsPerYear = 0;
-    for(let incident of this.incidentList){
-      if(!labels.includes(incident.dataLostType)){
-        labels.push(incident.dataLostType);
+    for (let incident of this.incidentList) {
+      if(dataMap.get(incident.dataLostType)) {
+        dataMap.set(incident.dataLostType, dataMap.get(incident.dataLostType)+1);
+      }else{
+        dataMap.set(incident.dataLostType, 1);
       }
     }
-    for(let label of labels) {
-      let dataTypeCount =0;
-      for (let incident of this.incidentList) {
-        if(label==incident.dataLostType){
-          dataTypeCount+=1
-        }
-      }
-      data.push(dataTypeCount);
-    }
+    let typeLabels = [];
+    let typeCounts = [];
+    dataMap.forEach((value: number, key: string) => {
+      typeLabels.push(key);
+      typeCounts.push(value);
+    });
 
     this.dataLostTypeComparison = {
-      labels: labels,
+      labels: typeLabels,
       datasets: [
         {
-          data: data,
+          data: typeCounts,
           backgroundColor: [
             "#ff6384",
             "#36A2EB",
