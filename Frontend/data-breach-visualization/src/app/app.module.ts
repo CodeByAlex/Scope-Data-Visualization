@@ -10,6 +10,7 @@ import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
 import {MatCardModule, MatTableModule} from "@angular/material";
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import {ChartModule} from '../../node_modules/primeng/chart';
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {ChartModule} from '../../node_modules/primeng/chart';
     HttpModule,
     MatCardModule,
     MatTableModule,
-    ChartModule
+    ChartModule,
+    NgxDatatableModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

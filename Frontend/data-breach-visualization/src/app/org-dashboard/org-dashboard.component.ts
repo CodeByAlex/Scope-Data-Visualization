@@ -15,6 +15,9 @@ export class OrgDashboardComponent implements AfterViewInit {
   yearComparisonData = {};
   dataLostTypeComparison = {};
   incidentList: Incident [] = [];
+  orgList:Organization[] = [];
+  rows =[];
+  columns =[];
 
   dataSource= null;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,18 +31,18 @@ export class OrgDashboardComponent implements AfterViewInit {
   }
 
   onRowClick(row){
-    console.log(row.orgId)
-    this.apiService.getIncidentsByOrgId(row.orgId)
-      .subscribe(
-        (incidents) => {
-          this.incidentList = incidents;
-        }
-      );
-    this.getYearComparisonData();
-    this.getDataLostTypeComparison();
+      this.apiService.getIncidentsByOrgId(row.orgId)
+       .subscribe(
+       (incidents) => {
+       this.incidentList = incidents;
+       }
+       );
+       this.getYearComparisonData();
+       this.getDataLostTypeComparison();
   }
 
   getYearComparisonData(){
+    this.yearComparisonData = {}
     let labels = [];
     let orgYearData = [];
 
@@ -61,13 +64,14 @@ export class OrgDashboardComponent implements AfterViewInit {
           label: 'Incidents per year',
           data: orgYearData,
           fill: false,
-          borderColor: '#ff3333'
+          borderColor: '#ff6384'
         }
       ]
     }
   }
 
   getDataLostTypeComparison(){
+    this.dataLostTypeComparison ={}
     let labels = [];
     let data = [];
 
@@ -93,7 +97,7 @@ export class OrgDashboardComponent implements AfterViewInit {
         {
           data: data,
           backgroundColor: [
-            "#FF6384",
+            "#ff6384",
             "#36A2EB",
             "#FFCE56"
           ],

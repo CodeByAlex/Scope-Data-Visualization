@@ -29,28 +29,30 @@
     </div>-->
   </div>
 <br>
+
+
   <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource" matSort>
 
-      <!-- Name Column -->
+      <!--Name Column-->
       <ng-container matColumnDef="orgName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
         <mat-cell *matCellDef="let org"> {{org.orgName}} </mat-cell>
       </ng-container>
 
-      <!-- Industry Column -->
+     <!--Industry Column-->
       <ng-container matColumnDef="orgIndustry">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Industry </mat-header-cell>
         <mat-cell *matCellDef="let org"> {{org.orgIndustry}} </mat-cell>
       </ng-container>
 
-      <!-- Name Column -->
+      <!--Number of Incidents Column-->
       <ng-container matColumnDef="numIncidents">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Number of Incidents </mat-header-cell>
         <mat-cell *matCellDef="let org"> {{org.numIncidents}} </mat-cell>
       </ng-container>
 
-      <!-- Industry Column -->
+      <!--Records Lost Column-->
       <ng-container matColumnDef="numRecordsLost">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Records Lost </mat-header-cell>
         <mat-cell *matCellDef="let org"> {{org.numRecordsLost}} </mat-cell>
@@ -62,3 +64,4 @@
     </mat-table>
   </div>
 </div>
+<br>
