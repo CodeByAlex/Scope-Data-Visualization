@@ -94,14 +94,18 @@ export class OrgDashboardComponent implements AfterViewInit {
         {
           data: typeCounts,
           backgroundColor: [
+            "#00B5DD",
+            "#345065",
+            "#FFCE56",
             "#ff6384",
-            "#36A2EB",
-            "#FFCE56"
+            "#ABCDCF",
           ],
           hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
+            "#00B5DD",
+            "#345065",
+            "#FFCE56",
+            "#ff6384",
+            "#ABCDCF",
           ]
         }]
     }

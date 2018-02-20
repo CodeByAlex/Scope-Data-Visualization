@@ -22,14 +22,6 @@ export class WorldDashboardComponent implements OnInit {
   constructor(private apiService:ApiService) {}
 
   ngOnInit() {
-    this.apiService.getAllActors()
-      .subscribe(
-        (actors) => {
-          this.actorList = actors;
-          this.getActorPatternComparison();
-        }
-      );
-
     this.apiService.getAllIncidents()
       .subscribe(
         (incidents) => {
@@ -37,6 +29,13 @@ export class WorldDashboardComponent implements OnInit {
           this.getCountryComparison();
           this.getYearComparisonData();
           this.getRecordsLostComparisonData();
+          this.apiService.getAllActors()
+            .subscribe(
+              (actors) => {
+                this.actorList = actors;
+                this.getActorPatternComparison();
+              }
+            );
         }
       );
 
@@ -72,14 +71,20 @@ export class WorldDashboardComponent implements OnInit {
         {
           data: countryCounts,
           backgroundColor: [
+            "#00B5DD",
+            "#345065",
+            "#ABCDCF",
             "#ff6384",
-            "#36A2EB",
-            "#FFCE56"
+            "#FFCE56",
+            "#00DEF2",
           ],
           hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
+            "#00B5DD",
+            "#345065",
+            "#ABCDCF",
+            "#ff6384",
+            "#FFCE56",
+            "#00DEF2",
           ]
         }]
     }
@@ -144,18 +149,25 @@ export class WorldDashboardComponent implements OnInit {
   getActorPatternComparison() {
     let dataMap = new Map<string, number>();
 
-    for (let actor of this.actorList) {
-      if (dataMap.get(actor.actorPattern)) {
-        dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
-      } else {
-        dataMap.set(actor.actorPattern, 1);
+    for(let incident of this.incidentList) {
+      for (let actor of this.actorList) {
+        if(incident.actorId == actor.actorId) {
+          if (dataMap.get(actor.actorPattern)) {
+            dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
+          } else {
+            dataMap.set(actor.actorPattern, 1);
+          }
+          break;
+        }
       }
     }
     let typeLabels = [];
     let typeCounts = [];
     dataMap.forEach((value: number, key: string) => {
-      typeLabels.push(key);
-      typeCounts.push(value);
+      if(value>250) {
+        typeLabels.push(key);
+        typeCounts.push(value);
+      }
     });
 
     this.actorComparison = {
@@ -164,27 +176,21 @@ export class WorldDashboardComponent implements OnInit {
         {
           data: typeCounts,
           backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
+            "#00B5DD",
+            "#345065",
+            "#ABCDCF",
+            "#ff6384",
             "#FFCE56",
-            "#85ff5d",
-            "#6affeb",
-            "#94b6ff",
-            "#9389ff",
-            "#c99bff",
-            "#ff83f8",
+            "#00DEF2",
 
           ],
           hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
+            "#00B5DD",
+            "#345065",
+            "#ABCDCF",
+            "#ff6384",
             "#FFCE56",
-            "#85ff5d",
-            "#6affeb",
-            "#94b6ff",
-            "#9389ff",
-            "#c99bff",
-            "#ff83f8",
+            "#00DEF2",
           ]
         }]
     };
@@ -216,7 +222,7 @@ export class WorldDashboardComponent implements OnInit {
         {
           label: 'Industries',
           backgroundColor: 'rgba(179,181,198,0.2)',
-          borderColor: '#36A2EB',
+          borderColor: '#00DEF2',
           pointBackgroundColor: 'rgba(179,181,198,1)',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
