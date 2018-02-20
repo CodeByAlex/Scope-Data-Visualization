@@ -1,9 +1,9 @@
 
 export class Actor{
 
-  private actorId:number;
-  private actorType:string;
-  private actorPattern: string;
+  actorId:number;
+  actorType:string;
+  actorPattern: string;
 
   constructor(actorId:number, actorType:string, actorPattern: string) {
     this.actorId = actorId;

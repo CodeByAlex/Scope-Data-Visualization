@@ -12,7 +12,9 @@ import {Incident} from "../Models/Incident";
 })
 export class OrgDashboardComponent implements AfterViewInit {
   displayedColumns = ['orgName', 'orgIndustry', 'numIncidents', 'numRecordsLost'];
-  incidentList: Incident [];
+  yearComparisonData = {};
+  dataLostTypeComparison = {};
+  incidentList: Incident [] = [];
 
   dataSource= null;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,16 +27,83 @@ export class OrgDashboardComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  onRowClick(){
-    this.incidentList = [];
-    this.apiService.getAllIncidents()
+  onRowClick(row){
+    console.log(row.orgId)
+    this.apiService.getIncidentsByOrgId(row.orgId)
       .subscribe(
         (incidents) => {
           this.incidentList = incidents;
         }
       );
+    this.getYearComparisonData();
+    this.getDataLostTypeComparison();
   }
 
+  getYearComparisonData(){
+    let labels = [];
+    let orgYearData = [];
 
+    for(let year=1971; year<=2017; year++){
+      labels.push(year.toString());
+      let numIncidentsPerYear = 0;
+      for(let incident of this.incidentList){
+        if(incident.reportYear ==year){
+          numIncidentsPerYear+=1;
+        }
+      }
+      orgYearData.push(numIncidentsPerYear)
+    }
+
+    this.yearComparisonData = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Incidents per year',
+          data: orgYearData,
+          fill: false,
+          borderColor: '#ff3333'
+        }
+      ]
+    }
+  }
+
+  getDataLostTypeComparison(){
+    let labels = [];
+    let data = [];
+
+    let numIncidentsPerYear = 0;
+    for(let incident of this.incidentList){
+      if(!labels.includes(incident.dataLostType)){
+        labels.push(incident.dataLostType);
+      }
+    }
+    for(let label of labels) {
+      let dataTypeCount =0;
+      for (let incident of this.incidentList) {
+        if(label==incident.dataLostType){
+          dataTypeCount+=1
+        }
+      }
+      data.push(dataTypeCount);
+    }
+
+    this.dataLostTypeComparison = {
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56"
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56"
+          ]
+        }]
+    }
+  }
 
 }

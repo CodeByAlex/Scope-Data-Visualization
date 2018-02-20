@@ -2,29 +2,31 @@
   <h1>Organization Dashboard</h1>
   <br>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <mat-card>
         <mat-card-content>
-          incidents over time
+          Yearly comparison
+          <p-chart type="line" [data]="yearComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
       <mat-card>
         <mat-card-content>
-          Data lost type comparison
+          Types of data lost
+          <p-chart type="pie" [data]="dataLostTypeComparison"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
 
-    <div class="col-md-4">
+   <!-- <div class="col-lg-4">
       <mat-card>
         <mat-card-content>
           Actor pattern comparison
         </mat-card-content>
       </mat-card>
-    </div>
+    </div>-->
   </div>
 <br>
   <div class="example-container mat-elevation-z8">
@@ -56,7 +58,7 @@
 
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row (click)="onRowClick(row.orgId)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
     </mat-table>
   </div>
 </div>

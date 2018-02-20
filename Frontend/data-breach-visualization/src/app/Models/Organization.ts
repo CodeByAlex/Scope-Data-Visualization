@@ -1,10 +1,10 @@
 
 export class Organization{
-  private orgId:number;
-  private orgName:string;
-  private orgIndustry: string;
-  private numIncidents:number;
-  private numRecordsLost:number;
+  orgId:number;
+  orgName:string;
+  orgIndustry: string;
+  numIncidents:number;
+  numRecordsLost:number;
 
   constructor(orgId:number, orgName:string, orgIndustry:string, numIncidents:number, numRecordsLost:number) {
     this.orgId = orgId;

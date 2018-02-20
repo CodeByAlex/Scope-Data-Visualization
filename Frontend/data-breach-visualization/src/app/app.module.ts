@@ -9,6 +9,7 @@ import { WorldDashboardComponent } from './world-dashboard/world-dashboard';
 import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
 import {MatCardModule, MatTableModule} from "@angular/material";
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import {ChartModule} from '../../node_modules/primeng/chart';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
     FormsModule,
     HttpModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    ChartModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
