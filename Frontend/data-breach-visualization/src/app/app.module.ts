@@ -7,17 +7,22 @@ import { AppComponent } from './app.component';
 import { ApiService } from './ApiService/api.service';
 import { WorldDashboardComponent } from './world-dashboard/world-dashboard';
 import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
+import {MatCardModule, MatTableModule} from "@angular/material";
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WorldDashboardComponent,
-    OrgDashboardComponent
+    OrgDashboardComponent,
+    NavigationBarComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    MatCardModule,
+    MatTableModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

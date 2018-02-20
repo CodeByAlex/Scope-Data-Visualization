@@ -52,12 +52,32 @@ public class SecurityBreachManager {
 	public ResponseEntity<?> getAllOrgInfo() {
 		try{
 			List<Organization> orgs = orgDao.getAllOrgInfo();
+			for(Organization org: orgs){
+				List<Incident> incidents = incidentDao.getIncidentsByOrgId(org.getOrgId());
+				int numRecordsLost =0;
+				for(Incident incident: incidents){
+					numRecordsLost += incident.getNumRecordsLost();
+				}
+				org.setNumIncidents(incidents.size());
+				org.setNumRecordsLost(numRecordsLost);
+			}
 			return new ResponseEntity<>(orgs, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	public ResponseEntity<?> getIncidentRecordsByOrgId(int orgId) {
+		try{
+			List<Incident> incidents = incidentDao.getIncidentsByOrgId(orgId);
+			return new ResponseEntity<>(incidents, HttpStatus.OK);
+		}catch(Exception ex){
+			System.err.println(ex);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	
 	
 }

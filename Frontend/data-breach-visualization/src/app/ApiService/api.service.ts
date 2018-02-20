@@ -19,11 +19,11 @@ export class ApiService {
     return this.http.get(API_URL+'/breach-data/org-info')
       .map(response=>{
         const organizations = response.json();
-        return organizations.map(org => new Organization(org.orgId, org.orgName, org.orgIndustry))
+        return organizations.map(org => new Organization(org.orgId, org.orgName, org.orgIndustry, org.numIncidents, org.numRecordsLost))
       }).catch(this.handleError)
   }
 
-  public getAllIncidents(){
+  public getAllIncidents() : Observable<Incident[]>{
     return this.http.get(API_URL+'/breach-data/incident-info')
       .map(response=>{
         const incidents = response.json();
@@ -34,7 +34,18 @@ export class ApiService {
       }).catch(this.handleError)
   }
 
-  public getAllActors(){
+  public getIncidentsByOrgId(orgId:number) : Observable<Incident[]>{
+    return this.http.get(API_URL+'/breach-data/incident-info/by-org-id?org_id='+orgId)
+      .map(response=>{
+        const incidents = response.json();
+        return incidents.map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
+          incident.reportMonth, incident.reportYear, incident.numRecordsLost,
+          incident.dataLostType, incident.country, incident.state, incident.victimType,
+          incident.summary, incident.references))
+      }).catch(this.handleError)
+  }
+
+  public getAllActors() : Observable<Actor[]>{
     return this.http.get(API_URL+'/breach-data/actor-info')
       .map(response=>{
         const actors = response.json();

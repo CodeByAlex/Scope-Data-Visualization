@@ -1,1 +1,62 @@
-<h1>Organization Dashboard</h1>
+<div class="container">
+  <h1>Organization Dashboard</h1>
+  <br>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          incidents over time
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          Data lost type comparison
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          Actor pattern comparison
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+<br>
+  <div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="orgName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.orgName}} </mat-cell>
+      </ng-container>
+
+      <!-- Industry Column -->
+      <ng-container matColumnDef="orgIndustry">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Industry </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.orgIndustry}} </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="numIncidents">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Number of Incidents </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.numIncidents}} </mat-cell>
+      </ng-container>
+
+      <!-- Industry Column -->
+      <ng-container matColumnDef="numRecordsLost">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Records Lost </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.numRecordsLost}} </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row (click)="onRowClick(row.orgId)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

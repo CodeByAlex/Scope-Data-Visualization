@@ -17,7 +17,7 @@ export class WorldDashboardComponent implements OnInit {
   constructor(private apiService:ApiService) {}
 
   ngOnInit() {
-    this.apiService.getAllActors()
+    /*this.apiService.getAllActors()
       .subscribe(
         (actors) => {
           this.actorList = actors;
@@ -36,7 +36,9 @@ export class WorldDashboardComponent implements OnInit {
         (orgs) => {
           this.orgList = orgs;
         }
-      );
+      );*/
   }
+
+  get
 
 }

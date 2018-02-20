@@ -1,27 +1,56 @@
-<h1>World Dashboard</h1>
+<div class="container">
+  <h1>World Dashboard</h1>
+  <br>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          Country comparison - advanced pie chart
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-<ul>
-  <ng-container *ngFor="let org of orgList; let i=index">
-    <li *ngIf="i<25">
-      {{org.orgId}}, {{org.orgName}}, {{org.orgIndustry}}
-    </li>
-  </ng-container>
-</ul>
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          incidents over time - line graph
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-<h3>Actors</h3>
-<ul>
-  <ng-container *ngFor="let actor of actorList; let i=index">
-    <li *ngIf="i<25">
-        {{actor.actorId}}, {{actor.actorType}}, {{actor.actorPattern}}
-    </li>
-  </ng-container>
-</ul>
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          All actor types comparison
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+<br>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          Data lost type comparison - vertical bar chart
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-<h3>Incidents</h3>
-<ul>
-  <ng-container *ngFor="let incident of incidentList; let i=index">
-    <li *ngIf="i<25">
-      {{incident.incidentId}}, {{incident.reportMonth}}, {{incident.reportYear}}
-    </li>
-  </ng-container>
-</ul>
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          All actor pattern comparison
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-content>
+          Industry comparison
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+<br>
+
