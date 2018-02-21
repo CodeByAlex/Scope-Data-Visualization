@@ -11,13 +11,16 @@ import {MatCardModule, MatTableModule} from "@angular/material";
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import {ChartModule} from '../../node_modules/primeng/chart';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import { AboutComponent } from './about/about.component';
+import {routing} from "./app.routing";
 
 @NgModule({
   declarations: [
     AppComponent,
     WorldDashboardComponent,
     OrgDashboardComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     MatCardModule,
     MatTableModule,
     ChartModule,
-    NgxDatatableModule
+    routing
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

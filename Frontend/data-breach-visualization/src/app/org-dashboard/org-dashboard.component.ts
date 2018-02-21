@@ -34,11 +34,12 @@ export class OrgDashboardComponent implements AfterViewInit {
       this.apiService.getIncidentsByOrgId(row.orgId)
        .subscribe(
        (incidents) => {
-       this.incidentList = incidents;
+         this.incidentList = incidents;
+         this.getYearComparisonData();
+         this.getDataLostTypeComparison();
        }
        );
-       this.getYearComparisonData();
-       this.getDataLostTypeComparison();
+
   }
 
   getYearComparisonData(){

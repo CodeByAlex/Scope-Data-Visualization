@@ -1,23 +1,16 @@
-<nav class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a #link id="home-link" class="navbar-brand title-font">Data Breach Visualizer</a>
-      <button type="button" class="navbar-toggle collapsed" (click)="toggleState()">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="navbar-right" >
-      <div class="collapse navbar-collapse" [ngClass]="{'in': isIn}">
-        <ul class="nav navbar-nav">
-          <li><a id="world-dash-link" (click)="closeNav()">World Dashboard</a></li>
-          <li><a id="org-dash-link" (click)="closeNav()">Organization Dashboard</a></li>
-        </ul>
-      </div>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+<input type="checkbox" id="navcheck" role="button" title="menu">
+<label for="navcheck" aria-hidden="true" title="menu">
+	<span class="burger">
+		<span class="bar">
+			<span class="visuallyhidden">Menu</span>
+		</span>
+	</span>
+</label>
+<nav id="menu">
+  <a [routerLink]="['/about']">About</a>
+  <a [routerLink]="['/world']">World dashboard</a>
+  <a [routerLink]="['/org']">Company dashboard</a>
 </nav>
+<main>
+  <router-outlet></router-outlet>
+</main>

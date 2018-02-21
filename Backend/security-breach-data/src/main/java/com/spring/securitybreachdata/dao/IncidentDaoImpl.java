@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.spring.securitybreachdata.entity.Incident;
+import com.spring.securitybreachdata.entity.Organization;
 import com.spring.securitybreachdata.rowmapper.ActorRowMapper;
 import com.spring.securitybreachdata.rowmapper.IncidentRowMapper;
 
@@ -21,8 +22,13 @@ public class IncidentDaoImpl implements IncidentDao{
 	private static final String GET_ALL_INCIDENT_INFO_SQL = "SELECT * FROM INCIDENT";
 	private static final String GET_INCIDENT_INFO_BY_ORG_ID_SQL = "SELECT * FROM INCIDENT WHERE INCIDENT.ORG_ID = :orgId";
 	
-	public List<Incident> getAllIncidentInfo(){		
-		return jdbcTemplate.query(GET_ALL_INCIDENT_INFO_SQL, new IncidentRowMapper());
+	private static List<Incident> allIncidents = null;
+
+	public List<Incident> getAllIncidentInfo(){
+		if(allIncidents ==null){
+			allIncidents = jdbcTemplate.query(GET_ALL_INCIDENT_INFO_SQL, new IncidentRowMapper());
+		}
+		return allIncidents;
 	}
 
 	@Override

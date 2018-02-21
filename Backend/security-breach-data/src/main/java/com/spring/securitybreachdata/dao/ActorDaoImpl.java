@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import com.spring.securitybreachdata.entity.Actor;
+import com.spring.securitybreachdata.entity.Incident;
 import com.spring.securitybreachdata.rowmapper.ActorRowMapper;
 
 import java.util.ArrayList;
@@ -18,8 +19,12 @@ public class ActorDaoImpl implements ActorDao{
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
 	private static final String ALL_ACTOR_INFO_SQL = "SELECT * FROM ACTOR";
-	
-	public List<Actor> getAllActorInfo(){		
-		return jdbcTemplate.query(ALL_ACTOR_INFO_SQL, new ActorRowMapper());
+	private static List<Actor> allActors = null;
+
+	public List<Actor> getAllActorInfo(){
+		if(allActors==null){
+			allActors =jdbcTemplate.query(ALL_ACTOR_INFO_SQL, new ActorRowMapper());
+		}
+		return allActors;
 	}
 }
