@@ -46,7 +46,6 @@ export class ApiService {
   }
 
   public getIncidentsByOrgId(orgId:number) : Observable<Incident[]>{
-    console.log(API_URL+'/breach-data/incident-info/by-org-id?org_id='+orgId);
     return this.http.get(API_URL+'/breach-data/incident-info/by-org-id?org_id='+orgId)
       .map(response=>{
         const incidents = response.json();
