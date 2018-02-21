@@ -53,13 +53,15 @@ public class SecurityBreachManager {
 		try{
 			List<Organization> orgs = orgDao.getAllOrgInfo();
 			for(Organization org: orgs){
-				List<Incident> incidents = incidentDao.getIncidentsByOrgId(org.getOrgId());
-				int numRecordsLost =0;
-				for(Incident incident: incidents){
-					numRecordsLost += incident.getNumRecordsLost();
+				if(org.getOrgId() != null){
+					List<Incident> incidents = incidentDao.getIncidentsByOrgId(org.getOrgId());
+					int numRecordsLost =0;
+					for(Incident incident: incidents){
+						numRecordsLost += incident.getNumRecordsLost();
+					}
+					org.setNumIncidents(incidents.size());
+					org.setNumRecordsLost(numRecordsLost);
 				}
-				org.setNumIncidents(incidents.size());
-				org.setNumRecordsLost(numRecordsLost);
 			}
 			return new ResponseEntity<>(orgs, HttpStatus.OK);
 		}catch(Exception ex){
