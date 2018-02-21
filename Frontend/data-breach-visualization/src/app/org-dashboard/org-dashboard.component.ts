@@ -1,34 +1,43 @@
-import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
 import {Organization} from "../Models/Organization";
 import {ApiService} from "../ApiService/api.service";
-import {MatTableDataSource, MatSort} from "@angular/material";
+import {MatTableDataSource, MatSort, MatPaginator} from "@angular/material";
 import {OrgDataSource} from "./org-data-source";
 import {Incident} from "../Models/Incident";
 import {GraphDataService} from "../GraphDataService/graph-data.service";
+import {Observable} from "rxjs/Observable";
+import {OrgDataService} from "./org-data-service";
 
 @Component({
   selector: 'org-dashboard',
   templateUrl: './org-dashboard.component.html',
   styleUrls: ['./org-dashboard.component.scss']
 })
-export class OrgDashboardComponent implements AfterViewInit {
+export class OrgDashboardComponent implements OnInit {
   displayedColumns = ['orgName', 'orgIndustry', 'numIncidents', 'numRecordsLost'];
   yearComparisonData = {};
   dataLostTypeComparison = {};
   incidentList: Incident [] = [];
 
   dataSource= null;
-  @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private apiService:ApiService, private graphDataService: GraphDataService) {
-    this.dataSource = new OrgDataSource(this.apiService);
+  orgName:string = null;
+  orgIndustry: string = null;
+
+  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
+  constructor(private apiService: ApiService, private graphDataService: GraphDataService, private orgDataService: OrgDataService) {
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  ngOnInit() {
+    this.dataSource = new OrgDataSource(this.orgDataService, this.paginator);
   }
 
-  onRowClick(row){
+  onRowClick(row) {
+    this.orgName = row.orgName;
+    this.orgIndustry = row.orgIndustry;
       this.apiService.getIncidentsByOrgId(row.orgId)
        .subscribe(
        (incidents) => {

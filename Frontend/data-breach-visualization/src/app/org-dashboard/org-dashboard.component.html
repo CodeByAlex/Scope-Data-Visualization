@@ -1,6 +1,14 @@
 <div class="container">
   <h2>Company Breach Dashboard</h2>
   <br>
+  <ng-container *ngIf="orgName && orgIndustry">
+    <div class="row">
+      <div class="col-12">Company: {{orgName}} </div>
+      <div class="col-12">Industry: {{orgIndustry}}</div>
+    </div>
+    <br>
+  </ng-container>
+
   <div class="row">
     <div class="col-md-6 mb-2">
       <mat-card>
@@ -66,6 +74,12 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
     </mat-table>
+    <mat-paginator #paginator
+                   [length]="dataSource?.filteredData.length"
+                   [pageSize]="5"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [showFirstLastButtons]="true">
+    </mat-paginator>
   </div>
 </div>
 <br>
