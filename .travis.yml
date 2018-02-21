@@ -1,6 +1,5 @@
 language: java
 jdk:
   - oraclejdk8
-before_script: ls -R
-before_script: cd CodeByAlex/Data-Breach-Visualization/Backend/security-breach-data
+before_script: cd Backend/security-breach-data
 
