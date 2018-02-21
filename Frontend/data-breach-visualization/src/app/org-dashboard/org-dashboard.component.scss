@@ -6,9 +6,15 @@
 
 .mat-table {
   overflow: auto;
-  max-height: 500px;
+  max-height: 280px;
 }
 
 .mat-header-cell.mat-sort-header-sorted {
   color: white;
+}
+
+.example-header {
+  max-height: 65px;
+  padding: 8px 24px 0;
+  background-color: lightgray;
 }

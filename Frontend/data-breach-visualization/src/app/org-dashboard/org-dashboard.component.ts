@@ -4,6 +4,7 @@ import {ApiService} from "../ApiService/api.service";
 import {MatTableDataSource, MatSort} from "@angular/material";
 import {OrgDataSource} from "./org-data-source";
 import {Incident} from "../Models/Incident";
+import {GraphDataService} from "../GraphDataService/graph-data.service";
 
 @Component({
   selector: 'org-dashboard',
@@ -15,14 +16,11 @@ export class OrgDashboardComponent implements AfterViewInit {
   yearComparisonData = {};
   dataLostTypeComparison = {};
   incidentList: Incident [] = [];
-  orgList:Organization[] = [];
-  rows =[];
-  columns =[];
 
   dataSource= null;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private apiService:ApiService) {
+  constructor(private apiService:ApiService, private graphDataService: GraphDataService) {
     this.dataSource = new OrgDataSource(this.apiService);
   }
 
@@ -39,11 +37,15 @@ export class OrgDashboardComponent implements AfterViewInit {
          this.getDataLostTypeComparison();
        }
        );
+  }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
   getYearComparisonData(){
-    this.yearComparisonData = {}
     let labels = [];
     let orgYearData = [];
 
@@ -58,21 +60,10 @@ export class OrgDashboardComponent implements AfterViewInit {
       orgYearData.push(numIncidentsPerYear)
     }
 
-    this.yearComparisonData = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Incidents per year',
-          data: orgYearData,
-          fill: false,
-          borderColor: '#ff6384'
-        }
-      ]
-    }
+    this.yearComparisonData = this.graphDataService.getlineChartDataObject('Incidents', labels, orgYearData);
   }
 
   getDataLostTypeComparison(){
-    this.dataLostTypeComparison ={};
     let dataMap = new Map<string, number>();
 
     for (let incident of this.incidentList) {
@@ -89,27 +80,7 @@ export class OrgDashboardComponent implements AfterViewInit {
       typeCounts.push(value);
     });
 
-    this.dataLostTypeComparison = {
-      labels: typeLabels,
-      datasets: [
-        {
-          data: typeCounts,
-          backgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#FFCE56",
-            "#ff6384",
-            "#ABCDCF",
-          ],
-          hoverBackgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#FFCE56",
-            "#ff6384",
-            "#ABCDCF",
-          ]
-        }]
-    }
+    this.dataLostTypeComparison = this.graphDataService.getPieChartDataObject(typeLabels, typeCounts);
   }
 
 }

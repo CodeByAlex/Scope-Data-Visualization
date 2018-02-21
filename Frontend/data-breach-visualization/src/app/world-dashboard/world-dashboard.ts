@@ -3,6 +3,7 @@ import {ApiService} from "../ApiService/api.service";
 import {Actor} from "../Models/Actor";
 import {Incident} from "app/Models/Incident";
 import {Organization} from "../Models/Organization";
+import {GraphDataService} from "app/GraphDataService/graph-data.service";
 
 @Component({
   selector: 'world-dashboard',
@@ -13,20 +14,18 @@ export class WorldDashboardComponent implements OnInit {
   actorList: Actor [];
   incidentList: Incident [];
   orgList: Organization [];
-  countryComparison ={};
   yearComparisonData = {};
   actorComparison = {};
   industryComparisonData ={};
   recordsLostComparisonData ={};
 
-  constructor(private apiService:ApiService) {}
+  constructor(private apiService:ApiService, private graphDataService: GraphDataService) {}
 
   ngOnInit() {
     this.apiService.getAllIncidents()
       .subscribe(
         (incidents) => {
           this.incidentList = incidents;
-          this.getCountryComparison();
           this.getYearComparisonData();
           this.getRecordsLostComparisonData();
           this.apiService.getAllActors()
@@ -48,48 +47,6 @@ export class WorldDashboardComponent implements OnInit {
       );
   }
 
-  getCountryComparison(){
-    let dataMap = new Map<string, number>();
-
-    for (let incident of this.incidentList) {
-      if(dataMap.get(incident.country)) {
-        dataMap.set(incident.country, dataMap.get(incident.country)+1);
-      }else{
-        dataMap.set(incident.country, 1);
-      }
-    }
-    let countryLabels = [];
-    let countryCounts = [];
-    dataMap.forEach((value: number, key: string) => {
-      countryLabels.push(key);
-      countryCounts.push(value);
-    });
-
-    this.countryComparison = {
-      labels: countryLabels,
-      datasets: [
-        {
-          data: countryCounts,
-          backgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#ABCDCF",
-            "#ff6384",
-            "#FFCE56",
-            "#00DEF2",
-          ],
-          hoverBackgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#ABCDCF",
-            "#ff6384",
-            "#FFCE56",
-            "#00DEF2",
-          ]
-        }]
-    }
-  }
-
   getYearComparisonData(){
     let labels = [];
     let orgYearData = [];
@@ -105,17 +62,7 @@ export class WorldDashboardComponent implements OnInit {
       orgYearData.push(numIncidentsPerYear)
     }
 
-    this.yearComparisonData = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Incidents per year',
-          data: orgYearData,
-          fill: false,
-          borderColor: '#ff6384'
-        }
-      ]
-    }
+    this.yearComparisonData = this.graphDataService.getlineChartDataObject('Incidents', labels, orgYearData);
   }
 
   getRecordsLostComparisonData(){
@@ -133,17 +80,7 @@ export class WorldDashboardComponent implements OnInit {
       recordYearData.push(numRecordsPerYear)
     }
 
-    this.recordsLostComparisonData = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Records lost per year',
-          data: recordYearData,
-          fill: true,
-          borderColor: '#FFCE56'
-        }
-      ]
-    }
+    this.recordsLostComparisonData = this.graphDataService.getlineChartDataObject('Records lost', labels, recordYearData);
   }
 
   getActorPatternComparison() {
@@ -170,30 +107,7 @@ export class WorldDashboardComponent implements OnInit {
       }
     });
 
-    this.actorComparison = {
-      labels: typeLabels,
-      datasets: [
-        {
-          data: typeCounts,
-          backgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#ABCDCF",
-            "#ff6384",
-            "#FFCE56",
-            "#00DEF2",
-
-          ],
-          hoverBackgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#ABCDCF",
-            "#ff6384",
-            "#FFCE56",
-            "#00DEF2",
-          ]
-        }]
-    };
+    this.actorComparison = this.graphDataService.getPieChartDataObject(typeLabels, typeCounts);
   }
 
   getIndustryComparisonData(){
@@ -220,7 +134,7 @@ export class WorldDashboardComponent implements OnInit {
       labels: industryLabels,
       datasets: [
         {
-          label: 'Industries',
+          label: 'Breaches per industry',
           backgroundColor: 'rgba(179,181,198,0.2)',
           borderColor: '#00DEF2',
           pointBackgroundColor: 'rgba(179,181,198,1)',
