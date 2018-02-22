@@ -121,14 +121,14 @@ nav {
   }
 }
 
-main {
+/*main {
   overflow: hidden;
   .content {
-    transform: translate3d(0,0,0); /* material acceleration */
+    transform: translate3d(0,0,0); !* material acceleration *!
     will-change: transform, filter;
     transition: all .5s $timing-function;
   }
-}
+}*/
 
 [id="navcheck"]:checked {
   & + label {
@@ -161,18 +161,7 @@ main {
       transform: translateX(0);
     }
   }
-  & ~ main .content {
-    transform: translateX(3em);
-    transform-origin: left center;
-    -webkit-filter: blur(2px);
-    filter: blur(2px); /* quite laggy :S */
-  }
 }
 
 /* helper */
 .visuallyhidden { border:0; clip:rect(0 0 0 0);	height:1px; margin:-1px; overflow:hidden; padding:0; position:absolute; width:1px; }
-
-/* misc */
-main { padding: 50px 0; }
-article { width: 80%; margin: 0 auto; font-size: 1.3em; @media(min-width: 60em) { width: 50%; } }
-h1 { font: 2.5em/1.4 "roboto condensed"; font-weight: 700; }

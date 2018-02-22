@@ -7,9 +7,13 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 })
 export class NavigationBarComponent implements OnInit {
 
-  // @ViewChild('checkbox') checkbox:ElementRef;
+  @ViewChild('checkbox') checkbox:ElementRef;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  closeSideNavigation(){
+    this.checkbox.nativeElement.checked = false;
   }
 }

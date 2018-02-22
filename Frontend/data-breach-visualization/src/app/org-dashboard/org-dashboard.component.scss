@@ -1,4 +1,4 @@
-.example-container {
+.table-container {
   display: flex;
   flex-direction: column;
   min-width: 300px;
@@ -13,8 +13,11 @@
   color: white;
 }
 
-.example-header {
+.header {
   max-height: 65px;
   padding: 8px 24px 0;
   background-color: lightgray;
+}
+.mat-input-element{
+  color:black;
 }
