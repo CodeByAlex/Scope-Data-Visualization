@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'navigation-bar',
@@ -6,18 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation-bar.component.scss']
 })
 export class NavigationBarComponent implements OnInit {
-  isIn = false;
 
+  // @ViewChild('checkbox') checkbox:ElementRef;
   constructor() { }
 
   ngOnInit() {
-  }
-
-  toggleState() {
-    this.isIn = this.isIn === false ? true : false;
-  }
-
-  closeNav() {
-    this.isIn = false;
   }
 }
