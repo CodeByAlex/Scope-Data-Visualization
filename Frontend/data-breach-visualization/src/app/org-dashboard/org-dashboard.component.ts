@@ -7,13 +7,14 @@ import {Incident} from "../Models/Incident";
 import {GraphDataService} from "../GraphDataService/graph-data.service";
 import {Observable} from "rxjs/Observable";
 import {OrgDataService} from "./org-data-service";
+import {merge} from "rxjs/operators";
 
 @Component({
   selector: 'org-dashboard',
   templateUrl: './org-dashboard.component.html',
   styleUrls: ['./org-dashboard.component.scss']
 })
-export class OrgDashboardComponent implements OnInit {
+export class OrgDashboardComponent implements OnInit, AfterViewInit {
   displayedColumns = ['orgName', 'orgIndustry', 'numIncidents', 'numRecordsLost'];
   yearComparisonData = {};
   dataLostTypeComparison = {};
@@ -24,7 +25,7 @@ export class OrgDashboardComponent implements OnInit {
   orgName:string = null;
   orgIndustry: string = null;
 
-  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
@@ -32,7 +33,11 @@ export class OrgDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource = new OrgDataSource(this.orgDataService, this.paginator);
+    this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, new MatSort());
+  }
+
+  ngAfterViewInit(){
+    this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, this.sort);
   }
 
   onRowClick(row) {

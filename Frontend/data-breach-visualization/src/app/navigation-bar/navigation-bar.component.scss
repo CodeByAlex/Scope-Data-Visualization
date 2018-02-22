@@ -139,7 +139,7 @@ main {
     .burger {
       &::before,
       &::after {
-        width: 141.42%; // Pythagore!
+        width: 141.42%;
       }
       &::before {
         transform: rotate(45deg) translateY(-50%);

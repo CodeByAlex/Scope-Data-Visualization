@@ -17,7 +17,7 @@ public class OrgDaoImpl implements OrgDao{
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
-	private static final String ALL_ORG_INFO_SQL = "SELECT * FROM ORG";
+	private static final String ALL_ORG_INFO_SQL = "SELECT ORG_ID, ORG_NAME, ORG_INDUSTRY FROM ORG";
 	private static List<Organization> allOrganizations = null;
 	
 	public List<Organization> getAllOrgInfo(){	

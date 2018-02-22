@@ -18,7 +18,7 @@ public class ActorDaoImpl implements ActorDao{
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
-	private static final String ALL_ACTOR_INFO_SQL = "SELECT * FROM ACTOR";
+	private static final String ALL_ACTOR_INFO_SQL = "SELECT ACTOR_ID, ACTOR_TYPE, ACTOR_PATTERN FROM ACTOR";
 	private static List<Actor> allActors = null;
 
 	public List<Actor> getAllActorInfo(){

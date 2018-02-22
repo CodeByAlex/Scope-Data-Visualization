@@ -7,7 +7,10 @@ import { AppComponent } from './app.component';
 import { ApiService } from './ApiService/api.service';
 import { WorldDashboardComponent } from './world-dashboard/world-dashboard';
 import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
-import {MatCardModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from "@angular/material";
+import {
+  MatCardModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
+  MatSortModule
+} from "@angular/material";
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import {ChartModule} from '../../node_modules/primeng/chart';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
@@ -32,6 +35,7 @@ import {OrgDataService} from "app/org-dashboard/org-data-service";
     HttpModule,
     MatCardModule,
     MatTableModule,
+    MatSortModule,
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,

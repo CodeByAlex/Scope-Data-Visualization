@@ -14,7 +14,7 @@ export class OrgDataSource extends DataSource<Organization> {
   filteredData: Organization[] = [];
   renderedData: Organization[] = [];
 
-  constructor(private orgDatabase: OrgDataService, private _paginator: MatPaginator) {
+  constructor(private orgDatabase: OrgDataService, private _paginator: MatPaginator, private _sort:MatSort) {
     super();
     this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
   }
@@ -23,6 +23,7 @@ export class OrgDataSource extends DataSource<Organization> {
   connect(): Observable<Organization[]> {
     const displayDataChanges = [
       this.orgDatabase.dataChange,
+      this._sort.sortChange,
       this._filterChange,
       this._paginator.page,
     ];
@@ -32,16 +33,19 @@ export class OrgDataSource extends DataSource<Organization> {
         const searchStr = (item.orgName + +item.orgIndustry + item.numIncidents + item.numRecordsLost).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
-      // const sortedData = this.sortData(this.filteredData.slice());
+      // Sort filtered data
+      const sortedData = this.sortData(this.filteredData.slice());
+
+      // Grab the page's slice of the filtered sorted data.
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      this.renderedData = this.filteredData.splice(startIndex, this._paginator.pageSize);
+      this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
       return this.renderedData;
     });
   }
 
   disconnect() {}
 
-  /*sortData(data: Organization[]): Organization[] {
+  sortData(data: Organization[]): Organization[] {
     if (!this._sort.active || this._sort.direction == '') { return data; }
 
     return data.sort((a, b) => {
@@ -59,5 +63,5 @@ export class OrgDataSource extends DataSource<Organization> {
 
       return (valueA < valueB ? -1 : 1) * (this._sort.direction == 'asc' ? 1 : -1);
     });
-  }*/
+  }
 }
