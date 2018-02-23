@@ -31,6 +31,13 @@ public class SecurityBreachController {
 		return securityBreachManager.getIncidentRecordsByOrgId(orgId);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "incident-info/year-range")
+	@CrossOrigin(origins="*")
+	public ResponseEntity<?> getYearRange(){
+		return securityBreachManager.getYearRange();
+	}
+	
+	
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "actor-info")
 	@CrossOrigin(origins="*")
 	public ResponseEntity<?> getAllActorInfo(){

@@ -68,7 +68,7 @@ export class ApiService {
   }
 
   private handleError (error: Response | any) {
-    console.error('ApiService::handleError', error);
+    console.error('api-service::handleError', error);
     return Observable.throw(error);
   }
 

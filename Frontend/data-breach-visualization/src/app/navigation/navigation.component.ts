@@ -2,10 +2,10 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'navigation-bar',
-  templateUrl: './navigation-bar.component.html',
-  styleUrls: ['./navigation-bar.component.scss']
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss']
 })
-export class NavigationBarComponent implements OnInit {
+export class NavigationComponent implements OnInit {
 
   @ViewChild('checkbox') checkbox:ElementRef;
   constructor() { }

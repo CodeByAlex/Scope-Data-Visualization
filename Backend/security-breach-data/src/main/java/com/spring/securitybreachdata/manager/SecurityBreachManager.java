@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.spring.securitybreachdata.dao.ActorDao;
 import com.spring.securitybreachdata.dao.IncidentDao;
 import com.spring.securitybreachdata.dao.OrgDao;
+import com.spring.securitybreachdata.dto.YearRangeDTO;
 import com.spring.securitybreachdata.entity.Actor;
 import com.spring.securitybreachdata.entity.Incident;
 import com.spring.securitybreachdata.entity.Organization;
@@ -74,6 +75,16 @@ public class SecurityBreachManager {
 		try{
 			List<Incident> incidents = incidentDao.getIncidentsByOrgId(orgId);
 			return new ResponseEntity<>(incidents, HttpStatus.OK);
+		}catch(Exception ex){
+			System.err.println(ex);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	public ResponseEntity<?> getYearRange(){
+		try{
+			YearRangeDTO incident = incidentDao.getYearRange();
+			return new ResponseEntity<>(incident, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

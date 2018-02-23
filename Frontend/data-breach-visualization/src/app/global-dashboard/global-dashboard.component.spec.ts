@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorldDashboardComponent } from './world-dashboard';
+import { GlobalDashboardComponent } from './global-dashboard';
 import {MatCardModule, MatTableModule} from "@angular/material";
 import {ChartModule} from "primeng/chart";
-import {ApiService} from "../ApiService/api.service";
+import {ApiService} from "../api-service/api.service";
 import {Http, HttpModule} from "@angular/http";
-import {GraphDataService} from "app/GraphDataService/graph-data.service";
+import {GraphDataService} from "../graph-data-service/graph-data.service";
 
-describe('WorldDashboardComponent', () => {
-  let component: WorldDashboardComponent;
-  let fixture: ComponentFixture<WorldDashboardComponent>;
+describe('GlobalDashboardComponent', () => {
+  let component: GlobalDashboardComponent;
+  let fixture: ComponentFixture<GlobalDashboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorldDashboardComponent ],
+      declarations: [ GlobalDashboardComponent ],
       imports:[
         MatCardModule,
         ChartModule,
@@ -28,7 +28,7 @@ describe('WorldDashboardComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorldDashboardComponent);
+    fixture = TestBed.createComponent(GlobalDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

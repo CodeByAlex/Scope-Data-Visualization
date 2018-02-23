@@ -1,7 +1,7 @@
 
 import {DataSource} from "@angular/cdk/collections";
 import {Organization} from "../Models/Organization";
-import {ApiService} from "../ApiService/api.service";
+import {ApiService} from "../api-service/api.service";
 import {BehaviorSubject, Observable} from "rxjs";
 import {MatPaginator, MatSort} from "@angular/material";
 import {OrgDataService} from "app/org-dashboard/org-data-service";

@@ -1,6 +1,6 @@
 import {BehaviorSubject} from "rxjs";
 import {Organization} from "../Models/Organization";
-import {ApiService} from "../ApiService/api.service";
+import {ApiService} from "../api-service/api.service";
 import {Injectable} from "@angular/core";
 /**
  * Created by alexanderwilson on 2/21/18.

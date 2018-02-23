@@ -4,28 +4,28 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { ApiService } from './ApiService/api.service';
-import { WorldDashboardComponent } from './world-dashboard/world-dashboard';
+import { ApiService } from './api-service/api.service';
+import { GlobalDashboardComponent } from './global-dashboard/global-dashboard';
 import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
 import {
   MatCardModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
   MatSortModule
 } from "@angular/material";
-import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { NavigationComponent } from './navigation/navigation.component';
 import {ChartModule} from '../../node_modules/primeng/chart';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { AboutComponent } from './about/about.component';
 import {routing} from "./app.routing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {GraphDataService} from "app/GraphDataService/graph-data.service";
 import {OrgDataService} from "app/org-dashboard/org-data-service";
+import {GraphDataService} from "./graph-data-service/graph-data.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    WorldDashboardComponent,
+    GlobalDashboardComponent,
     OrgDashboardComponent,
-    NavigationBarComponent,
+    NavigationComponent,
     AboutComponent
   ],
   imports: [

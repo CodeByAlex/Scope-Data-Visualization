@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
 import {Organization} from "../Models/Organization";
-import {ApiService} from "../ApiService/api.service";
+import {ApiService} from "../api-service/api.service";
 import {MatTableDataSource, MatSort, MatPaginator} from "@angular/material";
 import {OrgDataSource} from "./org-data-source";
 import {Incident} from "../Models/Incident";
-import {GraphDataService} from "../GraphDataService/graph-data.service";
+import {GraphDataService} from "../graph-data-service/graph-data.service";
 import {Observable} from "rxjs/Observable";
 import {OrgDataService} from "./org-data-service";
 import {merge} from "rxjs/operators";

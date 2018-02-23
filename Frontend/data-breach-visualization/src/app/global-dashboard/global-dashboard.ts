@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from "../ApiService/api.service";
+import {ApiService} from "../api-service/api.service";
 import {Actor} from "../Models/Actor";
 import {Incident} from "app/Models/Incident";
 import {Organization} from "../Models/Organization";
-import {GraphDataService} from "app/GraphDataService/graph-data.service";
+import {GraphDataService} from "../graph-data-service/graph-data.service";
 
 @Component({
   selector: 'world-dashboard',
-  templateUrl: './world-dashboard.component.html',
-  styleUrls: ['./world-dashboard.component.scss']
+  templateUrl: './global-dashboard.component.html',
+  styleUrls: ['./global-dashboard.component.scss']
 })
-export class WorldDashboardComponent implements OnInit {
+export class GlobalDashboardComponent implements OnInit {
   actorList: Actor [];
   incidentList: Incident [];
   orgList: Organization [];
@@ -130,20 +130,6 @@ export class WorldDashboardComponent implements OnInit {
       }
     });
 
-    this.industryComparisonData = {
-      labels: industryLabels,
-      datasets: [
-        {
-          label: 'Breaches per industry',
-          backgroundColor: 'rgba(179,181,198,0.2)',
-          borderColor: '#00DEF2',
-          pointBackgroundColor: 'rgba(179,181,198,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(179,181,198,1)',
-          data: industryCounts
-        }
-      ]
-    };
+    this.industryComparisonData = this.graphDataService.getRadarChartDataObject('Breaches per industry', industryLabels, industryCounts);
   }
 }

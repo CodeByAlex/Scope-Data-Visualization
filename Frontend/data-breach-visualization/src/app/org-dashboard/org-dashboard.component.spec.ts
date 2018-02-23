@@ -6,9 +6,9 @@ import {
   MatTableModule
 } from "@angular/material";
 import {ChartModule} from "primeng/chart";
-import {ApiService} from "../ApiService/api.service";
+import {ApiService} from "../api-service/api.service";
 import {Http, HttpModule} from "@angular/http";
-import {GraphDataService} from "../GraphDataService/graph-data.service";
+import {GraphDataService} from "../graph-data-service/graph-data.service";
 import {OrgDataService} from "./org-data-service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
