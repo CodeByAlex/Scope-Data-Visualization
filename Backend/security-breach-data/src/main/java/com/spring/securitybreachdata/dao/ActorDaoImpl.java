@@ -23,8 +23,16 @@ public class ActorDaoImpl implements ActorDao{
 
 	public List<Actor> getAllActorInfo(){
 		if(allActors==null){
-			allActors =jdbcTemplate.query(ALL_ACTOR_INFO_SQL, new ActorRowMapper());
+			allActors =getJdbcTemplate().query(ALL_ACTOR_INFO_SQL, new ActorRowMapper());
 		}
 		return allActors;
+	}
+
+	public NamedParameterJdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(NamedParameterJdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 }

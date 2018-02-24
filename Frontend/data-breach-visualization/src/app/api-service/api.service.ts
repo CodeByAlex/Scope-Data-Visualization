@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs";
-import {Organization} from "../Models/Organization";
-import {Incident} from "../Models/Incident";
-import {Actor} from "../Models/Actor";
+import {Organization} from "../models/Organization";
+import {Incident} from "../models/Incident";
+import {Actor} from "../models/Actor";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {YearRange} from "../dto/YearRange";
 
 const API_URL = environment.apiUrl;
 
@@ -18,6 +19,7 @@ export class ApiService {
   allOrgs: Observable<Organization[]> = null;
   allActors: Observable<Actor[]> =null;
 
+  yearRange: YearRange;
   constructor(private http: Http) { }
 
   public getAllOrgs(): Observable<Organization[]> {
@@ -65,6 +67,15 @@ export class ApiService {
         }).catch(this.handleError)
     }
     return this.allActors;
+  }
+
+
+
+  public getIncidentYearRange() : Observable<YearRange>{
+    return this.http.get(API_URL + '/breach-data/incident-info/year-range')
+      .map(function(res){
+      return new YearRange(res.json().minYear, res.json().maxYear);
+    }).catch(this.handleError);
   }
 
   private handleError (error: Response | any) {

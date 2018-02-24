@@ -29,7 +29,7 @@ public class IncidentDaoImpl implements IncidentDao{
 
 	public List<Incident> getAllIncidentInfo(){
 		if(allIncidents ==null){
-			allIncidents = jdbcTemplate.query(GET_ALL_INCIDENT_INFO_SQL, new IncidentRowMapper());
+			allIncidents = getJdbcTemplate().query(GET_ALL_INCIDENT_INFO_SQL, new IncidentRowMapper());
 		}
 		return allIncidents;
 	}
@@ -38,13 +38,21 @@ public class IncidentDaoImpl implements IncidentDao{
 	public List<Incident> getIncidentsByOrgId(int orgId) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("orgId", orgId);
-		return jdbcTemplate.query(GET_INCIDENT_INFO_BY_ORG_ID_SQL, params, new IncidentRowMapper());
+		return getJdbcTemplate().query(GET_INCIDENT_INFO_BY_ORG_ID_SQL, params, new IncidentRowMapper());
 	}
 
 	@Override
 	public YearRangeDTO getYearRange() {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		return jdbcTemplate.queryForObject(GET_YEAR_RANGE_SQL, params, new YearRangeMapper());
+		return getJdbcTemplate().queryForObject(GET_YEAR_RANGE_SQL, params, new YearRangeMapper());
+	}
+
+	public NamedParameterJdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(NamedParameterJdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 }

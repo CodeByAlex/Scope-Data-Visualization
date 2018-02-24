@@ -1,5 +1,5 @@
 import {BehaviorSubject} from "rxjs";
-import {Organization} from "../Models/Organization";
+import {Organization} from "../models/Organization";
 import {ApiService} from "../api-service/api.service";
 import {Injectable} from "@angular/core";
 /**

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../api-service/api.service";
-import {Actor} from "../Models/Actor";
-import {Incident} from "app/Models/Incident";
-import {Organization} from "../Models/Organization";
+import {Actor} from "../models/Actor";
+import {Incident} from "../models/Incident";
+import {Organization} from "../models/Organization";
 import {GraphDataService} from "../graph-data-service/graph-data.service";
+import {YearRange} from "../dto/YearRange";
 
 @Component({
   selector: 'world-dashboard',
@@ -14,6 +15,9 @@ export class GlobalDashboardComponent implements OnInit {
   actorList: Actor [];
   incidentList: Incident [];
   orgList: Organization [];
+
+  yearRange: YearRange;
+
   yearComparisonData = {};
   actorComparison = {};
   industryComparisonData ={};
@@ -45,13 +49,20 @@ export class GlobalDashboardComponent implements OnInit {
           this.getIndustryComparisonData();
         }
       );
+
+    this.apiService.getIncidentYearRange()
+      .subscribe(
+        (range) => {
+          this.yearRange = range;
+        }
+      );
   }
 
   getYearComparisonData(){
     let labels = [];
     let orgYearData = [];
 
-    for(let year=1971; year<=2017; year++){
+    for(let year=this.yearRange.minYear; year<=this.yearRange.maxYear; year++){
       labels.push(year.toString());
       let numIncidentsPerYear = 0;
       for(let incident of this.incidentList){
@@ -69,7 +80,7 @@ export class GlobalDashboardComponent implements OnInit {
     let labels = [];
     let recordYearData = [];
 
-    for(let year=1971; year<=2017; year++){
+    for(let year=this.yearRange.minYear; year<=this.yearRange.maxYear; year++){
       labels.push(year.toString());
       let numRecordsPerYear = 0;
       for(let incident of this.incidentList){

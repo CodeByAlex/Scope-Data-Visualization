@@ -22,8 +22,16 @@ public class OrgDaoImpl implements OrgDao{
 	
 	public List<Organization> getAllOrgInfo(){	
 		if(allOrganizations ==null){
-			allOrganizations = jdbcTemplate.query(ALL_ORG_INFO_SQL, new OrgRowMapper());
+			allOrganizations = getJdbcTemplate().query(ALL_ORG_INFO_SQL, new OrgRowMapper());
 		}
 		return allOrganizations;
+	}
+
+	public NamedParameterJdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(NamedParameterJdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 }

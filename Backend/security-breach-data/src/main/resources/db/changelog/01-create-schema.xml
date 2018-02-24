@@ -8,7 +8,7 @@
 
   <changeSet id="01" author="awilson">
     
-    <createTable tableName="org" remarks="A table to contain organization information">
+    <createTable catalogName = "BREACH" tableName="org" remarks="A table to contain organization information">
       <column name="org_id" type="int">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
@@ -16,7 +16,7 @@
       <column name="org_industry" type="varchar(100)"></column>
     </createTable>
     
-    <createTable tableName="incident" remarks="A table to information about data breach incidents">
+    <createTable catalogName = "BREACH" tableName="incident" remarks="A table to information about data breach incidents">
       <column name="incident_id" type="int">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
@@ -38,7 +38,7 @@
       <column name="num_records_lost" type="int"></column>
     </createTable>
     
-    <createTable tableName="actor" remarks="A table to information about data breach actors">
+    <createTable catalogName = "BREACH" tableName="actor" remarks="A table to information about data breach actors">
       <column name="actor_id" type="int">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
@@ -46,11 +46,11 @@
       <column name="actor_pattern" type="varchar(100)"></column>
     </createTable>
 
-    <addForeignKeyConstraint baseTableName="incident" baseColumnNames="org_id"
+    <addForeignKeyConstraint baseTableCatalogName = "BREACH"  baseTableName="incident" baseColumnNames="org_id"
       constraintName="incident_org_id_fk"
       referencedTableName="org" referencedColumnNames="org_id"/>
     
-    <addForeignKeyConstraint baseTableName="incident" baseColumnNames="actor_id"
+    <addForeignKeyConstraint baseTableCatalogName = "BREACH" baseTableName="incident" baseColumnNames="actor_id"
       constraintName="incident_actor_id_fk"
       referencedTableName="actor" referencedColumnNames="actor_id"/>
       

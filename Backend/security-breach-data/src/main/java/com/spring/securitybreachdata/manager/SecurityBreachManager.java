@@ -36,7 +36,7 @@ public class SecurityBreachManager {
 			return new ResponseEntity<>(incidents, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class SecurityBreachManager {
 			return new ResponseEntity<>(actors, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class SecurityBreachManager {
 			return new ResponseEntity<>(orgs, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class SecurityBreachManager {
 			return new ResponseEntity<>(incidents, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class SecurityBreachManager {
 			return new ResponseEntity<>(incident, HttpStatus.OK);
 		}catch(Exception ex){
 			System.err.println(ex);
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
