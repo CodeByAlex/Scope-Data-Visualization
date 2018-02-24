@@ -6,34 +6,46 @@ export class GraphDataService {
   constructor() { }
 
   getPieChartDataObject(labels: string [], data: number[]){
-    let dataObject = {
+    const dataObject = {
       labels: labels,
       datasets: [
         {
           data: data,
           backgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#ABCDCF",
-            "#ff6384",
-            "#FFCE56",
-            "#00DEF2",
+            '#00B5DD',
+            '#345065',
+            '#ABCDCF',
+            '#ff6384',
+            '#FFCE56',
+            '#00DEF2',
           ],
           hoverBackgroundColor: [
-            "#00B5DD",
-            "#345065",
-            "#ABCDCF",
-            "#ff6384",
-            "#FFCE56",
-            "#00DEF2",
+            '#00B5DD',
+            '#345065',
+            '#ABCDCF',
+            '#ff6384',
+            '#FFCE56',
+            '#00DEF2',
           ]
         }]
     }
     return dataObject;
   }
 
+  getLegendPositionLeftOption() {
+    const object = {
+        legend: {
+          position: 'left',
+          maintainAspectRatio: false,
+          responsive: true,
+
+        }
+    }
+    return object;
+  }
+
   getlineChartDataObject(title: string, labels: string [], data: number[]){
-    let dataObject = {
+    const dataObject = {
       labels: labels,
       datasets: [
         {
@@ -48,7 +60,7 @@ export class GraphDataService {
   }
 
   getRadarChartDataObject(title: string, labels: string [], data: number[]){
-    let dataObject = {
+    const dataObject = {
       labels: labels,
       datasets: [
         {

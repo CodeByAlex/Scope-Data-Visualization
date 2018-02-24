@@ -22,7 +22,6 @@ import io.swagger.annotations.ApiResponse;
 @RestController
 @RequestMapping("/breach-data")
 @Api(value="breachdata", description="Operations pertaining to security breach data collected by VERIS Community Database")
-
 public class SecurityBreachController {
 	
 	private static final String ORG_ID = "org_id";

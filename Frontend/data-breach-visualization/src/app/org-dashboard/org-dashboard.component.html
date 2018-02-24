@@ -1,19 +1,24 @@
 <div class="container content-wrapper">
   <h2>Company Breach Dashboard</h2>
-  <br>
-  <ng-container *ngIf="orgName && orgIndustry">
-    <div class="row">
-      <div class="col-12">Company: {{orgName}} </div>
-      <div class="col-12">Industry: {{orgIndustry}}</div>
+  <!--<br>-->
+
+    <div class="row ">
+      <div class="col-12 text-right">{{orgName}} </div>
+      <ng-container *ngIf="!orgName">
+        <div class="col-12 text-right">Unknown </div>
+      </ng-container>
+
+      <!--<div class="col-12 text-right">Industry: {{orgIndustry}}</div>-->
     </div>
-    <br>
-  </ng-container>
 
   <div class="row">
     <div class="col-md-6 mb-2">
       <mat-card>
+        <mat-card-header>
+          <mat-card-title>Yearly breach comparison</mat-card-title>
+          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
+        </mat-card-header>
         <mat-card-content>
-          Yearly comparison
           <p-chart type="line" [data]="yearComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
@@ -21,8 +26,11 @@
 
     <div class="col-md-6 mb-4">
       <mat-card>
+        <mat-card-header>
+          <mat-card-title>Types of data lost</mat-card-title>
+          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
+        </mat-card-header>
         <mat-card-content>
-          Types of data lost
           <p-chart type="pie" [data]="dataLostTypeComparison"></p-chart>
         </mat-card-content>
       </mat-card>

@@ -8,6 +8,7 @@ import {GraphDataService} from "../graph-data-service/graph-data.service";
 import {Observable} from "rxjs/Observable";
 import {OrgDataService} from "./org-data-service";
 import {merge} from "rxjs/operators";
+import {YearRange} from "../dto/YearRange";
 
 @Component({
   selector: 'org-dashboard',
@@ -19,6 +20,7 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   yearComparisonData = {};
   dataLostTypeComparison = {};
   incidentList: Incident [] = [];
+  yearRange: YearRange;
 
   dataSource= null;
 
@@ -33,6 +35,12 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.apiService.getIncidentYearRange()
+      .subscribe(
+        (range) => {
+          this.yearRange = range;
+        }
+      );
     this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, new MatSort());
   }
 
@@ -63,7 +71,7 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
     let labels = [];
     let orgYearData = [];
 
-    for(let year=1971; year<=2017; year++){
+    for(let year=this.yearRange.minYear; year<=this.yearRange.maxYear; year++){
       labels.push(year.toString());
       let numIncidentsPerYear = 0;
       for(let incident of this.incidentList){

@@ -13,7 +13,6 @@ import {
 } from "@angular/material";
 import { NavigationComponent } from './navigation/navigation.component';
 import {ChartModule} from '../../node_modules/primeng/chart';
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { AboutComponent } from './about/about.component';
 import {routing} from "./app.routing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";

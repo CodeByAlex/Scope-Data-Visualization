@@ -4,8 +4,11 @@
   <div class="row">
     <div class="col-lg-6 mb-2">
       <mat-card>
+        <mat-card-header>
+          <mat-card-title>Incidents over time</mat-card-title>
+          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
+        </mat-card-header>
         <mat-card-content>
-          Incidents over time
           <p-chart type="line" [data]="yearComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
@@ -13,9 +16,12 @@
 
     <div class="col-lg-6 mb-2">
       <mat-card>
+        <mat-card-header>
+          <mat-card-title>Actor pattern comparison</mat-card-title>
+          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
+        </mat-card-header>
         <mat-card-content>
-          Actor pattern comparison
-          <p-chart type="doughnut" [data]="actorComparison"></p-chart>
+          <p-chart type="doughnut" [data]="actorComparison" [options]="graphDataService.getLegendPositionLeftOption()"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -24,8 +30,11 @@
   <div class="row">
     <div class="col-lg-6 mb-2">
       <mat-card>
+        <mat-card-header>
+          <mat-card-title>Breaches by industry</mat-card-title>
+          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
+        </mat-card-header>
         <mat-card-content>
-          Breaches by industry
           <p-chart type="radar" [data]="industryComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
@@ -33,12 +42,16 @@
 
     <div class="col-lg-6 mb-2">
       <mat-card>
+        <mat-card-header>
+          <mat-card-title>Number of records lost per year</mat-card-title>
+          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
+        </mat-card-header>
         <mat-card-content>
-          Number of records lost per year
           <p-chart type="line" [data]="recordsLostComparisonData"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
-<br>
+
+  <br>
 </div>
