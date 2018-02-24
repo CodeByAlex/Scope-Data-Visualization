@@ -58,7 +58,9 @@ public class SecurityBreachManager {
 					List<Incident> incidents = incidentDao.getIncidentsByOrgId(org.getOrgId());
 					int numRecordsLost =0;
 					for(Incident incident: incidents){
-						numRecordsLost += incident.getNumRecordsLost();
+						if(incident.getNumRecordsLost() != null){
+							numRecordsLost += incident.getNumRecordsLost();
+						}
 					}
 					org.setNumIncidents(incidents.size());
 					org.setNumRecordsLost(numRecordsLost);

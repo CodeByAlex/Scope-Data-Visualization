@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import com.spring.securitybreachdata.dao.ActorDao;
 import com.spring.securitybreachdata.dao.IncidentDao;
 import com.spring.securitybreachdata.dao.OrgDao;
+import com.spring.securitybreachdata.dto.YearRangeDTO;
 import com.spring.securitybreachdata.entity.Actor;
 import com.spring.securitybreachdata.entity.Incident;
 import com.spring.securitybreachdata.entity.Organization;
@@ -46,7 +47,9 @@ public class SecurityBreachManagerTest {
 	@Test
 	public void testGetAllIncidentInfo(){
 		List<Incident> incidents = new ArrayList<>();
-		incidents.add(new Incident());
+		Incident incident = new Incident();
+		incident.setOrgId(1);
+		incidents.add(incident);
 		doReturn(incidents).when(incidentDao).getAllIncidentInfo();
 		ResponseEntity<?> response = manager.getAllIncidentInfo();
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -66,12 +69,73 @@ public class SecurityBreachManagerTest {
 	@Test
 	public void testGetAllOrgInfo(){
 		List<Organization> orgs = new ArrayList<>();
-		orgs.add(new Organization());
+		Organization org = new Organization();
+		org.setOrgId(1);
+		orgs.add(org);
 		doReturn(orgs).when(orgDao).getAllOrgInfo();
 		ResponseEntity<?> response = manager.getAllOrgInfo();
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(orgs, response.getBody());
 	}
 	
+	@Test
+	public void testGetAllOrgInfoWithIncidents(){
+		List<Incident> incidents = new ArrayList<>();
+		Incident incident = new Incident();
+		incident.setOrgId(1);
+		incident.setNumRecordsLost(1);
+		incidents.add(incident);
+		doReturn(incidents).when(incidentDao).getIncidentsByOrgId(1);
+		
+		List<Organization> orgs = new ArrayList<>();
+		Organization org = new Organization();
+		org.setOrgId(1);
+		orgs.add(org);
+		doReturn(orgs).when(orgDao).getAllOrgInfo();
+		
+		ResponseEntity<?> response = manager.getAllOrgInfo();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(orgs, response.getBody());
+	}
+	
+	@Test
+	public void testGetAllOrgInfoWithIncidentsNullRecordsLost(){
+		List<Incident> incidents = new ArrayList<>();
+		Incident incident = new Incident();
+		incident.setOrgId(1);
+		incidents.add(incident);
+		doReturn(incidents).when(incidentDao).getIncidentsByOrgId(1);
+		
+		List<Organization> orgs = new ArrayList<>();
+		Organization org = new Organization();
+		org.setOrgId(1);
+		orgs.add(org);
+		doReturn(orgs).when(orgDao).getAllOrgInfo();
+		
+		ResponseEntity<?> response = manager.getAllOrgInfo();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(orgs, response.getBody());
+	}
+	
+	@Test
+	public void testGetIncidentRecordsByOrgId(){
+		List<Incident> incidents = new ArrayList<>();
+		Incident incident = new Incident();
+		incident.setOrgId(1);
+		incidents.add(incident);
+		doReturn(incidents).when(incidentDao).getIncidentsByOrgId(1);
+		ResponseEntity<?> response = manager.getIncidentRecordsByOrgId(1);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(incidents, response.getBody());
+	}
+	
+	@Test
+	public void testGetYearRange(){
+		YearRangeDTO dto = new YearRangeDTO();		
+		doReturn(dto).when(incidentDao).getYearRange();
+		ResponseEntity<?> response = manager.getYearRange();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(dto, response.getBody());
+	}
 	
 }

@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.spring.securitybreachdata.entity.Incident;
 import com.spring.securitybreachdata.manager.SecurityBreachManager;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -48,4 +49,22 @@ public class SecurityBreachControllerTest {
 		when(manager.getAllOrgInfo()).thenReturn(response);
 		assertEquals(controller.getAllOrgInfo().getStatusCode(),HttpStatus.OK);
 	}
+	
+	@Test
+	public void getIncidentRecordsByOrgId(){
+		Incident incident = new Incident();
+		incident.setOrgId(1);
+		ResponseEntity response = new ResponseEntity<>(incident, HttpStatus.OK);
+		when(manager.getIncidentRecordsByOrgId(1)).thenReturn(response);
+		assertEquals(controller.getIncidentRecordsByOrgId(1).getStatusCode(),HttpStatus.OK);
+	}
+	
+	@Test
+	public void testGetYearRange(){
+		ResponseEntity response = new ResponseEntity<>(null, HttpStatus.OK);
+		when(manager.getYearRange()).thenReturn(response);
+		assertEquals(controller.getYearRange().getStatusCode(),HttpStatus.OK);
+	}
+	
+	
 }

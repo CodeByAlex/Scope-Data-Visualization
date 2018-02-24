@@ -7,6 +7,9 @@
   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
 	
   	<changeSet id="01" author="awilson">
+  		<preConditions onFail="HALT" onFailMessage="Cannot insert into BREACH.INCIDENT. Required Table or columns not created">
+  			<tableExists catalogName="BREACH" tableName="INCIDENT"></tableExists>
+  		</preConditions>
   		<loadData tableName="INCIDENT" file="../data/INCIDENT_DATA.csv" relativeToChangelogFile="true"/>
   	</changeSet>
 </databaseChangeLog>

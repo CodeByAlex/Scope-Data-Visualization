@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+  
+  <changeSet id="org-data-1" author="awilson" dbms="h2">
+  	<preConditions onFail="HALT" onFailMessage="Cannot insert into BREACH.ORG. Required Table or columns not created">
+  		<tableExists schemaName="BREACH" tableName="ORG"></tableExists>
+  	</preConditions>
+  	<insert catalogName="BREACH" tableName="ORG">
+  		<column name="org_id" valueNumeric ="1"/>
+  		<column name="org_name" value="Hello Name!"/>
+      	<column name="org_industry" value="Hello Industry!"/>
+  	</insert>
+  	
+  </changeSet>
+  
+  <changeSet id="actor-data-1" author="awilson" dbms="h2">
+  	<preConditions onFail="HALT" onFailMessage="Cannot insert into BREACH.ACTOR. Required Table or columns not created">
+  		<tableExists schemaName="BREACH" tableName="ACTOR"></tableExists>
+  	</preConditions>
+  	
+  	<insert catalogName="BREACH" tableName="ACTOR">
+  		<column name="actor_id" valueNumeric ="1"/>
+      	<column name="actor_type" value="Hello Actor Type!"></column>
+      	<column name="actor_pattern" value="Hello Actor Pattern!"></column>
+  	</insert>
+  	
+  </changeSet>
+  
+  <changeSet id="incident-data-1" author="awilson" dbms="h2">
+  	<preConditions onFail="HALT" onFailMessage="Cannot insert into BREACH.INCIDENT. Required Table or columns not created">
+  		<tableExists catalogName="BREACH" tableName="INCIDENT"></tableExists>
+  	</preConditions>
+  	
+  	<insert catalogName="BREACH" tableName="INCIDENT">
+      	<column name="incident_id" valueNumeric ="1"/>
+      	<column name="org_id" valueNumeric ="1"/>
+      	<column name="actor_id" valueNumeric ="1"/>
+      	<column name="country" value="USA"></column>
+      	<column name="state" value="MD"></column>
+      	<column name="victim_type" value="Hello Victim Type!"></column>
+      	<column name="data_lost_type" value="Hello Data Lost Type!"></column>
+      	<column name="summary" value="Hello Summary!"></column>
+      	<column name="references" value="Hello References!"></column>
+      	<column name="report_day" valueNumeric ="1"></column>
+      	<column name="report_month" valueNumeric ="1"></column>
+      	<column name="report_year" valueNumeric ="2017"></column>
+      	<column name="num_records_lost" valueNumeric ="1"></column>
+  	</insert>
+  	
+  </changeSet>
+  
+
+</databaseChangeLog>
