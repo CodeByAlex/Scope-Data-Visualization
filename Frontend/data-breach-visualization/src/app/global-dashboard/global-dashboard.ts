@@ -112,7 +112,7 @@ export class GlobalDashboardComponent implements OnInit {
     let typeLabels = [];
     let typeCounts = [];
     dataMap.forEach((value: number, key: string) => {
-      if(value>250) {
+      if(value>260) {
         typeLabels.push(key);
         typeCounts.push(value);
       }

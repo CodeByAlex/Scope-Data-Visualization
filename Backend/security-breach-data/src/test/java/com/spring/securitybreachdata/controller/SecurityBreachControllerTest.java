@@ -51,7 +51,7 @@ public class SecurityBreachControllerTest {
 	}
 	
 	@Test
-	public void getIncidentRecordsByOrgId(){
+	public void testGetIncidentRecordsByOrgId(){
 		Incident incident = new Incident();
 		incident.setOrgId(1);
 		ResponseEntity response = new ResponseEntity<>(incident, HttpStatus.OK);

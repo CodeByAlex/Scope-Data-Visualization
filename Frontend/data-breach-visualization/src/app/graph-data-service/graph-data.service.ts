@@ -20,12 +20,12 @@ export class GraphDataService {
             '#00DEF2',
           ],
           hoverBackgroundColor: [
-            '#00B5DD',
-            '#345065',
-            '#ABCDCF',
+            '#00bfe7',
+            '#3f5a6f',
+            '#b5d7d9',
             '#ff6384',
-            '#FFCE56',
-            '#00DEF2',
+            '#ffce56',
+            '#00def2',
           ]
         }]
     }
