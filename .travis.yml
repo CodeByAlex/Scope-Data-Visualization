@@ -14,7 +14,9 @@ before_script:
   - npm install 
   - ng build -aot --prod
   - echo 'Front end build successful'
-  - cd ../../Backend/security-breach-data
 after_success: 
-  - docker build -t sec-viz .
-  - echo 'Docker image build successful'
+  - cd ../../Backend/security-breach-data
+  - docker build -t sec-viz-back .
+  - cd  ../../Frontend/data-breach-visualization
+  - docker build -t sec-viz-front .
+  - echo 'Docker images built successfully'
