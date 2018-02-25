@@ -10,6 +10,7 @@ jdk:
   - oraclejdk8
 before_script: 
   - cd Backend/security-breach-data
+  - npm install -g @angular/cli
   - npm install 
 script:
   - ng build -aot --prod
