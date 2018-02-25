@@ -9,7 +9,7 @@ node_js:
 jdk:
   - oraclejdk8
 before_script: 
-  - cd  Frontend/data-breach-visualization
+  - cd  Frontend/data-breach-visualization/src/app
   - npm install -g @angular/cli
   - npm install 
   - ng build -aot --prod
