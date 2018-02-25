@@ -12,10 +12,9 @@ before_script:
   - cd  Frontend/data-breach-visualization
   - npm install -g @angular/cli
   - npm install 
-  - cd ../../Backend/security-breach-data
-script:
   - ng build -aot --prod
   - echo 'Front end build successful'
+  - cd ../../Backend/security-breach-data
 after_success: 
   - docker build -t sec-viz .
   - echo 'Docker image build successful'
