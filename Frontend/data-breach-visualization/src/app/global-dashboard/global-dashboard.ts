@@ -20,10 +20,10 @@ export class GlobalDashboardComponent implements OnInit {
 
   yearComparisonData = {};
   actorComparison = {};
-  industryComparisonData ={};
-  recordsLostComparisonData ={};
+  industryComparisonData = {};
+  recordsLostComparisonData = {};
 
-  constructor(private apiService:ApiService, private graphDataService: GraphDataService) {}
+  constructor(private apiService: ApiService, private graphDataService: GraphDataService) {}
 
   ngOnInit() {
     this.apiService.getAllIncidents()
@@ -58,16 +58,16 @@ export class GlobalDashboardComponent implements OnInit {
       );
   }
 
-  getYearComparisonData(){
-    let labels = [];
-    let orgYearData = [];
+  getYearComparisonData() {
+    const labels = [];
+    const orgYearData = [];
 
-    for(let year=this.yearRange.minYear; year<=this.yearRange.maxYear; year++){
+    for (let year = this.yearRange.minYear; year <= this.yearRange.maxYear; year++) {
       labels.push(year.toString());
       let numIncidentsPerYear = 0;
-      for(let incident of this.incidentList){
-        if(incident.reportYear ==year){
-          numIncidentsPerYear+=1;
+      for (const incident of this.incidentList) {
+        if (incident.reportYear == year) {
+          numIncidentsPerYear += 1;
         }
       }
       orgYearData.push(numIncidentsPerYear)
@@ -76,16 +76,16 @@ export class GlobalDashboardComponent implements OnInit {
     this.yearComparisonData = this.graphDataService.getlineChartDataObject('Incidents', labels, orgYearData);
   }
 
-  getRecordsLostComparisonData(){
-    let labels = [];
-    let recordYearData = [];
+  getRecordsLostComparisonData() {
+    const labels = [];
+    const recordYearData = [];
 
-    for(let year=this.yearRange.minYear; year<=this.yearRange.maxYear; year++){
+    for (let year = this.yearRange.minYear; year <= this.yearRange.maxYear; year++) {
       labels.push(year.toString());
       let numRecordsPerYear = 0;
-      for(let incident of this.incidentList){
-        if(incident.reportYear ==year){
-          numRecordsPerYear+=incident.numRecordsLost;
+      for (const incident of this.incidentList) {
+        if (incident.reportYear == year) {
+          numRecordsPerYear += incident.numRecordsLost;
         }
       }
       recordYearData.push(numRecordsPerYear)
@@ -95,11 +95,11 @@ export class GlobalDashboardComponent implements OnInit {
   }
 
   getActorPatternComparison() {
-    let dataMap = new Map<string, number>();
+    const dataMap = new Map<string, number>();
 
-    for(let incident of this.incidentList) {
-      for (let actor of this.actorList) {
-        if(incident.actorId == actor.actorId) {
+    for (const incident of this.incidentList) {
+      for (const actor of this.actorList) {
+        if (incident.actorId == actor.actorId) {
           if (dataMap.get(actor.actorPattern)) {
             dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
           } else {
@@ -109,10 +109,10 @@ export class GlobalDashboardComponent implements OnInit {
         }
       }
     }
-    let typeLabels = [];
-    let typeCounts = [];
+    const typeLabels = [];
+    const typeCounts = [];
     dataMap.forEach((value: number, key: string) => {
-      if(value>260) {
+      if (value > 260) {
         typeLabels.push(key);
         typeCounts.push(value);
       }
@@ -122,25 +122,29 @@ export class GlobalDashboardComponent implements OnInit {
   }
 
   getIndustryComparisonData(){
-    let dataMap = new Map<string, number>();
+    const dataMap = new Map<string, number>();
 
-    for (let org of this.orgList) {
+    for (const org of this.orgList) {
       if (dataMap.get(org.orgIndustry)) {
         dataMap.set(org.orgIndustry, dataMap.get(org.orgIndustry) + 1);
       } else {
         dataMap.set(org.orgIndustry, 1);
       }
     }
-    let industryLabels = [];
-    let industryCounts = [];
-    let otherIndustries = 0;
+    const industryLabels = [];
+    const industryCounts = [];
+    const otherIndustries = 0;
     dataMap.forEach((value: number, key: string) => {
-      if(value >300) { //to eliminate low range insustries
+      if (value > 300) { // to eliminate low range insustries
         industryLabels.push(key);
         industryCounts.push(value);
       }
     });
 
     this.industryComparisonData = this.graphDataService.getRadarChartDataObject('Breaches per industry', industryLabels, industryCounts);
+  }
+
+  getLeftPositionOption(){
+    return this.graphDataService.getLegendPositionLeftOption();
   }
 }

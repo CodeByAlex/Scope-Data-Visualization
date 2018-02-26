@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs';
-import {Organization} from '../models/Organization';
-import {Incident} from '../models/Incident';
-import {Actor} from '../models/Actor';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {YearRange} from '../dto/YearRange';
+import {Incident} from '../models/Incident';
+import {Organization} from '../models/Organization';
+import {Actor} from '../models/Actor';
 
 const API_URL = environment.apiUrl;
 
 @Injectable()
 export class ApiService {
 
-  //used for in memory caching since all data is static
+  // used for in memory caching since all data is static
   allIncidents: Observable<Incident[]> = null;
   allOrgs: Observable<Organization[]> = null;
   allActors: Observable<Actor[]> = null;
@@ -69,9 +69,7 @@ export class ApiService {
     return this.allActors;
   }
 
-
-
-  public getIncidentYearRange(): Observable<YearRange>{
+  public getIncidentYearRange(): Observable<YearRange> {
     return this.http.get(API_URL + '/breach-data/incident-info/year-range')
       .map(function(res) {
       return new YearRange(res.json().minYear, res.json().maxYear);

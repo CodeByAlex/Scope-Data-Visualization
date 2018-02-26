@@ -22,9 +22,9 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   incidentList: Incident [] = [];
   yearRange: YearRange;
 
-  dataSource= null;
+  dataSource = null;
 
-  orgName:string = null;
+  orgName: string = null;
   orgIndustry: string = null;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -44,7 +44,7 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
     this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, new MatSort());
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, this.sort);
   }
 
@@ -67,16 +67,16 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  getYearComparisonData(){
-    let labels = [];
-    let orgYearData = [];
+  getYearComparisonData() {
+    const labels = [];
+    const orgYearData = [];
 
-    for(let year=this.yearRange.minYear; year<=this.yearRange.maxYear; year++){
+    for (let year = this.yearRange.minYear; year <= this.yearRange.maxYear; year++) {
       labels.push(year.toString());
       let numIncidentsPerYear = 0;
-      for(let incident of this.incidentList){
-        if(incident.reportYear ==year){
-          numIncidentsPerYear+=1;
+      for (const incident of this.incidentList) {
+        if (incident.reportYear == year) {
+          numIncidentsPerYear += 1;
         }
       }
       orgYearData.push(numIncidentsPerYear)
@@ -85,18 +85,18 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
     this.yearComparisonData = this.graphDataService.getlineChartDataObject('Incidents', labels, orgYearData);
   }
 
-  getDataLostTypeComparison(){
-    let dataMap = new Map<string, number>();
+  getDataLostTypeComparison() {
+    const dataMap = new Map<string, number>();
 
-    for (let incident of this.incidentList) {
-      if(dataMap.get(incident.dataLostType)) {
-        dataMap.set(incident.dataLostType, dataMap.get(incident.dataLostType)+1);
-      }else{
+    for (const incident of this.incidentList) {
+      if (dataMap.get(incident.dataLostType)) {
+        dataMap.set(incident.dataLostType, dataMap.get(incident.dataLostType) + 1);
+      } else {
         dataMap.set(incident.dataLostType, 1);
       }
     }
-    let typeLabels = [];
-    let typeCounts = [];
+    const typeLabels = [];
+    const typeCounts = [];
     dataMap.forEach((value: number, key: string) => {
       typeLabels.push(key);
       typeCounts.push(value);

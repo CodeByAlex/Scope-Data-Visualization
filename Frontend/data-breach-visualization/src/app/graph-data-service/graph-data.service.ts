@@ -5,7 +5,7 @@ export class GraphDataService {
 
   constructor() { }
 
-  getPieChartDataObject(labels: string [], data: number[]){
+  getPieChartDataObject(labels: string [], data: number[]) {
     const dataObject = {
       labels: labels,
       datasets: [
@@ -44,7 +44,7 @@ export class GraphDataService {
     return object;
   }
 
-  getlineChartDataObject(title: string, labels: string [], data: number[]){
+  getlineChartDataObject(title: string, labels: string [], data: number[]) {
     const dataObject = {
       labels: labels,
       datasets: [
@@ -59,7 +59,7 @@ export class GraphDataService {
     return dataObject;
   }
 
-  getRadarChartDataObject(title: string, labels: string [], data: number[]){
+  getRadarChartDataObject(title: string, labels: string [], data: number[]) {
     const dataObject = {
       labels: labels,
       datasets: [

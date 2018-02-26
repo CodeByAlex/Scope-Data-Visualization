@@ -14,12 +14,12 @@ describe('GlobalDashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GlobalDashboardComponent ],
-      imports:[
+      imports: [
         MatCardModule,
         ChartModule,
         HttpModule
       ],
-      providers:[
+      providers: [
         ApiService,
         GraphDataService
       ]
