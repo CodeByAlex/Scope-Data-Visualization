@@ -1,7 +1,4 @@
 sudo: required
-branches:
-  - master
-  - tavis-fixes
 services: 
   - docker
 language: 
