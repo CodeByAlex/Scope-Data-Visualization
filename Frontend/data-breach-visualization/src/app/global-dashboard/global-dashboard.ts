@@ -37,6 +37,54 @@ export class GlobalDashboardComponent implements OnInit {
   }
 
   getYearComparisonObject(incidentList: Incident [], yearRange: YearRange) {
+    const labels = [];
+    const data = [];
+    const dataMap = this.getYearComparisonMap(incidentList, yearRange);
+    dataMap.forEach((value: number, key: string) => {
+      labels.push(key);
+      data.push(value);
+    });
+    return this.graphDataService.getlineChartDataObject('Incidents', labels, data);
+  }
+
+  getRecordsLostComparisonObject(incidentList: Incident [], yearRange: YearRange) {
+    const labels = [];
+    const data = [];
+    const dataMap = this.getRecordsLostComparisonMap(incidentList, yearRange);
+    dataMap.forEach((value: number, key: string) => {
+      labels.push(key);
+      data.push(value);
+    });
+    return this.graphDataService.getlineChartDataObject('Records lost', labels, data);
+  }
+
+  getActorPatternComparisonObject(incidentList: Incident [], actorList: Actor []) {
+    const labels = [];
+    const data = [];
+    const dataMap = this.getActorPatternComparisonMap(incidentList, actorList);
+    dataMap.forEach((value: number, key: string) => {
+      if (value > 250) { // to eliminate low range actor patterns
+        labels.push(key);
+        data.push(value);
+      }
+    });
+    return this.graphDataService.getPieChartDataObject(labels, data);
+  }
+
+  getIndustryComparisonObject(orgList: Organization []) {
+    const labels = [];
+    const data = [];
+    const dataMap = this.getIndustryComparisonMap(orgList);
+    dataMap.forEach((value: number, key: string) => {
+      if (value > 300) { // to eliminate low range industries
+        labels.push(key);
+        data.push(value);
+      }
+    });
+    return this.graphDataService.getRadarChartDataObject('Breaches per industry', labels, data);
+  }
+
+  getYearComparisonMap(incidentList: Incident [], yearRange: YearRange) {
     const dataMap = new Map<string, number>();
     if (yearRange && incidentList) {
       for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
@@ -49,17 +97,10 @@ export class GlobalDashboardComponent implements OnInit {
         dataMap.set(year.toString(), numIncidentsPerYear)
       }
     }
-
-    const labels = [];
-    const data = [];
-    dataMap.forEach((value: number, key: string) => {
-      labels.push(key);
-      data.push(value);
-    });
-    return this.graphDataService.getlineChartDataObject('Incidents', labels, data);
+    return dataMap;
   }
 
-  getRecordsLostComparisonObject(incidentList: Incident [], yearRange: YearRange) {
+  getRecordsLostComparisonMap(incidentList: Incident [], yearRange: YearRange) {
     const dataMap = new Map<string, number>();
     if (yearRange && incidentList) {
       for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
@@ -72,17 +113,10 @@ export class GlobalDashboardComponent implements OnInit {
         dataMap.set(year.toString(), numRecordsPerYear);
       }
     }
-
-    const labels = [];
-    const data = [];
-    dataMap.forEach((value: number, key: string) => {
-      labels.push(key);
-      data.push(value);
-    });
-    return this.graphDataService.getlineChartDataObject('Records lost', labels, data);
+    return dataMap;
   }
 
-  getActorPatternComparisonObject(incidentList: Incident [], actorList: Actor []) {
+  getActorPatternComparisonMap(incidentList: Incident [], actorList: Actor []) {
     const dataMap = new Map<string, number>();
     if (actorList && incidentList) {
       for (const incident of incidentList) {
@@ -98,21 +132,11 @@ export class GlobalDashboardComponent implements OnInit {
         }
       }
     }
-
-    const labels = [];
-    const data = [];
-    dataMap.forEach((value: number, key: string) => {
-      if (value > 250) { // to eliminate low range actor patterns
-        labels.push(key);
-        data.push(value);
-      }
-    });
-    return this.graphDataService.getPieChartDataObject(labels, data);
+    return dataMap;
   }
 
-  getIndustryComparisonObject(orgList: Organization []) {
+  getIndustryComparisonMap(orgList: Organization []) {
     const dataMap = new Map<string, number>();
-
     for (const org of orgList) {
       if (dataMap.get(org.orgIndustry)) {
         dataMap.set(org.orgIndustry, dataMap.get(org.orgIndustry) + 1);
@@ -120,17 +144,9 @@ export class GlobalDashboardComponent implements OnInit {
         dataMap.set(org.orgIndustry, 1);
       }
     }
-
-    const labels = [];
-    const data = [];
-    dataMap.forEach((value: number, key: string) => {
-      if (value > 300) { // to eliminate low range insustries
-        labels.push(key);
-        data.push(value);
-      }
-    });
-    return this.graphDataService.getRadarChartDataObject('Breaches per industry', labels, data);
+    return dataMap;
   }
+
 
   getLeftPositionOption() {
     return this.graphDataService.getLegendPositionLeftOption();
