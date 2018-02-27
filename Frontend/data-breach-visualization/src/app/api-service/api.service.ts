@@ -5,9 +5,9 @@ import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {YearRange} from '../dto/YearRange';
-import {Incident} from '../models/Incident';
-import {Organization} from '../models/Organization';
-import {Actor} from '../models/Actor';
+import {Incident} from '../model/Incident';
+import {Organization} from '../model/Organization';
+import {Actor} from '../model/Actor';
 
 const API_URL = environment.apiUrl;
 

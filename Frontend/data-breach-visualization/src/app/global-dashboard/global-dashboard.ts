@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../api-service/api.service";
-import {Actor} from "../models/Actor";
-import {Incident} from "../models/Incident";
-import {Organization} from "../models/Organization";
+import {Actor} from "../model/Actor";
+import {Incident} from "../model/Incident";
+import {Organization} from "../model/Organization";
 import {GraphDataService} from "../graph-data-service/graph-data.service";
 import {YearRange} from "../dto/YearRange";
 
