@@ -8,6 +8,8 @@ node_js:
   - "7"
 jdk:
   - oraclejdk8
+addons:
+  chrome: stable
 before_script: 
   - cd  Frontend/data-breach-visualization/src
   - npm install -g @angular/cli
