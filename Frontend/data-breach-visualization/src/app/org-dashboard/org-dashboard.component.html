@@ -83,7 +83,7 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
     </mat-table>
     <mat-paginator #paginator
-                   [length]="dataSource?.filteredData.length"
+                   [length]="paginationLength"
                    [pageSize]="5"
                    [pageSizeOptions]="[5, 10, 20]"
                    [showFirstLastButtons]="true">

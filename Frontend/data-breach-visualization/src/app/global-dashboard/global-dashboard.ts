@@ -26,36 +26,38 @@ export class GlobalDashboardComponent implements OnInit {
   constructor(private apiService: ApiService, private graphDataService: GraphDataService) {}
 
   ngOnInit() {
-    this.apiService.getAllIncidents()
-      .subscribe(
-        (incidents) => {
-          this.incidentList = incidents;
-          this.getYearComparisonData();
-          this.getRecordsLostComparisonData();
-          this.apiService.getAllActors()
-            .subscribe(
-              (actors) => {
-                this.actorList = actors;
-                this.getActorPatternComparison();
-              }
-            );
-        }
-      );
+    this.loadAllIncidents()
+    this.loadAllOrgs();
+  }
 
-    this.apiService.getAllOrgs()
-      .subscribe(
-        (orgs) => {
-          this.orgList = orgs;
-          this.getIndustryComparisonData();
-        }
-      );
+  loadAllIncidents() {
+    this.apiService.getAllIncidents().then((result) => {
+      this.incidentList = result;
+      this.loadIncidentYearRange();
+      this.loadAllActors();
+    }).catch((error) => console.error(error));
+  }
 
-    this.apiService.getIncidentYearRange()
-      .subscribe(
-        (range) => {
-          this.yearRange = range;
-        }
-      );
+  loadAllActors() {
+    this.apiService.getAllActors().then((result) => {
+      this.actorList = result;
+      this.getActorPatternComparison();
+    });
+  }
+
+  loadAllOrgs() {
+    this.apiService.getAllOrgs().subscribe((result) => {
+      this.orgList = result;
+      this.getIndustryComparisonData();
+    });
+  }
+
+  loadIncidentYearRange() {
+    this.apiService.getIncidentYearRange().subscribe((result) => {
+      this.yearRange = result;
+      this.getYearComparisonData();
+      this.getRecordsLostComparisonData();
+    });
   }
 
   getYearComparisonData() {
@@ -121,7 +123,7 @@ export class GlobalDashboardComponent implements OnInit {
     this.actorComparison = this.graphDataService.getPieChartDataObject(typeLabels, typeCounts);
   }
 
-  getIndustryComparisonData(){
+  getIndustryComparisonData() {
     const dataMap = new Map<string, number>();
 
     for (const org of this.orgList) {
@@ -144,7 +146,7 @@ export class GlobalDashboardComponent implements OnInit {
     this.industryComparisonData = this.graphDataService.getRadarChartDataObject('Breaches per industry', industryLabels, industryCounts);
   }
 
-  getLeftPositionOption(){
+  getLeftPositionOption() {
     return this.graphDataService.getLegendPositionLeftOption();
   }
 }

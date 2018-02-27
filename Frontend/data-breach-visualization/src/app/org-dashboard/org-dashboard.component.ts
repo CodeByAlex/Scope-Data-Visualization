@@ -27,20 +27,16 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   orgName: string = null;
   orgIndustry: string = null;
 
+  paginationLength: number =0;
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private apiService: ApiService, private graphDataService: GraphDataService, private orgDataService: OrgDataService) {
-  }
+  constructor(private apiService: ApiService, private graphDataService: GraphDataService, private orgDataService: OrgDataService) {}
 
   ngOnInit() {
-    this.apiService.getIncidentYearRange()
-      .subscribe(
-        (range) => {
-          this.yearRange = range;
-        }
-      );
+    this.loadYearRange();
     this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, new MatSort());
   }
 
@@ -51,20 +47,28 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   onRowClick(row) {
     this.orgName = row.orgName;
     this.orgIndustry = row.orgIndustry;
-      this.apiService.getIncidentsByOrgId(row.orgId)
-       .subscribe(
-       (incidents) => {
-         this.incidentList = incidents;
-         this.getYearComparisonData();
-         this.getDataLostTypeComparison();
-       }
-       );
+    this.loadIncidentsByOrgId(row.orgId);
+  }
+
+  loadIncidentsByOrgId(orgId: number) {
+    this.apiService.getIncidentsByOrgId(orgId).subscribe((incidents) => {
+      this.incidentList = incidents;
+      this.getYearComparisonData();
+      this.getDataLostTypeComparison();
+    });
+  }
+
+  loadYearRange() {
+    this.apiService.getIncidentYearRange().subscribe((result) => {
+      this.yearRange = result;
+    });
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+    this.paginationLength = this.dataSource.filteredData.length;
   }
 
   getYearComparisonData() {
@@ -104,5 +108,4 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
 
     this.dataLostTypeComparison = this.graphDataService.getPieChartDataObject(typeLabels, typeCounts);
   }
-
 }

@@ -15,65 +15,60 @@ const API_URL = environment.apiUrl;
 export class ApiService {
 
   // used for in memory caching since all data is static
-  allIncidents: Observable<Incident[]> = null;
+  allIncidents: Promise<Incident[]> = null;
+  allActors: Promise<Actor[]> = null;
   allOrgs: Observable<Organization[]> = null;
-  allActors: Observable<Actor[]> = null;
 
-  yearRange: YearRange;
+  yearRange: Observable<YearRange>;
   constructor(private http: Http) { }
 
   public getAllOrgs(): Observable<Organization[]> {
     if (this.allOrgs == null) {
-      this.allOrgs = this.http.get(API_URL + '/breach-data/org-info')
-        .map(response => {
-          const organizations = response.json();
-          return organizations.map(org => new Organization(org.orgId, org.orgName, org.orgIndustry, org.numIncidents, org.numRecordsLost))
-        }).catch(this.handleError)
+      this.allOrgs = this.http.get(API_URL + '/breach-data/org-info').map(response => {
+          return response.json().map(org => new Organization(org.orgId, org.orgName, org.orgIndustry, org.numIncidents, org.numRecordsLost))
+      }).catch(this.handleError)
     }
     return this.allOrgs;
   }
 
-  public getAllIncidents(): Observable<Incident[]> {
+  public getIncidentsByOrgId(orgId: number): Observable<Incident[]> {
+    return this.http.get(API_URL + '/breach-data/incident-info/by-org-id?org_id=' + orgId).map(res => {
+      return res.json().map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
+        incident.reportMonth, incident.reportYear, incident.numRecordsLost,
+        incident.dataLostType, incident.country, incident.state, incident.victimType,
+        incident.summary, incident.references))
+    }).catch(this.handleError)
+  }
+
+  public getAllIncidents(): Promise<Incident[]> {
     if (this.allIncidents == null) {
-      this.allIncidents = this.http.get(API_URL + '/breach-data/incident-info')
-        .map(response => {
-          const incidents = response.json();
-          return incidents.map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
-            incident.reportMonth, incident.reportYear, incident.numRecordsLost,
-            incident.dataLostType, incident.country, incident.state, incident.victimType,
-            incident.summary, incident.references))
-        }).catch(this.handleError)
+      this.allIncidents = this.http.get(API_URL + '/breach-data/incident-info').toPromise().then((res) => {
+          return res.json().map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
+            incident.reportMonth, incident.reportYear, incident.numRecordsLost, incident.dataLostType, incident.country,
+            incident.state, incident.victimType, incident.summary, incident.references))
+        }).catch(this.handleError);
     }
     return this.allIncidents;
   }
 
-  public getIncidentsByOrgId(orgId: number): Observable<Incident[]>{
-    return this.http.get(API_URL + '/breach-data/incident-info/by-org-id?org_id=' + orgId)
-      .map(response => {
-        const incidents = response.json();
-        return incidents.map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
-          incident.reportMonth, incident.reportYear, incident.numRecordsLost,
-          incident.dataLostType, incident.country, incident.state, incident.victimType,
-          incident.summary, incident.references))
-      }).catch(this.handleError)
-  }
-
-  public getAllActors(): Observable<Actor[]> {
+  public getAllActors(): Promise<Actor[]> {
     if (this.allActors == null) {
-      this.allActors = this.http.get(API_URL + '/breach-data/actor-info')
-        .map(response => {
-          const actors = response.json();
-          return actors.map(actor => new Actor(actor.actorId, actor.actorType, actor.actorPattern))
-        }).catch(this.handleError)
+      this.allActors = this.http.get(API_URL + '/breach-data/actor-info').toPromise().then((res) => {
+          return res.json().map(actor => new Actor(actor.actorId, actor.actorType, actor.actorPattern))
+      }).catch(this.handleError);
     }
     return this.allActors;
   }
 
   public getIncidentYearRange(): Observable<YearRange> {
-    return this.http.get(API_URL + '/breach-data/incident-info/year-range')
-      .map(function(res) {
-      return new YearRange(res.json().minYear, res.json().maxYear);
-    }).catch(this.handleError);
+    if (this.yearRange == null) {
+      this.yearRange = this.http.get(API_URL + '/breach-data/incident-info/year-range').map(
+        function (res) {
+          return new YearRange(res.json().minYear, res.json().maxYear);
+        }
+      ).catch(this.handleError);
+    }
+    return this.yearRange;
   }
 
   private handleError (error: Response | any) {

@@ -20,3 +20,4 @@ after_success:
   - cd  ../../Frontend/data-breach-visualization
   - docker build -t sec-viz-front .
   - echo 'Docker images built successfully'
+  
