@@ -29,7 +29,6 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
   constructor(private apiService: ApiService, private graphDataService: GraphDataService, private orgDataService: OrgDataService) {}
 
   ngOnInit() {
@@ -60,7 +59,6 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-    this.paginationLength = this.dataSource.filteredData.length;
   }
 
   getYearComparisonObject(incidentList: Incident[], yearRange: YearRange) {
