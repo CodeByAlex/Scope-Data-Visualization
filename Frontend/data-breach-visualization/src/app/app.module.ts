@@ -9,7 +9,7 @@ import { GlobalDashboardComponent } from './global-dashboard/global-dashboard';
 import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
 import {
   MatCardModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
-  MatSortModule
+  MatSortModule, MatProgressSpinnerModule
 } from "@angular/material";
 import { NavigationComponent } from './navigation/navigation.component';
 import {ChartModule} from '../../node_modules/primeng/chart';

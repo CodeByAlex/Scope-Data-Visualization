@@ -16,7 +16,7 @@ export class OrgDataSource extends DataSource<Organization> {
 
   constructor(private orgDatabase: OrgDataService, private _paginator: MatPaginator, private _sort:MatSort) {
     super();
-    this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
+    this._filterChange.subscribe(() => {this._paginator.pageIndex = 0});
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */

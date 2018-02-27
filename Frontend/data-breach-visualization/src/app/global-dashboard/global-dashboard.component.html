@@ -9,7 +9,7 @@
           <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
-          <p-chart type="line" [data]="yearComparisonData"></p-chart>
+          <p-chart type="line" [data]="yearComparisonObject"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -21,7 +21,7 @@
           <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
-          <p-chart type="doughnut" [data]="actorComparison" [options]="getLeftPositionOption()"></p-chart>
+          <p-chart type="doughnut" [data]="actorComparisonObject" [options]="getLeftPositionOption()"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -35,7 +35,7 @@
           <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
-          <p-chart type="radar" [data]="industryComparisonData"></p-chart>
+          <p-chart type="radar" [data]="industryComparisonObject"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -47,7 +47,7 @@
           <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
-          <p-chart type="line" [data]="recordsLostComparisonData"></p-chart>
+          <p-chart type="line" [data]="recordsLostComparisonObject"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>

@@ -19,7 +19,7 @@
           <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
-          <p-chart type="line" [data]="yearComparisonData"></p-chart>
+          <p-chart type="line" [data]="yearComparisonObject"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -31,7 +31,7 @@
           <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
-          <p-chart type="pie" [data]="dataLostTypeComparison"></p-chart>
+          <p-chart type="pie" [data]="dataLostTypeComparisonObject"></p-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -82,12 +82,12 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
     </mat-table>
-    <mat-paginator #paginator
-                   [length]="paginationLength"
-                   [pageSize]="5"
-                   [pageSizeOptions]="[5, 10, 20]"
-                   [showFirstLastButtons]="true">
-    </mat-paginator>
+      <mat-paginator #paginator
+                     [length]="orgDataService.data.length"
+                     [pageSize]="5"
+                     [pageSizeOptions]="[5, 10, 20]"
+                     [showFirstLastButtons]="true">
+      </mat-paginator>
   </div>
 </div>
 <br>

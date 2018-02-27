@@ -12,109 +12,105 @@ import {YearRange} from "../dto/YearRange";
   styleUrls: ['./global-dashboard.component.scss']
 })
 export class GlobalDashboardComponent implements OnInit {
-  yearComparisonData = {};
-  actorComparison = {};
-  industryComparisonData = {};
-  recordsLostComparisonData = {};
+  yearComparisonObject = {};
+  actorComparisonObject = {};
+  industryComparisonObject = {};
+  recordsLostComparisonObject = {};
 
   constructor(private apiService: ApiService, private graphDataService: GraphDataService) {}
 
   ngOnInit() {
-    this.loadAllIncidents()
-    this.loadAllOrgs();
-  }
-
-  loadAllIncidents() {
     this.apiService.getAllIncidents().then((incidents) => {
-      this.loadIncidentYearRange(incidents);
-      this.loadAllActors(incidents); //create actor pattern comparison with incident and actor data
-    });
-  }
+      this.apiService.getIncidentYearRange().subscribe((yearRange) => {
+        this.yearComparisonObject = this.getYearComparisonObject(incidents, yearRange);
+        this.recordsLostComparisonObject = this.getRecordsLostComparisonObject(incidents, yearRange);
+      });
 
-  loadAllActors(incidentList: Incident []) {
-    this.apiService.getAllActors().then((actors) => {
-      this.getActorPatternComparison(incidentList, actors);
+      this.apiService.getAllActors().then((actors) => {
+        this.actorComparisonObject = this.getActorPatternComparisonObject(incidents, actors);
+      });
     });
-  }
 
-  loadAllOrgs() {
     this.apiService.getAllOrgs().subscribe((orgs) => {
-      this.getIndustryComparisonData(orgs);
+      this.industryComparisonObject = this.getIndustryComparisonObject(orgs);
     });
   }
 
-  loadIncidentYearRange(incidentList: Incident []) {
-    this.apiService.getIncidentYearRange().subscribe((yearRange) => {
-      this.getYearComparisonData(incidentList, yearRange);
-      this.getRecordsLostComparisonData(incidentList, yearRange);
-    })
-  }
-
-  getYearComparisonData(incidentList: Incident [], yearRange: YearRange) {
-    const labels = [];
-    const orgYearData = [];
+  getYearComparisonObject(incidentList: Incident [], yearRange: YearRange) {
+    const dataMap = new Map<string, number>();
     if (yearRange && incidentList) {
       for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
-        labels.push(year.toString());
         let numIncidentsPerYear = 0;
         for (const incident of incidentList) {
           if (incident.reportYear == year) {
             numIncidentsPerYear += 1;
           }
         }
-        orgYearData.push(numIncidentsPerYear)
+        dataMap.set(year.toString(), numIncidentsPerYear)
       }
     }
 
-    this.yearComparisonData = this.graphDataService.getlineChartDataObject('Incidents', labels, orgYearData);
-  }
-
-  getRecordsLostComparisonData(incidentList: Incident [], yearRange: YearRange) {
     const labels = [];
-    const recordYearData = [];
-
-    for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
-      labels.push(year.toString());
-      let numRecordsPerYear = 0;
-      for (const incident of incidentList) {
-        if (incident.reportYear == year) {
-          numRecordsPerYear += incident.numRecordsLost;
-        }
-      }
-      recordYearData.push(numRecordsPerYear)
-    }
-
-    this.recordsLostComparisonData = this.graphDataService.getlineChartDataObject('Records lost', labels, recordYearData);
+    const data = [];
+    dataMap.forEach((value: number, key: string) => {
+      labels.push(key);
+      data.push(value);
+    });
+    return this.graphDataService.getlineChartDataObject('Incidents', labels, data);
   }
 
-  getActorPatternComparison(incidentList: Incident [], actorList: Actor []) {
+  getRecordsLostComparisonObject(incidentList: Incident [], yearRange: YearRange) {
     const dataMap = new Map<string, number>();
-
-    for (const incident of incidentList) {
-      for (const actor of actorList) {
-        if (incident.actorId == actor.actorId) {
-          if (dataMap.get(actor.actorPattern)) {
-            dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
-          } else {
-            dataMap.set(actor.actorPattern, 1);
+    if (yearRange && incidentList) {
+      for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
+        let numRecordsPerYear = 0;
+        for (const incident of incidentList) {
+          if (incident.reportYear == year) {
+            numRecordsPerYear += incident.numRecordsLost;
           }
-          break;
+        }
+        dataMap.set(year.toString(), numRecordsPerYear);
+      }
+    }
+
+    const labels = [];
+    const data = [];
+    dataMap.forEach((value: number, key: string) => {
+      labels.push(key);
+      data.push(value);
+    });
+    return this.graphDataService.getlineChartDataObject('Records lost', labels, data);
+  }
+
+  getActorPatternComparisonObject(incidentList: Incident [], actorList: Actor []) {
+    const dataMap = new Map<string, number>();
+    if (actorList && incidentList) {
+      for (const incident of incidentList) {
+        for (const actor of actorList) {
+          if (incident.actorId == actor.actorId) {
+            if (dataMap.get(actor.actorPattern)) {
+              dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
+            } else {
+              dataMap.set(actor.actorPattern, 1);
+            }
+            break;
+          }
         }
       }
     }
-    const typeLabels = [];
-    const typeCounts = [];
+
+    const labels = [];
+    const data = [];
     dataMap.forEach((value: number, key: string) => {
-      if (value > 250) {
-        typeLabels.push(key);
-        typeCounts.push(value);
+      if (value > 250) { // to eliminate low range actor patterns
+        labels.push(key);
+        data.push(value);
       }
     });
-
-    this.actorComparison = this.graphDataService.getPieChartDataObject(typeLabels, typeCounts);
+    return this.graphDataService.getPieChartDataObject(labels, data);
   }
 
-  getIndustryComparisonData(orgList: Organization []) {
+  getIndustryComparisonObject(orgList: Organization []) {
     const dataMap = new Map<string, number>();
 
     for (const org of orgList) {
@@ -124,17 +120,16 @@ export class GlobalDashboardComponent implements OnInit {
         dataMap.set(org.orgIndustry, 1);
       }
     }
-    const industryLabels = [];
-    const industryCounts = [];
-    const otherIndustries = 0;
+
+    const labels = [];
+    const data = [];
     dataMap.forEach((value: number, key: string) => {
       if (value > 300) { // to eliminate low range insustries
-        industryLabels.push(key);
-        industryCounts.push(value);
+        labels.push(key);
+        data.push(value);
       }
     });
-
-    this.industryComparisonData = this.graphDataService.getRadarChartDataObject('Breaches per industry', industryLabels, industryCounts);
+    return this.graphDataService.getRadarChartDataObject('Breaches per industry', labels, data);
   }
 
   getLeftPositionOption() {

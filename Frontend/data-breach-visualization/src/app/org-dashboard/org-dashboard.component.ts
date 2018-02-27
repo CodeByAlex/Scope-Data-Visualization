@@ -17,17 +17,14 @@ import {YearRange} from "../dto/YearRange";
 })
 export class OrgDashboardComponent implements OnInit, AfterViewInit {
   displayedColumns = ['orgName', 'orgIndustry', 'numIncidents', 'numRecordsLost'];
-  yearComparisonData = {};
-  dataLostTypeComparison = {};
-  incidentList: Incident [] = [];
+  yearComparisonObject = {};
+  dataLostTypeComparisonObject = {};
   yearRange: YearRange;
 
   dataSource = null;
 
   orgName: string = null;
   orgIndustry: string = null;
-
-  paginationLength: number =0;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,7 +33,9 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   constructor(private apiService: ApiService, private graphDataService: GraphDataService, private orgDataService: OrgDataService) {}
 
   ngOnInit() {
-    this.loadYearRange();
+    this.apiService.getIncidentYearRange().subscribe((yearRange) => {
+      this.yearRange = yearRange;
+    });
     this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, new MatSort());
   }
 
@@ -52,15 +51,8 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
 
   loadIncidentsByOrgId(orgId: number) {
     this.apiService.getIncidentsByOrgId(orgId).subscribe((incidents) => {
-      this.incidentList = incidents;
-      this.getYearComparisonData();
-      this.getDataLostTypeComparison();
-    });
-  }
-
-  loadYearRange() {
-    this.apiService.getIncidentYearRange().subscribe((result) => {
-      this.yearRange = result;
+      this.dataLostTypeComparisonObject = this.getDataLostTypeComparisonObject(incidents);
+      this.yearComparisonObject = this.getYearComparisonObject(incidents, this.yearRange);
     });
   }
 
@@ -71,41 +63,48 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
     this.paginationLength = this.dataSource.filteredData.length;
   }
 
-  getYearComparisonData() {
-    const labels = [];
-    const orgYearData = [];
-
-    for (let year = this.yearRange.minYear; year <= this.yearRange.maxYear; year++) {
-      labels.push(year.toString());
-      let numIncidentsPerYear = 0;
-      for (const incident of this.incidentList) {
-        if (incident.reportYear == year) {
-          numIncidentsPerYear += 1;
+  getYearComparisonObject(incidentList: Incident[], yearRange: YearRange) {
+    const dataMap = new Map<string, number>();
+    if (yearRange && incidentList) {
+      for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
+        let numIncidentsPerYear = 0;
+        for (const incident of incidentList) {
+          if (incident.reportYear == year) {
+            numIncidentsPerYear += 1;
+          }
         }
+        dataMap.set(year.toString(), numIncidentsPerYear);
       }
-      orgYearData.push(numIncidentsPerYear)
     }
 
-    this.yearComparisonData = this.graphDataService.getlineChartDataObject('Incidents', labels, orgYearData);
+    const labels = [];
+    const data = [];
+    dataMap.forEach((value: number, key: string) => {
+      labels.push(key);
+      data.push(value);
+    });
+    return this.graphDataService.getlineChartDataObject('Incidents', labels, data);
   }
 
-  getDataLostTypeComparison() {
+  getDataLostTypeComparisonObject(incidentList: Incident[]) {
     const dataMap = new Map<string, number>();
-
-    for (const incident of this.incidentList) {
-      if (dataMap.get(incident.dataLostType)) {
-        dataMap.set(incident.dataLostType, dataMap.get(incident.dataLostType) + 1);
-      } else {
-        dataMap.set(incident.dataLostType, 1);
+    if (incidentList) {
+      for (const incident of incidentList) {
+        if (dataMap.get(incident.dataLostType)) {
+          dataMap.set(incident.dataLostType, dataMap.get(incident.dataLostType) + 1);
+        } else {
+          dataMap.set(incident.dataLostType, 1);
+        }
       }
     }
-    const typeLabels = [];
-    const typeCounts = [];
+
+    const labels = [];
+    const data = [];
     dataMap.forEach((value: number, key: string) => {
-      typeLabels.push(key);
-      typeCounts.push(value);
+      labels.push(key);
+      data.push(value);
     });
 
-    this.dataLostTypeComparison = this.graphDataService.getPieChartDataObject(typeLabels, typeCounts);
+    return this.graphDataService.getPieChartDataObject(labels, data);
   }
 }
