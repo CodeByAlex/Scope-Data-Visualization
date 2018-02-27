@@ -14,6 +14,8 @@ before_script:
   - npm install 
   - ng build
   - echo 'Front end build successful'
+script:
+  - ng test
 after_success: 
   - cd ../../Backend/security-breach-data
   - docker build -t sec-viz-back .

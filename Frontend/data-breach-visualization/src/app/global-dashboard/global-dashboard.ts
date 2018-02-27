@@ -135,4 +135,15 @@ export class GlobalDashboardComponent implements OnInit {
   getLeftPositionOption() {
     return this.graphDataService.getLegendPositionLeftOption();
   }
+
+  public geoChartData = {
+    chartType:'GeoChart',
+    dataTable:[
+      ['country', 'Population'],
+      ['United states', 456789]
+    ],
+
+  };
+
+
 }
