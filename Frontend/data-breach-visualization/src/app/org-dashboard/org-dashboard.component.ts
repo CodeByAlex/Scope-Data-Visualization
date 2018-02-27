@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
-import {Organization} from "../model/Organization";
-import {ApiService} from "../api-service/api.service";
-import {MatTableDataSource, MatSort, MatPaginator} from "@angular/material";
-import {OrgDataSource} from "./org-data-source";
-import {Incident} from "../model/Incident";
-import {GraphDataService} from "../graph-data-service/graph-data.service";
-import {Observable} from "rxjs/Observable";
-import {OrgDataService} from "./org-data-service";
-import {merge} from "rxjs/operators";
-import {YearRange} from "../dto/YearRange";
+import {Organization} from '../model/Organization';
+import {ApiService} from '../api-service/api.service';
+import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
+import {OrgDataSource} from './org-data-source';
+import {Incident} from '../model/Incident';
+import {GraphDataService} from '../graph-data-service/graph-data.service';
+import {Observable} from 'rxjs/Observable';
+import {OrgDataService} from './org-data-service';
+import {merge} from 'rxjs/operators';
+import {YearRange} from '../dto/YearRange';
 
 @Component({
   selector: 'org-dashboard',
@@ -42,7 +42,7 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
     this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, this.sort);
   }
 
-  onRowClick(row) {
+  onRowClick(row: Organization) {
     this.orgName = row.orgName;
     this.orgIndustry = row.orgIndustry;
     this.loadIncidentsByOrgId(row.orgId);
@@ -62,6 +62,28 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   }
 
   getYearComparisonObject(incidentList: Incident[], yearRange: YearRange) {
+    const labels = [];
+    const data = [];
+    const dataMap = this.getYearComparisonMap(incidentList, yearRange);
+    dataMap.forEach((value: number, key: string) => {
+      labels.push(key);
+      data.push(value);
+    });
+    return this.graphDataService.getlineChartDataObject('Incidents', labels, data);
+  }
+
+  getDataLostTypeComparisonObject(incidentList: Incident[]) {
+    const labels = [];
+    const data = [];
+    const dataMap = this.getDataLostTypeComparisonMap(incidentList);
+    dataMap.forEach((value: number, key: string) => {
+      labels.push(key);
+      data.push(value);
+    });
+    return this.graphDataService.getPieChartDataObject(labels, data);
+  }
+
+  getYearComparisonMap(incidentList: Incident[], yearRange: YearRange): Map<string, number> {
     const dataMap = new Map<string, number>();
     if (yearRange && incidentList) {
       for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
@@ -74,17 +96,10 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
         dataMap.set(year.toString(), numIncidentsPerYear);
       }
     }
-
-    const labels = [];
-    const data = [];
-    dataMap.forEach((value: number, key: string) => {
-      labels.push(key);
-      data.push(value);
-    });
-    return this.graphDataService.getlineChartDataObject('Incidents', labels, data);
+    return dataMap;
   }
 
-  getDataLostTypeComparisonObject(incidentList: Incident[]) {
+  getDataLostTypeComparisonMap(incidentList: Incident[]): Map<string, number> {
     const dataMap = new Map<string, number>();
     if (incidentList) {
       for (const incident of incidentList) {
@@ -95,14 +110,6 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
         }
       }
     }
-
-    const labels = [];
-    const data = [];
-    dataMap.forEach((value: number, key: string) => {
-      labels.push(key);
-      data.push(value);
-    });
-
-    return this.graphDataService.getPieChartDataObject(labels, data);
+    return dataMap;
   }
 }

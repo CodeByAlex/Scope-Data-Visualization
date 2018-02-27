@@ -1,23 +1,23 @@
 
-export class Incident{
-  incidentId:number;
-  orgId:number;
+export class Incident {
+  incidentId: number;
+  orgId: number;
   actorId: number;
-  reportDay:number;
-  reportMonth:number;
-  reportYear:number;
+  reportDay: number;
+  reportMonth: number;
+  reportYear: number;
 
-  numRecordsLost:number;
-  dataLostType:string;
-  country:string;
-  state:string;
-  victimType:string;
-  summary:string;
-  references:string;
+  numRecordsLost: number;
+  dataLostType: string;
+  country: string;
+  state: string;
+  victimType: string;
+  summary: string;
+  references: string;
 
-  constructor(incidentId:number, orgId:number, actorId: number, reportDay:number, reportMonth:number, reportYear:number,
-              numRecordsLost:number, dataLostType:string, country:string, state:string, victimType:string,
-              summary:string, references:string) {
+  constructor(incidentId?: number, orgId?: number, actorId?: number, reportDay?: number, reportMonth?: number, reportYear?: number,
+              numRecordsLost?: number, dataLostType?: string, country?: string, state?: string, victimType?: string,
+              summary?: string, references?: string) {
     this.incidentId = incidentId;
     this.orgId = orgId;
     this.actorId = actorId;

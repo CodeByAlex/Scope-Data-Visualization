@@ -78,14 +78,4 @@ export class GraphDataService {
     return dataObject;
   }
 
-  getGeoChartDataObject(){
-  const dataObject = {
-      chartType:'GeoChart',
-      dataTable:[
-        ['country', 'Incidents'],
-        ['United states', 400]
-      ],
-    };
-  return dataObject;
-  }
 }

@@ -18,8 +18,8 @@ export class ApiService {
   allIncidents: Promise<Incident[]> = null;
   allActors: Promise<Actor[]> = null;
   allOrgs: Observable<Organization[]> = null;
-
   yearRange: Observable<YearRange>;
+
   constructor(private http: Http) { }
 
   public getAllOrgs(): Observable<Organization[]> {
