@@ -12,12 +12,6 @@ import {YearRange} from "../dto/YearRange";
   styleUrls: ['./global-dashboard.component.scss']
 })
 export class GlobalDashboardComponent implements OnInit {
-  actorList: Actor [];
-  incidentList: Incident [];
-  orgList: Organization [];
-
-  yearRange: YearRange;
-
   yearComparisonData = {};
   actorComparison = {};
   industryComparisonData = {};
@@ -31,61 +25,58 @@ export class GlobalDashboardComponent implements OnInit {
   }
 
   loadAllIncidents() {
-    this.apiService.getAllIncidents().then((result) => {
-      this.incidentList = result;
-      this.loadIncidentYearRange();
-      this.loadAllActors();
-    }).catch((error) => console.error(error));
+    this.apiService.getAllIncidents().then((incidents) => {
+      this.loadIncidentYearRange(incidents);
+      this.loadAllActors(incidents); //create actor pattern comparison with incident and actor data
+    });
   }
 
-  loadAllActors() {
-    this.apiService.getAllActors().then((result) => {
-      this.actorList = result;
-      this.getActorPatternComparison();
+  loadAllActors(incidentList: Incident []) {
+    this.apiService.getAllActors().then((actors) => {
+      this.getActorPatternComparison(incidentList, actors);
     });
   }
 
   loadAllOrgs() {
-    this.apiService.getAllOrgs().subscribe((result) => {
-      this.orgList = result;
-      this.getIndustryComparisonData();
+    this.apiService.getAllOrgs().subscribe((orgs) => {
+      this.getIndustryComparisonData(orgs);
     });
   }
 
-  loadIncidentYearRange() {
-    this.apiService.getIncidentYearRange().subscribe((result) => {
-      this.yearRange = result;
-      this.getYearComparisonData();
-      this.getRecordsLostComparisonData();
-    });
+  loadIncidentYearRange(incidentList: Incident []) {
+    this.apiService.getIncidentYearRange().subscribe((yearRange) => {
+      this.getYearComparisonData(incidentList, yearRange);
+      this.getRecordsLostComparisonData(incidentList, yearRange);
+    })
   }
 
-  getYearComparisonData() {
+  getYearComparisonData(incidentList: Incident [], yearRange: YearRange) {
     const labels = [];
     const orgYearData = [];
-
-    for (let year = this.yearRange.minYear; year <= this.yearRange.maxYear; year++) {
-      labels.push(year.toString());
-      let numIncidentsPerYear = 0;
-      for (const incident of this.incidentList) {
-        if (incident.reportYear == year) {
-          numIncidentsPerYear += 1;
+    if (yearRange && incidentList) {
+      for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
+        labels.push(year.toString());
+        let numIncidentsPerYear = 0;
+        for (const incident of incidentList) {
+          if (incident.reportYear == year) {
+            numIncidentsPerYear += 1;
+          }
         }
+        orgYearData.push(numIncidentsPerYear)
       }
-      orgYearData.push(numIncidentsPerYear)
     }
 
     this.yearComparisonData = this.graphDataService.getlineChartDataObject('Incidents', labels, orgYearData);
   }
 
-  getRecordsLostComparisonData() {
+  getRecordsLostComparisonData(incidentList: Incident [], yearRange: YearRange) {
     const labels = [];
     const recordYearData = [];
 
-    for (let year = this.yearRange.minYear; year <= this.yearRange.maxYear; year++) {
+    for (let year = yearRange.minYear; year <= yearRange.maxYear; year++) {
       labels.push(year.toString());
       let numRecordsPerYear = 0;
-      for (const incident of this.incidentList) {
+      for (const incident of incidentList) {
         if (incident.reportYear == year) {
           numRecordsPerYear += incident.numRecordsLost;
         }
@@ -96,11 +87,11 @@ export class GlobalDashboardComponent implements OnInit {
     this.recordsLostComparisonData = this.graphDataService.getlineChartDataObject('Records lost', labels, recordYearData);
   }
 
-  getActorPatternComparison() {
+  getActorPatternComparison(incidentList: Incident [], actorList: Actor []) {
     const dataMap = new Map<string, number>();
 
-    for (const incident of this.incidentList) {
-      for (const actor of this.actorList) {
+    for (const incident of incidentList) {
+      for (const actor of actorList) {
         if (incident.actorId == actor.actorId) {
           if (dataMap.get(actor.actorPattern)) {
             dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
@@ -114,7 +105,7 @@ export class GlobalDashboardComponent implements OnInit {
     const typeLabels = [];
     const typeCounts = [];
     dataMap.forEach((value: number, key: string) => {
-      if (value > 260) {
+      if (value > 250) {
         typeLabels.push(key);
         typeCounts.push(value);
       }
@@ -123,10 +114,10 @@ export class GlobalDashboardComponent implements OnInit {
     this.actorComparison = this.graphDataService.getPieChartDataObject(typeLabels, typeCounts);
   }
 
-  getIndustryComparisonData() {
+  getIndustryComparisonData(orgList: Organization []) {
     const dataMap = new Map<string, number>();
 
-    for (const org of this.orgList) {
+    for (const org of orgList) {
       if (dataMap.get(org.orgIndustry)) {
         dataMap.set(org.orgIndustry, dataMap.get(org.orgIndustry) + 1);
       } else {
