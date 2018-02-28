@@ -34,7 +34,7 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   }));
 
- /* describe('incidents', () => {
+  describe('incidents', () => {
 
     beforeEach(inject([MockBackend], (mockBackend: MockBackend) => {
 
@@ -144,8 +144,6 @@ describe('ApiService', () => {
       expect(this.spyConnection.calls.argsFor(0)[0].url).toEqual('http://localhost:8080/breach-data/org-info');
 
     }));
-  });*/
-
-  
+  });
 
 });
