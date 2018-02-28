@@ -3,6 +3,13 @@ $nav-width-desktop : 40em;
 $nav-width-mobile  : 25em;
 $nav-item-nb       : 6;
 
+.about-wrapper{
+  padding: 12px;
+  font-family: 'Poiret One', cursive;
+  //font-family: 'Stardos Stencil', cursive;
+  font-size: 30px;
+}
+
 input {
   position: fixed;
   opacity: 0;

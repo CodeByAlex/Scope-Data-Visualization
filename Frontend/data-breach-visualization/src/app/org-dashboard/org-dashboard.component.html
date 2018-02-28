@@ -1,14 +1,11 @@
-<div class="container content-wrapper">
+<div class="container">
   <h2>Company Breach Dashboard</h2>
-  <!--<br>-->
 
     <div class="row ">
       <div class="col-12 text-right">{{orgName}} </div>
       <ng-container *ngIf="!orgName">
         <div class="col-12 text-right">Unknown </div>
       </ng-container>
-
-      <!--<div class="col-12 text-right">Industry: {{orgIndustry}}</div>-->
     </div>
 
   <div class="row">
@@ -36,13 +33,6 @@
       </mat-card>
     </div>
 
-   <!-- <div class="col-lg-4">
-      <mat-card>
-        <mat-card-content>
-          Actor pattern comparison
-        </mat-card-content>
-      </mat-card>
-    </div>-->
   </div>
 
 
@@ -83,7 +73,7 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
     </mat-table>
       <mat-paginator #paginator
-                     [length]="orgDataService.data.length"
+                     [length]="dataSource.filteredData.length"
                      [pageSize]="5"
                      [pageSizeOptions]="[5, 10, 20]"
                      [showFirstLastButtons]="true">

@@ -1,3 +1,6 @@
+<div class="container about-wrapper">
+  <div class="text-right"><b>Scope</b></div>
+</div>
 <input type="checkbox" id="navcheck" role="button" title="menu" #checkbox>
 <label for="navcheck" aria-hidden="true" title="menu">
 	<span class="burger">
@@ -7,7 +10,7 @@
 	</span>
 </label>
 <nav id="menu">
-  <a [routerLink]="['/about']" (click)="closeSideNavigation()">About</a>
-  <a [routerLink]="['/world']" (click)="closeSideNavigation()">Global dashboard</a>
-  <a [routerLink]="['/org']" (click)="closeSideNavigation()">Company dashboard</a>
+  <a [routerLink]="['/home']" (click)="closeSideNavigation()">Home</a>
+  <a [routerLink]="['/global']" (click)="closeSideNavigation()">Global dashboard</a>
+  <a [routerLink]="['/company']" (click)="closeSideNavigation()">Company dashboard</a>
 </nav>

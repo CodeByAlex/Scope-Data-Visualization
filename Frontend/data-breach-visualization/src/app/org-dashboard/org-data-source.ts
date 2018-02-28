@@ -13,7 +13,6 @@ export class OrgDataSource extends DataSource<Organization> {
 
   filteredData: Organization[] = [];
   renderedData: Organization[] = [];
-
   constructor(private orgDatabase: OrgDataService, private _paginator: MatPaginator, private _sort:MatSort) {
     super();
     this._filterChange.subscribe(() => {this._paginator.pageIndex = 0});

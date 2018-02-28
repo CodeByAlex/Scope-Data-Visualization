@@ -18,17 +18,46 @@ body{
   background-color: #eeeeee;
 }
 .mat-select-value {
-  color: white !important;
+  color: #bbbbbb !important;
 }
 .mat-form-field-underline {
-  background-color: #eeeeee !important;
+  background-color: #a1a1a1 !important;
 }
 .mat-form-field-ripple {
-  background-color: #eeeeee !important;
+  background-color:  #a1a1a1 !important;
 }
 .mat-select-arrow {
-  color: #B9B9B9 !important;
+  color: #a1a1a1 !important;
 }
 .mat-form-field-label {
-  color: #B9B9B9 !important;
+  color: #8f8f8f !important;
+}
+
+//---------Loading spinner-----------
+
+.load-spinner {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #ffce56; /* Blue */
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+.center-spin{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
 }

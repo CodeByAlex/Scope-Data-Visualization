@@ -7,15 +7,15 @@ import {GlobalDashboardComponent} from "./global-dashboard/global-dashboard";
 const appRoutes : Routes =
   [
     {
-      path: '',
+      path: 'home',
       component: AboutComponent
     },
     {
-      path: 'org',
+      path: 'company',
       component: OrgDashboardComponent
     },
     {
-      path: 'world',
+      path: 'global',
       component: GlobalDashboardComponent,
     },
     {

@@ -21,7 +21,7 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   dataLostTypeComparisonObject = {};
   yearRange: YearRange;
 
-  dataSource = null;
+  dataSource: OrgDataSource = null;
 
   orgName: string = null;
   orgIndustry: string = null;
