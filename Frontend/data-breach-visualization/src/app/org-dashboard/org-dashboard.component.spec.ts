@@ -44,7 +44,6 @@ export class MockApiService {
   }
 }
 
-//some tests in this file run locally but have issues running in travis -looking into why this is
 describe('OrgDashboardComponent', () => {
   let component: OrgDashboardComponent;
   let fixture: ComponentFixture<OrgDashboardComponent>;
