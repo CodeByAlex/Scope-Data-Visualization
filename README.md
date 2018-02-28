@@ -11,10 +11,26 @@ Scope is a security breach visualization tool that gives you insight into cyber 
   ![alt tag](https://github.com/CodeByAlex/Data-Breach-Visualization/blob/master/images/global-dash.png)
   ![alt tag](https://github.com/CodeByAlex/Data-Breach-Visualization/blob/master/images/company-dash.png)
  
-## Why Scope?
+## Why I created Scope?
 
-  - If you are interested in security and enjoy looking at graph visualizations of data, this is the project for you.
+  - I wanted to create an end to end project from scratch that might be of interest to people in the security community
+  - I wanted to increase my presence on github
+  - I needed to get my hands on a good side project
+ 
+ ## Why Scope is right for you?
 
+  - Do you enjoy looking a graphical representations of data and have an affinity for security? You have made it to the right place.
+  - Interested in using graphs there are many examples in my codebase? Welcome!
+  - Are looking for the right person for the job and are browsing Github to find them? Take a look at my coding style.
+  
+  While you are here, you can also:
+  - You can use my graphing service for your own graphing needs
+  - Take a dive into my implementation of h2 integration with liquibase and spring boot
+  - Browse my configuration for testing the dao layer with H2
+  - Use the data set that I transformed for your own project
+  - Take a look at the python script I created for ETL
+  - Utilize my Travis and Docker files to help set up a project with the same architecture  
+    
 ## Technology stack
 
 ###### _Front end_
