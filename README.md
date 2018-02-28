@@ -17,12 +17,12 @@ Scope is a security breach visualization tool that gives you insight into cyber 
 
 ## Technology stack
 
-###### _Front_end_
+###### _Front end_
  * [Angular](https://angular.io/)
  * [Typescript](https://www.typescriptlang.org) 
  * [SCSS](https://sass-lang.com)
 
-###### _Back_end_
+###### _Back end_
  * [Java](https://www.java.com/)
  * [Spring](http://docs.spring.io/)
  * [Spring boot](http://docs.spring.io/spring-boot/)
