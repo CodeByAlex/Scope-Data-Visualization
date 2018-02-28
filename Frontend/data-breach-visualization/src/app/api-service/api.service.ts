@@ -40,6 +40,17 @@ export class ApiService {
     }).catch(this.handleError)
   }
 
+  public getIncidentYearRange(): Observable<YearRange> {
+    if (this.yearRange == null) {
+      this.yearRange = this.http.get(API_URL + '/breach-data/incident-info/year-range').map(
+        function (res) {
+          return new YearRange(res.json().minYear, res.json().maxYear);
+        }
+      ).catch(this.handleError);
+    }
+    return this.yearRange;
+  }
+
   public getAllIncidents(): Promise<Incident[]> {
     if (this.allIncidents == null) {
       this.allIncidents = this.http.get(API_URL + '/breach-data/incident-info').toPromise().then((res) => {
@@ -58,17 +69,6 @@ export class ApiService {
       });
     }
     return this.allActors;
-  }
-
-  public getIncidentYearRange(): Observable<YearRange> {
-    if (this.yearRange == null) {
-      this.yearRange = this.http.get(API_URL + '/breach-data/incident-info/year-range').map(
-        function (res) {
-          return new YearRange(res.json().minYear, res.json().maxYear);
-        }
-      ).catch(this.handleError);
-    }
-    return this.yearRange;
   }
 
   private handleError (error: Response | any) {

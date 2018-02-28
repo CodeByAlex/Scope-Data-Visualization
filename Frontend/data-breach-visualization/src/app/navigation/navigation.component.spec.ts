@@ -31,7 +31,7 @@ describe('NavigationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should uncheck a checkbox', ()=>{
+  it('should uncheck a checkbox', ()  => {
     fixture.detectChanges();
     component.checkbox.nativeElement.checked = true;
     component.closeSideNavigation();
