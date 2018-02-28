@@ -21,6 +21,7 @@ Scope is a security breach visualization tool that gives you insight into cyber 
  * [Hibernate](http://projects.spring.io/spring-data/) 
  * [H2](www.h2database.com)
  * [Maven](https://maven.apache.org/)
+ * [Docker](https://www.docker.com/)
 
 ## Data sets
 
