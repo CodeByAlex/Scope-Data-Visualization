@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 
 import { OrgDashboardComponent } from './org-dashboard.component';
 import {
@@ -53,12 +53,16 @@ describe('OrgDashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-/*  it('should set global orgName and orgIndustry when onRowClick method is called', () => {
+ /* it('should set global orgName and orgIndustry when onRowClick method is called', inject([ApiService], (service: ApiService) =>{
     const org: Organization = new Organization(1, 'Hello', 'World');
+    const incidents: Incident[] = []
+    new Promise
+    spyOn(service, "getIncidentsByOrgId").and.returnValue(incidents);
+
     component.onRowClick(org);
     expect(component.orgName).toEqual('Hello');
     expect(component.orgIndustry).toEqual('World');
-  });
+  });*/
 
   it('should set datasource filter to a trimmed/lowercase value', () => {
     component.applyFilter('Hello World!');
@@ -101,6 +105,6 @@ describe('OrgDashboardComponent', () => {
     const dataMap = new Map<string, number>();
     dataMap.set('Hello World!', 1);
     expect(component.getDataLostTypeComparisonMap(incidentList)).toEqual(dataMap)
-  });*/
+  });
 
 });

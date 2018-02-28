@@ -49,7 +49,7 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   }
 
   loadIncidentsByOrgId(orgId: number) {
-    this.apiService.getIncidentsByOrgId(orgId).subscribe((incidents) => {
+    this.apiService.getIncidentsByOrgId(orgId).then((incidents) => {
       this.dataLostTypeComparisonObject = this.getDataLostTypeComparisonObject(incidents);
       this.yearComparisonObject = this.getYearComparisonObject(incidents, this.yearRange);
     });

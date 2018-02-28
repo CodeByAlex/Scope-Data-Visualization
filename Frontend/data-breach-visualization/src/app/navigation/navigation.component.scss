@@ -8,6 +8,12 @@ $nav-item-nb       : 6;
   font-family: 'Poiret One', cursive;
   //font-family: 'Stardos Stencil', cursive;
   font-size: 30px;
+  text-underline: none;
+  color: white;
+  a {
+    color: white;
+    text-decoration: none;
+  }
 }
 
 input {
