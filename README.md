@@ -7,6 +7,10 @@ Scope is a security breach visualization tool that gives you insight into cyber 
   * view graphical representions of breach data by compnay
   * Apply searching, on company data
   * View company data in a table that includes pagination
+  
+  ![alt tag](https://github.com/CodeByAlex/Data-Breach-Visualization/blob/master/images/home-screen.png)
+  ![alt tag](https://github.com/CodeByAlex/Data-Breach-Visualization/blob/master/images/global-dash.png)
+  ![alt tag](https://github.com/CodeByAlex/Data-Breach-Visualization/blob/master/images/company-dash.png)
  
 ## Why Scope?
 
