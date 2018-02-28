@@ -1,10 +1,10 @@
 
-import {DataSource} from "@angular/cdk/collections";
-import {Organization} from "../model/Organization";
-import {ApiService} from "../api-service/api.service";
-import {BehaviorSubject, Observable} from "rxjs";
-import {MatPaginator, MatSort} from "@angular/material";
-import {OrgDataService} from "app/org-dashboard/org-data-service";
+import {DataSource} from '@angular/cdk/collections';
+import {Organization} from '../model/Organization';
+import {ApiService} from '../api-service/api.service';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {MatPaginator, MatSort} from '@angular/material';
+import {OrgDataService} from 'app/org-dashboard/org-data-service';
 
 export class OrgDataSource extends DataSource<Organization> {
   _filterChange = new BehaviorSubject('');
@@ -13,7 +13,7 @@ export class OrgDataSource extends DataSource<Organization> {
 
   filteredData: Organization[] = [];
   renderedData: Organization[] = [];
-  constructor(private orgDatabase: OrgDataService, private _paginator: MatPaginator, private _sort:MatSort) {
+  constructor(private orgDatabase: OrgDataService, private _paginator: MatPaginator, private _sort: MatSort) {
     super();
     this._filterChange.subscribe(() => {this._paginator.pageIndex = 0});
   }

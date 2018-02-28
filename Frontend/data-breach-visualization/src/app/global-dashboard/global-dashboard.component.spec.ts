@@ -92,25 +92,25 @@ describe('GlobalDashboardComponent', () => {
   });
 
   it('should get an actor pattern Comparison Map', () => {
-    const actorList: Actor[] = [];
+    const actorIdMap: Map<number, Actor> = new Map< number, Actor>();
+
     const actor: Actor = new Actor(1, null, 'pattern');
-    actorList.push(actor);
+    actorIdMap.set(1, actor);
     const incidentList: Incident[] = [];
     incidentList.push(new Incident(null, null, 1, null, null, 2011, 3, 'Hello World!'));
     const dataMap = new Map<string, number>();
     dataMap.set('pattern', 1);
-    expect(component.getActorPatternComparisonMap(incidentList, actorList)).toEqual(dataMap)
+    expect(component.getActorPatternComparisonMap(incidentList, actorIdMap)).toEqual(dataMap);
   });
 
   it('should get an actor pattern Comparison Object', () => {
     const graphDataService: GraphDataService = new GraphDataService();
-
-    const actorList: Actor[] = [];
-    actorList.push(new Actor(1, null, 'pattern'));
+    const actorIdMap: Map<number, Actor> = new Map< number, Actor>();
+    actorIdMap.set(1, new Actor(1, null, 'pattern'));
     const incidentList: Incident[] = [];
     incidentList.push(new Incident(null, null, 1, null, null, 2011, 3, 'Hello World!'));
     //empty arrays passed because <250
-    expect(component.getActorPatternComparisonObject(incidentList, actorList)).toEqual(graphDataService.getPieChartDataObject(['pattern'], [1]))
+    expect(component.getActorPatternComparisonObject(incidentList, actorIdMap)).toEqual(graphDataService.getPieChartDataObject(['pattern'], [1]))
   });
 
   it('should get an industry Comparison Map', () => {

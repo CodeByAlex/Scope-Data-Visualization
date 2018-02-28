@@ -17,6 +17,7 @@ export class GlobalDashboardComponent implements OnInit {
   DEFAULT_OPTION = 'All';
   form: FormGroup;
   incidentCountryMap: Map<string, Incident[]>;
+
   countryList: string [] = [];
   yearComparisonObject = {};
   actorComparisonObject = {};
@@ -58,7 +59,11 @@ export class GlobalDashboardComponent implements OnInit {
     });
 
     this.apiService.getAllActors().then((actors) => {
-      this.actorComparisonObject = this.getActorPatternComparisonObject(incidents, actors);
+      const actorIdMap: Map<number, Actor> = new Map< number, Actor>();
+      for (const actor of actors) {
+        actorIdMap.set(actor.actorId, actor);
+      }
+      this.actorComparisonObject = this.getActorPatternComparisonObject(incidents, actorIdMap);
     });
 
     this.apiService.getAllOrgs().subscribe((orgs) => {
@@ -88,10 +93,10 @@ export class GlobalDashboardComponent implements OnInit {
     return this.graphDataService.getlineChartDataObject('Records lost', labels, data);
   }
 
-  getActorPatternComparisonObject(incidentList: Incident [], actorList: Actor []) {
+  getActorPatternComparisonObject(incidentList: Incident [], actorIdMap: Map<number, Actor> ) {
     const labels = [];
     const data = [];
-    const dataMap = this.getActorPatternComparisonMap(incidentList, actorList);
+    const dataMap = this.getActorPatternComparisonMap(incidentList, actorIdMap);
 
     dataMap[Symbol.iterator] = function* () {
       yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
@@ -159,19 +164,14 @@ export class GlobalDashboardComponent implements OnInit {
     return dataMap;
   }
 
-  getActorPatternComparisonMap(incidentList: Incident [], actorList: Actor []) {
+  getActorPatternComparisonMap(incidentList: Incident [], actorIdMap: Map<number, Actor>) {
     const dataMap = new Map<string, number>();
-    if (actorList && incidentList) {
+    if (actorIdMap && incidentList) {
       for (const incident of incidentList) {
-        for (const actor of actorList) {
-          if (incident.actorId == actor.actorId) {
-            if (dataMap.get(actor.actorPattern)) {
-              dataMap.set(actor.actorPattern, dataMap.get(actor.actorPattern) + 1);
-            } else {
-              dataMap.set(actor.actorPattern, 1);
-            }
-            break;
-          }
+        if (dataMap.get(actorIdMap.get(incident.actorId).actorPattern)) {
+          dataMap.set(actorIdMap.get(incident.actorId).actorPattern, dataMap.get(actorIdMap.get(incident.actorId).actorPattern) + 1);
+        } else {
+          dataMap.set(actorIdMap.get(incident.actorId).actorPattern, 1);
         }
       }
     }
@@ -199,9 +199,11 @@ export class GlobalDashboardComponent implements OnInit {
 
     for (const incident of incidentList) {
       if (incidentCountryMap.get(incident.country)) {
+        // country is already in map
         incidentCountryMap.get(incident.country).push(incident);
         incidentCountryMap.get(this.DEFAULT_OPTION).push(incident);
       } else {
+        // first time country is inserted
         incidentCountryMap.set(incident.country, [incident]);
         incidentCountryMap.set(this.DEFAULT_OPTION, [incident]);
 

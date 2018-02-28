@@ -1,5 +1,6 @@
 <div class="container">
-  <h2>Global Breach Dashboard</h2>
+  <h2>Global Dashboard</h2>
+
   <div [formGroup] = "form" class="text-right">
     <mat-form-field>
       <mat-select placeholder="Location" formControlName="countryControl">
@@ -12,12 +13,12 @@
       </mat-select>
     </mat-form-field>
   </div>
+
   <div class="row">
     <div class="col-lg-6 mb-4">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Incidents over time</mat-card-title>
-          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
           <p-chart type="line" [data]="yearComparisonObject"></p-chart>
@@ -28,8 +29,7 @@
     <div class="col-lg-6 mb-4">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Actor pattern comparison</mat-card-title>
-          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
+          <mat-card-title>Breach pattern comparison</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <p-chart type="doughnut" [data]="actorComparisonObject" [options]="getLeftPositionOption()"></p-chart>
@@ -43,7 +43,6 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>Breaches by industry</mat-card-title>
-          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
           <p-chart type="radar" [data]="industryComparisonObject"></p-chart>
@@ -55,7 +54,6 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>Number of records lost per year</mat-card-title>
-          <!--<mat-card-subtitle>This is information about the title</mat-card-subtitle>-->
         </mat-card-header>
         <mat-card-content>
           <p-chart type="line" [data]="recordsLostComparisonObject"></p-chart>
@@ -63,21 +61,5 @@
       </mat-card>
     </div>
   </div>
-
- <!-- <div *ngIf="displayMap" class="row">
-    <div class="col-lg-12 mt-4">
-
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Incidents over time</mat-card-title>
-          &lt;!&ndash;<mat-card-subtitle>This is information about the title</mat-card-subtitle>&ndash;&gt;
-        </mat-card-header>
-        <mat-card-content class="responsive-map">
-          <google-chart  [data]="geoChartData"></google-chart>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>-->
-
   <br>
 </div>

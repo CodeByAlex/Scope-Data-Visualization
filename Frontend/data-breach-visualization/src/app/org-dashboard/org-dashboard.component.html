@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Company Breach Dashboard</h2>
+  <h2>Company Dashboard</h2>
 
     <div class="row ">
       <div class="col-12 text-right">{{orgName}} </div>
@@ -7,6 +7,50 @@
         <div class="col-12 text-right">Unknown </div>
       </ng-container>
     </div>
+  <div class="example-container mat-elevation-z8">
+    <div class="header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!--Name Column-->
+      <ng-container matColumnDef="orgName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.orgName}} </mat-cell>
+      </ng-container>
+
+      <!--Industry Column-->
+      <ng-container matColumnDef="orgIndustry">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Industry </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.orgIndustry}} </mat-cell>
+      </ng-container>
+
+      <!--Number of Incidents Column-->
+      <ng-container matColumnDef="numIncidents">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Number of Incidents </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.numIncidents}} </mat-cell>
+      </ng-container>
+
+      <!--Records Lost Column-->
+      <ng-container matColumnDef="numRecordsLost">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Records Lost </mat-header-cell>
+        <mat-cell *matCellDef="let org"> {{org.numRecordsLost}} </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+                   [length]="dataSource.filteredData.length"
+                   [pageSize]="5"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+  <br>
 
   <div class="row">
     <div class="col-md-6 mb-2">
@@ -34,50 +78,4 @@
     </div>
 
   </div>
-
-
-  <div class="example-container mat-elevation-z8">
-    <div class="header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-    </div>
-    <mat-table #table [dataSource]="dataSource" matSort>
-
-      <!--Name Column-->
-      <ng-container matColumnDef="orgName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let org"> {{org.orgName}} </mat-cell>
-      </ng-container>
-
-     <!--Industry Column-->
-      <ng-container matColumnDef="orgIndustry">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Industry </mat-header-cell>
-        <mat-cell *matCellDef="let org"> {{org.orgIndustry}} </mat-cell>
-      </ng-container>
-
-      <!--Number of Incidents Column-->
-      <ng-container matColumnDef="numIncidents">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Number of Incidents </mat-header-cell>
-        <mat-cell *matCellDef="let org"> {{org.numIncidents}} </mat-cell>
-      </ng-container>
-
-      <!--Records Lost Column-->
-      <ng-container matColumnDef="numRecordsLost">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Records Lost </mat-header-cell>
-        <mat-cell *matCellDef="let org"> {{org.numRecordsLost}} </mat-cell>
-      </ng-container>
-
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
-    </mat-table>
-      <mat-paginator #paginator
-                     [length]="dataSource.filteredData.length"
-                     [pageSize]="5"
-                     [pageSizeOptions]="[5, 10, 20]"
-                     [showFirstLastButtons]="true">
-      </mat-paginator>
-  </div>
 </div>
-<br>

@@ -1,5 +1,5 @@
 
-export class Organization{
+export class Organization {
   orgId: number;
   orgName: string;
   orgIndustry: string;
