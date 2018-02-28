@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from "../api-service/api.service";
-import {Actor} from "../model/Actor";
-import {Incident} from "../model/Incident";
-import {Organization} from "../model/Organization";
-import {GraphDataService} from "../graph-data-service/graph-data.service";
-import {YearRange} from "../dto/YearRange";
+import {ApiService} from '../api-service/api.service';
+import {Actor} from '../model/Actor';
+import {Incident} from '../model/Incident';
+import {Organization} from '../model/Organization';
+import {GraphDataService} from '../graph-data-service/graph-data.service';
+import {YearRange} from '../dto/YearRange';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'world-dashboard',
@@ -12,27 +13,56 @@ import {YearRange} from "../dto/YearRange";
   styleUrls: ['./global-dashboard.component.scss']
 })
 export class GlobalDashboardComponent implements OnInit {
+
+  DEFAULT_OPTION = 'All';
+  form: FormGroup;
+  incidentCountryMap: Map<string, Incident[]>;
+  countryList: string [] = [];
   yearComparisonObject = {};
   actorComparisonObject = {};
   industryComparisonObject = {};
   recordsLostComparisonObject = {};
 
-  constructor(private apiService: ApiService, private graphDataService: GraphDataService) {}
+  constructor(private apiService: ApiService, private graphDataService: GraphDataService) {
+    this.form = this.setUpForm();
+    this.subscribeToCountrySelect();
+  }
 
   ngOnInit() {
     this.apiService.getAllIncidents().then((incidents) => {
-      this.apiService.getIncidentYearRange().subscribe((yearRange) => {
-        this.yearComparisonObject = this.getYearComparisonObject(incidents, yearRange);
-        this.recordsLostComparisonObject = this.getRecordsLostComparisonObject(incidents, yearRange);
-      });
+      this.incidentCountryMap = this.getIncidentCountryMap(incidents);
+      this.getGraphComparisonObjects(incidents);
+    });
+  }
 
-      this.apiService.getAllActors().then((actors) => {
-        this.actorComparisonObject = this.getActorPatternComparisonObject(incidents, actors);
-      });
+  setUpForm() {
+    return new FormGroup({
+      countryControl: new FormControl()
+    });
+  }
+
+  subscribeToCountrySelect() {
+    this.form.get('countryControl').valueChanges.subscribe(() => {
+      if (this.incidentCountryMap && this.incidentCountryMap.get(this.form.get('countryControl').value)) {
+        if (this.form.get('countryControl').value) {
+          this.getGraphComparisonObjects(this.incidentCountryMap.get(this.form.get('countryControl').value));
+        }
+      }
+    });
+  }
+
+  getGraphComparisonObjects(incidents: Incident []) {
+    this.apiService.getIncidentYearRange().subscribe((yearRange) => {
+      this.yearComparisonObject = this.getYearComparisonObject(incidents, yearRange);
+      this.recordsLostComparisonObject = this.getRecordsLostComparisonObject(incidents, yearRange);
+    });
+
+    this.apiService.getAllActors().then((actors) => {
+      this.actorComparisonObject = this.getActorPatternComparisonObject(incidents, actors);
     });
 
     this.apiService.getAllOrgs().subscribe((orgs) => {
-      this.industryComparisonObject = this.getIndustryComparisonObject(orgs);
+      this.industryComparisonObject = this.getIndustryComparisonObject(incidents, orgs);
     });
   }
 
@@ -62,23 +92,36 @@ export class GlobalDashboardComponent implements OnInit {
     const labels = [];
     const data = [];
     const dataMap = this.getActorPatternComparisonMap(incidentList, actorList);
+
+    dataMap[Symbol.iterator] = function* () {
+      yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
+    }
+
     dataMap.forEach((value: number, key: string) => {
-      if (value > 250) { // to eliminate low range actor patterns
+      if (data.length < 5) { // to eliminate low range actor patterns
         labels.push(key);
         data.push(value);
+      } else {
+        return;
       }
     });
     return this.graphDataService.getPieChartDataObject(labels, data);
   }
 
-  getIndustryComparisonObject(orgList: Organization []) {
+  getIndustryComparisonObject(incidentList: Incident [], orgList: Organization []) {
     const labels = [];
     const data = [];
-    const dataMap = this.getIndustryComparisonMap(orgList);
+    const dataMap = this.getIndustryComparisonMap(incidentList, orgList);
+    dataMap[Symbol.iterator] = function* () {
+      yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
+    }
+
     dataMap.forEach((value: number, key: string) => {
-      if (value > 300) { // to eliminate low range industries
+      if (data.length < 5) { // to eliminate low range actor industries
         labels.push(key);
         data.push(value);
+      } else {
+        return;
       }
     });
     return this.graphDataService.getRadarChartDataObject('Breaches per industry', labels, data);
@@ -135,21 +178,42 @@ export class GlobalDashboardComponent implements OnInit {
     return dataMap;
   }
 
-  getIndustryComparisonMap(orgList: Organization []) {
+  getIndustryComparisonMap(incidentList: Incident [], orgList: Organization []) {
     const dataMap = new Map<string, number>();
-    for (const org of orgList) {
-      if (dataMap.get(org.orgIndustry)) {
-        dataMap.set(org.orgIndustry, dataMap.get(org.orgIndustry) + 1);
-      } else {
-        dataMap.set(org.orgIndustry, 1);
+    for (const incident of incidentList) {
+      for (const org of orgList) {
+        if (incident.orgId == org.orgId) {
+          if (dataMap.get(org.orgIndustry)) {
+            dataMap.set(org.orgIndustry, dataMap.get(org.orgIndustry) + 1);
+          } else {
+            dataMap.set(org.orgIndustry, 1);
+          }
+        }
       }
     }
     return dataMap;
+  }
+
+  getIncidentCountryMap(incidentList: Incident []) {
+    const incidentCountryMap: Map<string, Incident[]> = new Map<string, Incident[]>();
+
+    for (const incident of incidentList) {
+      if (incidentCountryMap.get(incident.country)) {
+        incidentCountryMap.get(incident.country).push(incident);
+        incidentCountryMap.get(this.DEFAULT_OPTION).push(incident);
+      } else {
+        incidentCountryMap.set(incident.country, [incident]);
+        incidentCountryMap.set(this.DEFAULT_OPTION, [incident]);
+
+        this.countryList.push(incident.country);
+      }
+    }
+    this.countryList.sort();
+    return incidentCountryMap;
   }
 
 
   getLeftPositionOption() {
     return this.graphDataService.getLegendPositionLeftOption();
   }
-
 }

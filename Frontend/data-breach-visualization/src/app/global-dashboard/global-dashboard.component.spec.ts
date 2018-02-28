@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GlobalDashboardComponent } from './global-dashboard';
-import {MatCardModule, MatTableModule} from '@angular/material';
+import {MatCardModule, MatOptionModule, MatSelectModule, MatTableModule} from '@angular/material';
 import {ChartModule} from 'primeng/chart';
 import {ApiService} from '../api-service/api.service';
 import {Http, HttpModule} from '@angular/http';
@@ -10,6 +10,8 @@ import {YearRange} from '../dto/YearRange';
 import {Incident} from '../model/Incident';
 import {Actor} from '../model/Actor';
 import {Organization} from "../model/Organization";
+import {ReactiveFormsModule} from "@angular/forms";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('GlobalDashboardComponent', () => {
   let component: GlobalDashboardComponent;
@@ -19,9 +21,13 @@ describe('GlobalDashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ GlobalDashboardComponent ],
       imports: [
+        BrowserAnimationsModule,
         MatCardModule,
         ChartModule,
-        HttpModule
+        HttpModule,
+        ReactiveFormsModule,
+        MatOptionModule,
+        MatSelectModule
       ],
       providers: [
         ApiService,
@@ -104,20 +110,24 @@ describe('GlobalDashboardComponent', () => {
     const incidentList: Incident[] = [];
     incidentList.push(new Incident(null, null, 1, null, null, 2011, 3, 'Hello World!'));
     //empty arrays passed because <250
-    expect(component.getActorPatternComparisonObject(incidentList, actorList)).toEqual(graphDataService.getPieChartDataObject([], []))
+    expect(component.getActorPatternComparisonObject(incidentList, actorList)).toEqual(graphDataService.getPieChartDataObject(['pattern'], [1]))
   });
 
   it('should get an industry Comparison Map', () => {
+    const incidentList: Incident[] = [];
+    incidentList.push(new Incident(1, 1, 1, null, null, 2011, 3, 'Hello World!'));
     const orgList: Organization[] = [];
     const org: Organization = new Organization(1, null, 'industry');
     orgList.push(org);
     const dataMap = new Map<string, number>();
     dataMap.set('industry', 1);
-    expect(component.getIndustryComparisonMap(orgList)).toEqual(dataMap)
+    expect(component.getIndustryComparisonMap(incidentList, orgList)).toEqual(dataMap)
   });
 
   it('should get an industry Comparison object', () => {
     const graphDataService: GraphDataService = new GraphDataService();
+    const incidentList: Incident[] = [];
+    incidentList.push(new Incident(1, 1, 1, null, null, 2011, 3, 'Hello World!'));
 
     const orgList: Organization[] = [];
     const org: Organization = new Organization(1, null, 'industry');
@@ -125,7 +135,7 @@ describe('GlobalDashboardComponent', () => {
     const dataMap = new Map<string, number>();
     dataMap.set('industry', 1);
     //empty arrays passed because <300
-    expect(component.getIndustryComparisonObject(orgList)).toEqual(graphDataService.getRadarChartDataObject('Breaches per industry', [], []))
+    expect(component.getIndustryComparisonObject(incidentList, orgList)).toEqual(graphDataService.getRadarChartDataObject('Breaches per industry', ['industry'], [1]))
   });
 
 

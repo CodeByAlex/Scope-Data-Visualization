@@ -6,12 +6,29 @@
 body{
   font-family: Roboto,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
   background: darkslateblue;
-  color: rgba(255, 255, 255, 0.7);
+  color: #eeeeee;
 }
 
+.content-wrapper{
+  padding: 50px;
+}
+
+//---------Material design overwrite styles-----------
 .mat-row:hover {
   background-color: #eeeeee;
 }
-.content-wrapper{
-  padding: 50px;
+.mat-select-value {
+  color: white !important;
+}
+.mat-form-field-underline {
+  background-color: #eeeeee !important;
+}
+.mat-form-field-ripple {
+  background-color: #eeeeee !important;
+}
+.mat-select-arrow {
+  color: #B9B9B9 !important;
+}
+.mat-form-field-label {
+  color: #B9B9B9 !important;
 }

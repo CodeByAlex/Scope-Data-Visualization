@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -9,7 +9,7 @@ import { GlobalDashboardComponent } from './global-dashboard/global-dashboard';
 import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
 import {
   MatCardModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule,
-  MatSortModule, MatProgressSpinnerModule
+  MatSortModule, MatProgressSpinnerModule, MatSelectModule
 } from "@angular/material";
 import { NavigationComponent } from './navigation/navigation.component';
 import {ChartModule} from '../../node_modules/primeng/chart';
@@ -40,6 +40,9 @@ import {Ng2GoogleChartsModule} from "ng2-google-charts";
     MatInputModule,
     MatPaginatorModule,
     ChartModule,
+    Ng2GoogleChartsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
     routing
   ],
   providers: [ApiService, GraphDataService, OrgDataService],
