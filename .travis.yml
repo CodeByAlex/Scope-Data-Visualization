@@ -24,7 +24,7 @@ before_script:
   - ng build
   - echo 'Front end build successful'
 script:
-  - ng test --exit
+  - ng tests --watch=false
 after_success: 
   - cd ../../Backend/security-breach-data
   - docker build -t sec-viz-back .
