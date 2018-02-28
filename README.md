@@ -14,7 +14,7 @@ Scope is a security breach visualization tool that gives you insight into cyber 
  
 ## Why Scope?
 
-  - If you are interested in security and enjoy lookin at graph visualizations of data, this is the project for you.
+  - If you are interested in security and enjoy looking at graph visualizations of data, this is the project for you.
 
 ## Technology stack
  
