@@ -16,7 +16,6 @@ import {ChartModule} from '../../node_modules/primeng/chart';
 import { AboutComponent } from './about/about.component';
 import {routing} from "./app.routing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {OrgDataService} from "app/org-dashboard/org-data-service";
 import {GraphDataService} from "./graph-data-service/graph-data.service";
 
 @NgModule({
@@ -43,7 +42,7 @@ import {GraphDataService} from "./graph-data-service/graph-data.service";
     MatSelectModule,
     routing
   ],
-  providers: [ApiService, GraphDataService, OrgDataService],
+  providers: [ApiService, GraphDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

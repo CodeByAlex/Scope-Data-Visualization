@@ -6,7 +6,6 @@ import {OrgDataSource} from './org-data-source';
 import {Incident} from '../model/Incident';
 import {GraphDataService} from '../graph-data-service/graph-data.service';
 import {Observable} from 'rxjs/Observable';
-import {OrgDataService} from './org-data-service';
 import {merge} from 'rxjs/operators';
 import {YearRange} from '../dto/YearRange';
 
@@ -29,17 +28,17 @@ export class OrgDashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private apiService: ApiService, private graphDataService: GraphDataService, private orgDataService: OrgDataService) {}
+  constructor(private apiService: ApiService, private graphDataService: GraphDataService) {}
 
   ngOnInit() {
     this.apiService.getIncidentYearRange().subscribe((yearRange) => {
       this.yearRange = yearRange;
     });
-    this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, new MatSort());
+    this.dataSource = new OrgDataSource(this.apiService, this.paginator, new MatSort());
   }
 
   ngAfterViewInit() {
-    this.dataSource = new OrgDataSource(this.orgDataService, this.paginator, this.sort);
+    this.dataSource = new OrgDataSource(this.apiService, this.paginator, this.sort);
   }
 
   onRowClick(row: Organization) {

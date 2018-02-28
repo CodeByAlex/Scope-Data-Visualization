@@ -1,4 +1,4 @@
-import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, inject, TestBed, tick} from '@angular/core/testing';
 
 import { OrgDashboardComponent } from './org-dashboard.component';
 import {
@@ -9,7 +9,6 @@ import {ChartModule} from 'primeng/chart';
 import {ApiService} from '../api-service/api.service';
 import {Http, HttpModule} from '@angular/http';
 import {GraphDataService} from '../graph-data-service/graph-data.service';
-import {OrgDataService} from './org-data-service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Organization} from '../model/Organization';
 import {YearRange} from '../dto/YearRange';
@@ -38,8 +37,7 @@ describe('OrgDashboardComponent', () => {
       ],
       providers: [
         ApiService,
-        GraphDataService,
-        OrgDataService
+        GraphDataService
       ]
 
     })
@@ -50,38 +48,42 @@ describe('OrgDashboardComponent', () => {
     fixture = TestBed.createComponent(OrgDashboardComponent);
     component = fixture.componentInstance;
     apiService = TestBed.get(ApiService);
+    const orgs: Organization[] = [];
+    spyOn(apiService, 'getAllOrgs').and.returnValue(Observable.of(orgs));
     fixture.detectChanges();
   });
 
-/*  it('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
-  });*/
+  });
 
   it('should set global orgName and orgIndustry when onRowClick method is called', () => {
     const org: Organization = new Organization(1, 'Hello', 'World');
     const incidents: Incident[] = [];
     spyOn(apiService, 'getIncidentsByOrgId').and.returnValue(Observable.of(incidents));
-
     component.onRowClick(org);
     expect(component.orgName).toEqual('Hello');
     expect(component.orgIndustry).toEqual('World');
   });
 
-  /*it('should set datasource filter to a trimmed/lowercase value', () => {
+  it('should set datasource filter to a trimmed/lowercase value', () => {
     component.applyFilter('Hello World!');
     expect(component.dataSource.filter).toEqual('hello world!');
   });
 
-  it('should get a year comparison object', () => {
-    const graphDataService: GraphDataService = new GraphDataService();
+
+  it('should get a year comparison object', () => inject([GraphDataService], (graphDataService: GraphDataService) => {
     const yearRange: YearRange = new YearRange();
     yearRange.minYear = 2010;
     yearRange.maxYear = 2012;
     const incidentList: Incident[] = [];
     incidentList.push(new Incident(null, null, null, null, null, 2011));
+    tick();
+    fixture.detectChanges();
     expect(component.getYearComparisonObject(incidentList, yearRange))
       .toEqual(graphDataService.getlineChartDataObject('Incidents', ['2010','2011','2012'], [0,1,0]))
-  });
+  }));
+
 
   it('should get a year comparison Map', () => {
     const yearRange: YearRange = new YearRange();
@@ -107,6 +109,6 @@ describe('OrgDashboardComponent', () => {
     const dataMap = new Map<string, number>();
     dataMap.set('Hello World!', 1);
     expect(component.getDataLostTypeComparisonMap(incidentList)).toEqual(dataMap)
-  });*/
+  });
 
 });

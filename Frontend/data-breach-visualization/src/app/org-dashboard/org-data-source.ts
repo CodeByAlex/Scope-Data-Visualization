@@ -4,16 +4,20 @@ import {Organization} from '../model/Organization';
 import {ApiService} from '../api-service/api.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {MatPaginator, MatSort} from '@angular/material';
-import {OrgDataService} from 'app/org-dashboard/org-data-service';
 
 export class OrgDataSource extends DataSource<Organization> {
+
+  public dataChange: BehaviorSubject<Organization[]> = new BehaviorSubject<Organization[]>([]);
+  get data(): Organization[] { return this.dataChange.value; }
+
+
   _filterChange = new BehaviorSubject('');
   get filter(): string { return this._filterChange.value; }
   set filter(filter: string) { this._filterChange.next(filter); }
 
   filteredData: Organization[] = [];
   renderedData: Organization[] = [];
-  constructor(private orgDatabase: OrgDataService, private _paginator: MatPaginator, private _sort: MatSort) {
+  constructor(private apiService: ApiService, private _paginator: MatPaginator, private _sort: MatSort) {
     super();
     this._filterChange.subscribe(() => {this._paginator.pageIndex = 0});
   }
@@ -21,14 +25,16 @@ export class OrgDataSource extends DataSource<Organization> {
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Organization[]> {
     const displayDataChanges = [
-      this.orgDatabase.dataChange,
+      this.dataChange,
       this._sort.sortChange,
       this._filterChange,
       this._paginator.page,
     ];
 
+    this.apiService.getAllOrgs().subscribe(data => this.dataChange.next(data));
+
     return Observable.merge(...displayDataChanges).map(() => {
-      this.filteredData = this.orgDatabase.data.slice().filter((item: Organization) => {
+      this.filteredData = this.data.slice().filter((item: Organization) => {
         const searchStr = (item.orgName + +item.orgIndustry + item.numIncidents + item.numRecordsLost).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
@@ -40,6 +46,7 @@ export class OrgDataSource extends DataSource<Organization> {
       this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
       return this.renderedData;
     });
+
   }
 
   disconnect() {}
