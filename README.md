@@ -16,16 +16,22 @@ Scope is a security breach visualization tool that gives you insight into cyber 
   - If you are interested in security and enjoy looking at graph visualizations of data, this is the project for you.
 
 ## Technology stack
- 
- * [Java](https://www.java.com/)
+
+Front end
  * [Angular](https://angular.io/)
+
+Back end 
+ * [Java](https://www.java.com/)
  * [Spring](http://docs.spring.io/)
  * [Spring boot](http://docs.spring.io/spring-boot/)
- * [Hibernate](http://projects.spring.io/spring-data/) 
  * [H2](www.h2database.com)
  * [Maven](https://maven.apache.org/)
- * [Docker](https://www.docker.com/)
  * [Liquibase](https://www.liquibase.org/)
+ 
+Deploy
+ * [Docker](https://www.docker.com/)
+ 
+ETL
  * [Python](https://www.python.org/)
 
 ## Data set
