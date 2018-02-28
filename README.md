@@ -15,7 +15,7 @@ Scope is a security breach visualization tool that gives you insight into cyber 
 ## Technology stack
  
  * [Java](https://www.java.com/)
- * [Angular](https://angular.io/), 
+ * [Angular](https://angular.io/)
  * [Spring](http://docs.spring.io/)
  * [Spring boot](http://docs.spring.io/spring-boot/)
  * [Hibernate](http://projects.spring.io/spring-data/) 
@@ -30,7 +30,8 @@ Scope is a security breach visualization tool that gives you insight into cyber 
 
 ###### _Prerequisites_
  * Maven installed
- * (Optional) MySQL configuration (see configurations steps below)
+ * Angular Cli install
+ * node installed
  
 ###### _Deployment_
 You can run the application using maven configuration command:
