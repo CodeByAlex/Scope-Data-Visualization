@@ -67,7 +67,7 @@ describe('OrgDashboardComponent', () => {
   it('should set datasource filter to a trimmed/lowercase value', () => {
     component.applyFilter('Hello World!');
     expect(component.dataSource.filter).toEqual('hello world!');
-  });*/
+  });
 
   it('should get a year comparison object', () => {
     const graphDataService: GraphDataService = new GraphDataService();
@@ -105,6 +105,6 @@ describe('OrgDashboardComponent', () => {
     const dataMap = new Map<string, number>();
     dataMap.set('Hello World!', 1);
     expect(component.getDataLostTypeComparisonMap(incidentList)).toEqual(dataMap)
-  });
+  });*/
 
 });
