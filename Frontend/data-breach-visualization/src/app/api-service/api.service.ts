@@ -18,8 +18,8 @@ export class ApiService {
   allIncidents: Promise<Incident[]> = null;
   allActors: Promise<Actor[]> = null;
   allOrgs: Observable<Organization[]> = null;
-  yearRange: Observable<YearRange>;
 
+  yearRange: Observable<YearRange>;
   constructor(private http: Http) { }
 
   public getAllOrgs(): Observable<Organization[]> {
@@ -46,7 +46,7 @@ export class ApiService {
           return res.json().map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
             incident.reportMonth, incident.reportYear, incident.numRecordsLost, incident.dataLostType, incident.country,
             incident.state, incident.victimType, incident.summary, incident.references))
-        }).catch(this.handleError);
+        });
     }
     return this.allIncidents;
   }
@@ -55,7 +55,7 @@ export class ApiService {
     if (this.allActors == null) {
       this.allActors = this.http.get(API_URL + '/breach-data/actor-info').toPromise().then((res) => {
           return res.json().map(actor => new Actor(actor.actorId, actor.actorType, actor.actorPattern))
-      }).catch(this.handleError);
+      });
     }
     return this.allActors;
   }
