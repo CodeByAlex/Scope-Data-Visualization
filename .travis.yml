@@ -8,9 +8,10 @@ node_js:
   - "7"
 jdk:
   - oraclejdk8
+addons:
+  chrome: stable
 before_install:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9876 http://localhost &
 before_script: 
   - cd  Frontend/data-breach-visualization/src
   - npm install -g @angular/cli
@@ -18,7 +19,7 @@ before_script:
   - ng build
   - echo 'Front end build successful'
 script:
-  - ./node_modules/.bin/karma start --browsers Firefox --single-run   
+  - ng test
 after_success: 
   - cd ../../Backend/security-breach-data
   - docker build -t sec-viz-back .
