@@ -8,8 +8,8 @@ COPY dist /usr/share/nginx/html
 EXPOSE 80
 
 #Commands to build from docker
-#docker build -t sec-vis-app .
-#docker run -p 80:80 -it sec-vis-app
+#docker build -t scope-frontend .
+#docker run -p 80:80 -it scope-frontend
 
 #To access box terminal
 #docker exec -it variable-id /bin/bash

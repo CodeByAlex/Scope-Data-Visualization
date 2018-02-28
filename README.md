@@ -3,8 +3,8 @@
 Scope is a security breach visualization tool that gives you insight into cyber crime around the world.
  
   * Uses data from the Veris database of breach information
-  * View graphical representions of breach data by country
-  * View graphical representions of breach data by compnay
+  * View graphical representations of breach data by country
+  * View graphical representations of breach data by company
   * Apply searching, on company data
   * View company data in a table that includes pagination
   
@@ -14,7 +14,7 @@ Scope is a security breach visualization tool that gives you insight into cyber 
  
 ## Why Scope?
 
-  - If you are interested in security and enjoy lookingraph visualizations of data, this is the project for you.
+  - If you are interested in security and enjoy lookin at graph visualizations of data, this is the project for you.
 
 ## Technology stack
  
@@ -40,21 +40,29 @@ Scope is a security breach visualization tool that gives you insight into cyber 
  * node installed
  
 ###### _Deployment_
-You can run the application using maven configuration command:
+To build docker containers:
 
-```
-spring-boot:run
-```
+*Download and unpack the zip file
+*CD into the Frontend/data-breach-visualization directory
 
-Or you can build the JAR file with maven configuration command:
+Create the dist folder by running the following commands:
+```
+npm install
+ng build
+```
+Run the following docker commands to start up the front end:
  ```
- clean package
+docker build -t scope-frontend .
+docker run -p 80:80 -it scope-frontend
  ```
-  
-Then you can execute the runnable JAR generated:
+*CD into the Backend/security-breach-data directory
+
+Run the following docker commands to start up the back end:
  ```
-  java -jar target/art-tracker-0.0.1-SNAPSHOT.jar
+docker build -t scope-backend .
+docker run -it -p 8080:8080 scope-backend
  ```
+You are up and running! Navigate to link [http://localhost:80] to start using the website.
  
 ## How to run integration tests?
 
@@ -64,11 +72,6 @@ Open your favorite IDE and run the files "as junit tests" from the top of the te
 
 An in memory H2 database will be created and liquibase scripts will be run to create tables and insert data.
 
-## Scope Front End
-
-*Start front end by using command ng serve from the src forlder of the front end application
-* Navigate to link [http://localhost:4200]
-
 ### Access API Documentation with Swagger
-
+* Start up the backend docker container
 * Navigate to link [http://localhost:8080/swagger-ui.html]
