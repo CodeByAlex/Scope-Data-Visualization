@@ -20,10 +20,10 @@ Scope is a security breach visualization tool that gives you insight into cyber 
  ## Why Scope is right for you?
 
   - Do you enjoy looking a graphical representations of data and have an affinity for security? You have made it to the right place.
-  - Interested in using graphs there are many examples in my codebase? Welcome!
+  - Interested in using graphs i your angular project? There are many examples in my codebase.
   - Are looking for the right person for the job and are browsing Github to find them? Take a look at my coding style.
   
-  While you are here, you can also:
+ ## While you are here...
   - You can use my graphing service for your own graphing needs
   - Take a dive into my implementation of h2 integration with liquibase and spring boot
   - Browse my configuration for testing the dao layer with H2
