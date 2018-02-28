@@ -3,8 +3,8 @@
 Scope is a security breach visualization tool that gives you insight into cyber crime around the world.
  
   * Uses data from the Veris database of breach information
-  * view graphical representions of breach data by country
-  * view graphical representions of breach data by compnay
+  * View graphical representions of breach data by country
+  * View graphical representions of breach data by compnay
   * Apply searching, on company data
   * View company data in a table that includes pagination
   
