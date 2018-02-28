@@ -26,23 +26,25 @@ Scope is a security breach visualization tool that gives you insight into cyber 
  * [Maven](https://maven.apache.org/)
  * [Docker](https://www.docker.com/)
  * [Liquibase](https://www.liquibase.org/)
+ * [Python](https://www.python.org/)
 
-## Data sets
+## Data set
 
-* Data was retrieved from Veris Comminity Database (http://veriscommunity.net/vcdb.html)
+* Data was retrieved from Veris Community Database (http://veriscommunity.net/vcdb.html)
+* Data was transformed using a custom python script
 
 ## How to run?
 
 ###### _Prerequisites_
- * Maven installed
- * Angular Cli install
- * node installed
+ * Install Maven
+ * Install Angular Cli
+ * Install node
  
 ###### _Deployment_
 To build docker containers:
 
-*Download and unpack the zip file
-*CD into the Frontend/data-breach-visualization directory
+* Download and unpack the zip file
+* CD into the Frontend/data-breach-visualization directory
 
 Create the dist folder by running the following commands:
 ```
@@ -54,14 +56,14 @@ Run the following docker commands to start up the front end:
 docker build -t scope-frontend .
 docker run -p 80:80 -it scope-frontend
  ```
-*CD into the Backend/security-breach-data directory
+CD into the Backend/security-breach-data directory
 
 Run the following docker commands to start up the back end:
  ```
 docker build -t scope-backend .
 docker run -it -p 8080:8080 scope-backend
  ```
-You are up and running! Navigate to link [http://localhost:80] to start using the website.
+You are up and running! Navigate to link http://localhost:80 to start using the website.
  
 ## How to run integration tests?
 
@@ -73,4 +75,4 @@ An in memory H2 database will be created and liquibase scripts will be run to cr
 
 ### Access API Documentation with Swagger
 * Start up the backend docker container
-* Navigate to link [http://localhost:8080/swagger-ui.html]
+* Navigate to link http://localhost:8080/swagger-ui.html
