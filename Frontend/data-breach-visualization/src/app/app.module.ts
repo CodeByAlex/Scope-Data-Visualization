@@ -39,7 +39,6 @@ import {GraphDataService} from "./graph-data-service/graph-data.service";
     MatInputModule,
     MatPaginatorModule,
     ChartModule,
-    Ng2GoogleChartsModule,
     ReactiveFormsModule,
     MatSelectModule,
     routing
