@@ -14,6 +14,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Organization} from '../model/Organization';
 import {YearRange} from '../dto/YearRange';
 import {Incident} from '../model/Incident';
+import {Observable} from 'rxjs';
+
+let apiService: ApiService;
 
 describe('OrgDashboardComponent', () => {
   let component: OrgDashboardComponent;
@@ -46,25 +49,25 @@ describe('OrgDashboardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrgDashboardComponent);
     component = fixture.componentInstance;
+    apiService = TestBed.get(ApiService);
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+/*  it('should create', () => {
     expect(component).toBeTruthy();
-  });
+  });*/
 
- /* it('should set global orgName and orgIndustry when onRowClick method is called', inject([ApiService], (service: ApiService) =>{
+  it('should set global orgName and orgIndustry when onRowClick method is called', () => {
     const org: Organization = new Organization(1, 'Hello', 'World');
-    const incidents: Incident[] = []
-    new Promise
-    spyOn(service, "getIncidentsByOrgId").and.returnValue(incidents);
+    const incidents: Incident[] = [];
+    spyOn(apiService, 'getIncidentsByOrgId').and.returnValue(Observable.of(incidents));
 
     component.onRowClick(org);
     expect(component.orgName).toEqual('Hello');
     expect(component.orgIndustry).toEqual('World');
   });
 
-  it('should set datasource filter to a trimmed/lowercase value', () => {
+  /*it('should set datasource filter to a trimmed/lowercase value', () => {
     component.applyFilter('Hello World!');
     expect(component.dataSource.filter).toEqual('hello world!');
   });
@@ -95,8 +98,7 @@ describe('OrgDashboardComponent', () => {
     const graphDataService: GraphDataService = new GraphDataService();
     const incidentList: Incident[] = [];
     incidentList.push(new Incident(null, null, null, null, null, 2011, null, 'Hello World!'));
-    expect(component.getDataLostTypeComparisonObject(incidentList))
-      .toEqual(graphDataService.getPieChartDataObject(['Hello World!'], [1]))
+    expect(component.getDataLostTypeComparisonObject(incidentList)).toEqual(graphDataService.getPieChartDataObject(['Hello World!'], [1]))
   });
 
   it('should get a Data Lost Type Comparison Map', () => {
