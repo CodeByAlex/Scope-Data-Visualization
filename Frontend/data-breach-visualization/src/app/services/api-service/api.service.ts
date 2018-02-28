@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../environments/environment';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {YearRange} from '../dto/YearRange';
-import {Incident} from '../model/Incident';
-import {Organization} from '../model/Organization';
-import {Actor} from '../model/Actor';
+import {environment} from '../../../environments/environment';
+import {Incident} from '../../model/Incident';
+import {Actor} from '../../model/Actor';
+import {Organization} from '../../model/Organization';
+import {YearRange} from '../../model/dto/YearRange';
 
 export const API_URL = environment.apiUrl;
 

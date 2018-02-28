@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from '../api-service/api.service';
+import {ApiService} from '../services/api-service/api.service';
 import {Actor} from '../model/Actor';
 import {Incident} from '../model/Incident';
 import {Organization} from '../model/Organization';
-import {GraphDataService} from '../graph-data-service/graph-data.service';
-import {YearRange} from '../dto/YearRange';
+import {GraphDataService} from '../services/graph-data-service/graph-data.service';
+import {YearRange} from '../model/dto/YearRange';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({

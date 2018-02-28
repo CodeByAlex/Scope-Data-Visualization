@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
 import {Organization} from '../model/Organization';
-import {ApiService} from '../api-service/api.service';
+import {ApiService} from '../services/api-service/api.service';
 import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
 import {OrgDataSource} from './org-data-source';
 import {Incident} from '../model/Incident';
-import {GraphDataService} from '../graph-data-service/graph-data.service';
+import {GraphDataService} from '../services/graph-data-service/graph-data.service';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/operators';
-import {YearRange} from '../dto/YearRange';
+import {YearRange} from '../model/dto/YearRange';
 
 @Component({
   selector: 'org-dashboard',

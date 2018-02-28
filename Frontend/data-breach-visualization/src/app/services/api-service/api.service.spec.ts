@@ -1,11 +1,10 @@
-import {TestBed, inject, fakeAsync, tick} from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import {API_URL, ApiService} from './api.service';
+import {ApiService} from './api.service';
 import {
-  BaseRequestOptions, Http, HttpModule, RequestMethod, RequestOptions, ResponseOptions,
-  XHRBackend
+  BaseRequestOptions, Http, HttpModule, RequestMethod, RequestOptions, ResponseOptions
 } from "@angular/http";
-import {MockBackend, MockConnection} from "@angular/http/testing";
+import {MockBackend} from "@angular/http/testing";
 
 describe('ApiService', () => {
   beforeEach((done) => {

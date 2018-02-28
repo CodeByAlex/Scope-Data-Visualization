@@ -6,12 +6,12 @@ import {
   MatTableModule
 } from '@angular/material';
 import {ChartModule} from 'primeng/chart';
-import {ApiService} from '../api-service/api.service';
+import {ApiService} from '../services/api-service/api.service';
 import {Http, HttpModule} from '@angular/http';
-import {GraphDataService} from '../graph-data-service/graph-data.service';
+import {GraphDataService} from '../services/graph-data-service/graph-data.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Organization} from '../model/Organization';
-import {YearRange} from '../dto/YearRange';
+import {YearRange} from '../model/dto/YearRange';
 import {Incident} from '../model/Incident';
 import {Observable} from 'rxjs';
 import {Actor} from '../model/Actor';

@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { ApiService } from './api-service/api.service';
+import { ApiService } from './services/api-service/api.service';
 import { GlobalDashboardComponent } from './global-dashboard/global-dashboard';
 import { OrgDashboardComponent } from './org-dashboard/org-dashboard.component';
 import {
@@ -16,7 +16,7 @@ import {ChartModule} from '../../node_modules/primeng/chart';
 import { AboutComponent } from './about/about.component';
 import {routing} from "./app.routing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {GraphDataService} from "./graph-data-service/graph-data.service";
+import {GraphDataService} from "./services/graph-data-service/graph-data.service";
 
 @NgModule({
   declarations: [
