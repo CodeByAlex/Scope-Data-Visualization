@@ -22,22 +22,43 @@ export class ApiService {
   yearRange: Observable<YearRange>;
   constructor(private http: Http) { }
 
+  public getIncidentsByOrgId(orgId: number): Promise<Incident[]> {
+      return this.http.get(API_URL + '/breach-data/incident-info/by-org-id?org_id=' + orgId).toPromise().then((res) => {
+        return res.json().map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
+          incident.reportMonth, incident.reportYear, incident.numRecordsLost,
+          incident.dataLostType, incident.country, incident.state, incident.victimType,
+          incident.summary, incident.references))
+      }).catch(this.handleError);
+  }
+
+  public getAllIncidents(): Promise<Incident[]> {
+    if (this.allIncidents == null) {
+      this.allIncidents = this.http.get(API_URL + '/breach-data/incident-info').toPromise().then((res) => {
+          return res.json().map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
+            incident.reportMonth, incident.reportYear, incident.numRecordsLost, incident.dataLostType, incident.country,
+            incident.state, incident.victimType, incident.summary, incident.references))
+        }).catch(this.handleError);
+    }
+    return this.allIncidents;
+  }
+
+  public getAllActors(): Promise<Actor[]> {
+    if (this.allActors == null) {
+      this.allActors = this.http.get(API_URL + '/breach-data/actor-info').toPromise().then((res) => {
+          return res.json().map(actor => new Actor(actor.actorId, actor.actorType, actor.actorPattern))
+      }).catch(this.handleError);
+    }
+    return this.allActors;
+  }
+
   public getAllOrgs(): Observable<Organization[]> {
+    // Observable used to meet requirements of angular material datatable
     if (this.allOrgs == null) {
       this.allOrgs = this.http.get(API_URL + '/breach-data/org-info').map(response => {
-          return response.json().map(org => new Organization(org.orgId, org.orgName, org.orgIndustry, org.numIncidents, org.numRecordsLost))
+        return response.json().map(org => new Organization(org.orgId, org.orgName, org.orgIndustry, org.numIncidents, org.numRecordsLost))
       }).catch(this.handleError)
     }
     return this.allOrgs;
-  }
-
-  public getIncidentsByOrgId(orgId: number): Observable<Incident[]> {
-    return this.http.get(API_URL + '/breach-data/incident-info/by-org-id?org_id=' + orgId).map(res => {
-      return res.json().map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
-        incident.reportMonth, incident.reportYear, incident.numRecordsLost,
-        incident.dataLostType, incident.country, incident.state, incident.victimType,
-        incident.summary, incident.references))
-    }).catch(this.handleError)
   }
 
   public getIncidentYearRange(): Observable<YearRange> {
@@ -49,26 +70,6 @@ export class ApiService {
       ).catch(this.handleError);
     }
     return this.yearRange;
-  }
-
-  public getAllIncidents(): Promise<Incident[]> {
-    if (this.allIncidents == null) {
-      this.allIncidents = this.http.get(API_URL + '/breach-data/incident-info').toPromise().then((res) => {
-          return res.json().map(incident => new Incident(incident.incidentId, incident.orgId, incident.actorId, incident.reportDay,
-            incident.reportMonth, incident.reportYear, incident.numRecordsLost, incident.dataLostType, incident.country,
-            incident.state, incident.victimType, incident.summary, incident.references))
-        });
-    }
-    return this.allIncidents;
-  }
-
-  public getAllActors(): Promise<Actor[]> {
-    if (this.allActors == null) {
-      this.allActors = this.http.get(API_URL + '/breach-data/actor-info').toPromise().then((res) => {
-          return res.json().map(actor => new Actor(actor.actorId, actor.actorType, actor.actorPattern))
-      });
-    }
-    return this.allActors;
   }
 
   private handleError (error: Response | any) {

@@ -74,7 +74,7 @@ To build docker containers:
 Create the dist folder by running the following commands:
 ```
 npm install
-ng build
+ng build -aot
 ```
 Run the following docker commands to start up the front end:
  ```

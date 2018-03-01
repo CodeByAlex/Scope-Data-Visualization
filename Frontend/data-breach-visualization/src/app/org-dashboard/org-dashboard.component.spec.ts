@@ -24,9 +24,9 @@ export class MockApiService {
    return Observable.of(orgList);
   }
 
-  public getIncidentsByOrgId(orgId: number): Observable<Incident[]> {
+  public getIncidentsByOrgId(orgId: number): Promise<Incident[]> {
     const incidentList: Incident[] = [new Incident()];
-    return Observable.of(incidentList);
+    return Observable.of(incidentList).toPromise();
   }
 
   public getIncidentYearRange(): Observable<YearRange> {
@@ -84,7 +84,7 @@ describe('OrgDashboardComponent', () => {
   it('should set global orgName and orgIndustry when onRowClick method is called', () => {
     const org: Organization = new Organization(1, 'Hello', 'World');
     const incidents: Incident[] = [];
-    spyOn(apiService, 'getIncidentsByOrgId').and.returnValue(Observable.of(incidents));
+    spyOn(apiService, 'getIncidentsByOrgId').and.returnValue(Observable.of(incidents).toPromise());
     component.onRowClick(org);
     expect(component.orgName).toEqual('Hello');
     expect(component.orgIndustry).toEqual('World');
