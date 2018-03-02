@@ -61,6 +61,8 @@ Scope is a security breach visualization tool that gives you insight into cyber 
 
 ###### _Prerequisites_
  * Install Docker 
+ * Maven
+ * Angular CLI
  
 ###### _Deployment_
 
@@ -94,9 +96,22 @@ docker run -it -p 8080:8080 scope-backend
  ```
 You are up and running! Navigate to link http://localhost:80 to start using the website.
  
-## How to run integration tests?
+## How to run test suites?
 
-Open your favorite IDE and run the files "as junit tests" from the top of the test directory  
+ To run frontend tests:
+ * CD into the Frontend/data-breach-visualization
+ * Run the following Angular CLI commands to run tests:
+ ```
+ng test
+```
+
+To run backend tests:
+ * CD into the Backend/security-breach-data directory
+ * Run the following Maven commands to run tests:
+
+ ```
+mvn clean test
+ ```
 
 ## DB configuation
 
