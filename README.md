@@ -63,7 +63,18 @@ Scope is a security breach visualization tool that gives you insight into cyber 
  * Install Docker 
  
 ###### _Deployment_
-To build docker containers:
+
+To build docker containers together:
+
+* Download and unpack the zip file
+* CD into the root directory
+
+Run the following docker commands to start up the application:
+ ```
+docker-compose up
+ ```
+
+To build docker containers separately:
 
 * Download and unpack the zip file
 * CD into the Frontend/data-breach-visualization directory

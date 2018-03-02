@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./Backend/security-breach-data
+      dockerfile: ./Dockerfile
+    networks:
+      default:
+        aliases:
+          - backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./Frontend/data-breach-visualization
+      dockerfile: ./Dockerfile
+    networks:
+      default:
+        aliases:
+          - frontend
+    ports:
+      - "80:80"
