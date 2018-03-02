@@ -61,8 +61,6 @@ Scope is a security breach visualization tool that gives you insight into cyber 
 
 ###### _Prerequisites_
  * Install Maven
- * Install Angular Cli
- * Install Node
  * Install Docker 
  
 ###### _Deployment_
@@ -71,16 +69,12 @@ To build docker containers:
 * Download and unpack the zip file
 * CD into the Frontend/data-breach-visualization directory
 
-Create the dist folder by running the following commands:
-```
-npm install
-ng build -aot
-```
 Run the following docker commands to start up the front end:
  ```
 docker build -t scope-frontend .
 docker run -p 80:80 -it scope-frontend
  ```
+
 CD into the Backend/security-breach-data directory
 
 Run the following docker commands to start up the back end:
