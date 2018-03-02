@@ -60,7 +60,6 @@ Scope is a security breach visualization tool that gives you insight into cyber 
 ## How to run?
 
 ###### _Prerequisites_
- * Install Maven
  * Install Docker 
  
 ###### _Deployment_
