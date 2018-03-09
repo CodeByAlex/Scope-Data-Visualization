@@ -12,7 +12,7 @@ for line in file.xreadlines():
 
 #id | ORG_NAME | ORG_INDUSTRY | ACTOR_TYPE | ACTOR_PATTERN | COUNTRY | STATE | REPORT_DAY | REPORT_MONTH | REPORT_YEAR | NUM_RECORDS_LOST | VICTIM_TYPE | DATA_LOST_TYPE | SUMMARY | REFERENCE
 
-#Map org values to unique IDs in orgslist 
+#Map org values to unique IDs in orgslist | ORG_NAME | ORG_INDUSTRY |
 orgsList = {}
 index = 0
 for x in lines:
@@ -35,7 +35,7 @@ with open('ORG_DATA.txt', 'a') as the_file:
         the_file.write( str(key) + "~" + value[0] + "~" + value[1] + "\n")
 
 
-#Map actor values to unique IDs in actorList
+#Map actor values to unique IDs in actorList  | ACTOR_TYPE | ACTOR_PATTERN 
 actorList = {}
 ind = 0
 for x in lines[1:len(lines)-1]:
@@ -68,7 +68,7 @@ for line in lines[1:len(lines)-1]:
         if v==org_value:
             org_id = k
 
-    #get org ID from actorList
+    #get actor ID from actorList
     actor_id = -1
     actor_value = [line[3].replace("\"", "").strip(), line[4].replace("\"", "").strip()]
     for k, v in actorList.iteritems():
